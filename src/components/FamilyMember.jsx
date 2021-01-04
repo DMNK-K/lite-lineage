@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import FamilyMemberExtension from './FamilyMemberExtension';
+import '../App.css';
 
 class FamilyMember extends Component
 {
     constructor(props)
     {
         super(props);
-        this.state = {extended = false}
+        this.state = {extended: false}
+        
     }
     
     render()
@@ -26,12 +29,9 @@ class FamilyMember extends Component
                 </div>
                 <p className="family_member_info"><img src="icon_birth.svg" className="family_member_icon"/>20.06.1955</p>
                 <p className="family_member_info"><img src="icon_death.svg" className="family_member_icon"/>14.11.2003</p>
-                <button className="family_member_extend">SHOW DETAILS</button>
-                <div className="family_member_extended">
-                    <p className="family_member_info">Eye color: brown</p>
-                    <p className="family_member_info">Hair color: black</p>
-                    <p className="family_member_info"></p>
-                </div>
+
+                <button className="family_member_extend">{(this.state.extended === true) ? "HIDE DETAILS" : "SHOW DETAILS"}</button>
+                {(this.state.extended === true && <FamilyMemberExtension/>)}
             </div>
         );
     }

@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
+import '../App.css';
+import NavInFamily from './NavInFamily';
 
 class Header extends Component
 {
+    constructor(props)
+    {
+        super(props);
+    }
+
     //state = {  }
     render()
-    { 
+    {
         return(
-        <header id="main_header">
+        <header className="main_header">
             <h1>LiteLineage</h1>
-            <nav className="main_nav">
-                <button className="header_button">EXPORT</button>
-                <button className="header_button">NEW PERSON</button>
-                <button className="header_button">HIGHLIGHT: OFF</button>
-                <button className="header_button">EXIT</button>
-            </nav>
+            {this.props.isInTree === true && <NavInFamily/>}
         </header>
         );
     }

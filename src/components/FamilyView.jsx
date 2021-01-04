@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import SideDrawer from './SideDrawer';
 import FamilyMember from './FamilyMember';
+import '../App.css';
 
 class FamilyView extends Component
 {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FamilyView from './FamilyView';
 import StartView from './StartView';
+import '../App.css';
 
 class Content extends Component
 {
