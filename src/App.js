@@ -4,7 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Content from './components/Content';
 import React, { Component } from 'react';
-import Cookies from 'js-cookies';
+// import Cookies from 'js-cookies';
 import FamilyTree from './FamilyTree';
 
 class App extends Component
@@ -13,7 +13,7 @@ class App extends Component
   {
       super(props);
       this.state = {
-        treeNames = this.loadTreeNames(), //array of treeNames
+        treeNames: this.loadTreeNames(), //array of treeNames
         isInTree: false,
         currentTree: null //null when none loaded, otherwise an instance of FamilyTree class
       }
@@ -40,7 +40,7 @@ class App extends Component
       const loadedTreeStr = localStorage.getItem(treeName);
       if (loadedTreeStr)
       {
-        treeObj = new FamilyTree(treeName, Date(), []);
+        const treeObj = new FamilyTree(treeName, Date(), []);
         return treeObj.fillDataFromJSON(loadedTreeStr);
       }
       else

@@ -14,7 +14,7 @@ class Content extends Component
     render()
     {
         //the ternary was too long, broken up for clarity:
-        const view = null;
+        let view = null;
         if (this.props.isInTree === true)
         {
             view = <FamilyView currentTree={this.props.currentTree}/>;

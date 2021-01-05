@@ -30,7 +30,7 @@ class FamilyTree
         this.family.length = 0;
         for(let i = 0; i < parsedJsonObj.family.length; i++)
         {
-            const personObj = new Person();
+            const personObj = new Person(parsedJsonObj.family[i].id);
             personObj.fillDataFromParsedJSON(parsedJsonObj.family[i]);
             this.family.push(personObj);
         }
