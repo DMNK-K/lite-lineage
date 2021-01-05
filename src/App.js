@@ -18,6 +18,7 @@ class App extends Component
         currentTree: null //null when none loaded, otherwise an instance of FamilyTree class
       }
       this.handleNewTree = this.handleNewTree.bind(this);
+      this.handleDeleteTree = this.handleDeleteTree.bind(this);
   }
 
   loadTreeNames()
@@ -37,7 +38,7 @@ class App extends Component
   saveTreeNames()
   {
     localStorage.setItem("treeNames", this.state.treeNames.join("~"));
-    console.log("saved");
+    //console.log("saved, " + this.state.treeNames.toString());
   }
 
   loadTree(treeName)
@@ -65,7 +66,7 @@ class App extends Component
 
   handleNewTree()
   {
-    console.log("trying to make tree");
+    //console.log("trying to make tree");
     const newName = FamilyTree.makeNewName(this.state.treeNames);
     const newTree = new FamilyTree(newName, Date(), []);
     this.setState({
@@ -75,7 +76,22 @@ class App extends Component
     }, () => {
         this.saveTreeNames();
         newTree.save();
-        console.log(this.state);
+        //console.log(this.state);
+      }
+    );
+  }
+
+  handleDeleteTree(nameOfTreeToDelete)
+  {
+    //console.log("trying to delete " + nameOfTreeToDelete);
+    localStorage.removeItem(nameOfTreeToDelete);
+    this.setState(
+      {
+        treeNames: this.state.treeNames.filter(item => item !== nameOfTreeToDelete)
+      },
+      () => {
+        this.saveTreeNames();
+        //console.log(this.state);
       }
     );
   }
@@ -85,7 +101,7 @@ class App extends Component
     return (
       <div className="app">
         <Header isInTree={this.state.isInTree}/>
-        <Content {...this.state} handleNewTree={this.handleNewTree}/>
+        <Content {...this.state} handleNewTree={this.handleNewTree} handleDeleteTree={this.handleDeleteTree}/>
         <Footer/>
       </div>
     );

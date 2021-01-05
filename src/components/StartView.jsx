@@ -1,31 +1,19 @@
 import React, { Component } from 'react';
 import '../App.css';
+import StartTreeButton from './StartTreeButton';
 
 class StartView extends Component
 {
     constructor(props)
     {
         super(props);
-        this.state = {tryingToDeleteTree: false}
+        //this.state = {tryingToDeleteTree: false}
     }
 
     render()
     { 
         const treeButtons = this.props.treeNames.map((treeName) =>
-            <div className="start_button_wrapper" key={treeName}>
-                <button className="start_button">
-                    {treeName}
-                </button>
-                <button className="start_button_delete">
-                    <img src=""/>
-                </button>
-                <div className="start_button_delete_confirmation">
-                    <p>{"Do you really want to delete " + treeName}</p>
-                    <button>YES</button>
-                    <button>NO</button>
-                </div>
-            </div>
-            
+            <StartTreeButton handleDeleteTree={this.props.handleDeleteTree} treeName={treeName} key={treeName}/>
         );
 
         return (
