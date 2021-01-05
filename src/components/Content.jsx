@@ -21,7 +21,7 @@ class Content extends Component
         }
         else
         {
-            view = <StartView treeNames={this.props.treeNames}/>;
+            view = <StartView treeNames={this.props.treeNames} handleNewTree={this.props.handleNewTree}/>;
         }
 
         return (

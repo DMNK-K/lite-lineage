@@ -17,6 +17,7 @@ class App extends Component
         isInTree: false,
         currentTree: null //null when none loaded, otherwise an instance of FamilyTree class
       }
+      this.handleNewTree = this.handleNewTree.bind(this);
   }
 
   loadTreeNames()
@@ -25,12 +26,18 @@ class App extends Component
     const separator = "~";
     if (namesStr)
     {
-      return namesStr.split(separator).filter(str => str != "");
+      return namesStr.split(separator).filter(str => str !== "");
     }
     else
     {
       return [];
     }
+  }
+
+  saveTreeNames()
+  {
+    localStorage.setItem("treeNames", this.state.treeNames.join("~"));
+    console.log("saved");
   }
 
   loadTree(treeName)
@@ -56,9 +63,21 @@ class App extends Component
     }
   }
 
-  newTree()
+  handleNewTree()
   {
-    
+    console.log("trying to make tree");
+    const newName = FamilyTree.makeNewName(this.state.treeNames);
+    const newTree = new FamilyTree(newName, Date(), []);
+    this.setState({
+      treeNames: [...this.state.treeNames, newName],
+      currentTree: newTree,
+      isInTree: true
+    }, () => {
+        this.saveTreeNames();
+        newTree.save();
+        console.log(this.state);
+      }
+    );
   }
 
   render()
@@ -66,7 +85,7 @@ class App extends Component
     return (
       <div className="app">
         <Header isInTree={this.state.isInTree}/>
-        <Content isInTree={this.state.isInTree} treeNames={this.state.treeNames} currentTree={this.state.currentTree}/>
+        <Content {...this.state} handleNewTree={this.handleNewTree}/>
         <Footer/>
       </div>
     );

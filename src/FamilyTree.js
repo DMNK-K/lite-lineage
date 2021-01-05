@@ -13,6 +13,18 @@ class FamilyTree
         this.family = family;
     }
 
+    static makeNewName(takenNames)
+    {
+        let newName = "My Tree 1";
+        let i = 1;
+        while (takenNames.includes(newName))
+        {
+            i++;
+            newName = "My Tree " + i;
+        }
+        return newName;
+    }
+
     fillDataFromJSON(unparsedJson)
     {
         this.fillDataFromParsedJSON(JSON.parse(unparsedJson));
@@ -34,6 +46,11 @@ class FamilyTree
             personObj.fillDataFromParsedJSON(parsedJsonObj.family[i]);
             this.family.push(personObj);
         }
+    }
+
+    save()
+    {
+        localStorage.setItem(this.treeName, JSON.stringify(this));
     }
 
     getNumberOfNodes()
