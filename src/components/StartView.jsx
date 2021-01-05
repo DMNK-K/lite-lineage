@@ -11,14 +11,17 @@ class StartView extends Component
 
     render()
     { 
+        const treeButtons = this.props.treeNames.map((treeName) =>
+            <button>{treeName}</button>
+        );
+
         return (
             <div className="start_view">
                 <div className="start_box">
                     <h2>Welcome to LiteLineage</h2>
-                    <p className="start_desc">Bla blab lbablabl lbal lba, create a new tree, or pick an existing one.</p>
+                    <p className="start_desc">A simple tool for making family trees, with all key family data kept on your machine and no need to create an account. To begin, create a new tree, or pick an existing one.</p>
                     <div className="start_button_wrapper">
-                        <button>Blabla family tree</button>
-                        <button>Blabla family tree</button>
+                        {treeButtons}
                         <button className="start_button_special">NEW TREE</button>
                     </div>
                 </div>

@@ -9,5 +9,10 @@ class Person
         
     }
     
+    fillDataFromParsedJSON(parsedJsonObj)
+    {
+        
+    }
 }
 
+export default Person;
