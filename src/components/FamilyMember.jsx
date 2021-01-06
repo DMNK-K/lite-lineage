@@ -21,7 +21,7 @@ class FamilyMember extends Component
         return (
             <div className="family_member">
                 <div className="family_member_dragger">
-                    <img src="icon_drag.svg"/>
+                    <img src={IconDrag}/>
                 </div>
                 <div className="family_member_bar">
                     <button className="family_member_task_button"><img src={IconEdit} className="family_member_task_icon"/></button>

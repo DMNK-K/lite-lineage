@@ -12,9 +12,9 @@ class NavInFamily extends Component
     {
         return (
             <nav className="main_nav">
-                <button className="header_button">EXPORT</button>
-                <button className="header_button">NEW PERSON</button>
-                <button className="header_button">HIGHLIGHT: OFF</button>
+                {/* <button className="header_button">EXPORT</button> */}
+                <button className="header_button" onClick={this.props.handleAddFamMember}>NEW PERSON</button>
+                {/* <button className="header_button">HIGHLIGHT: OFF</button> */}
                 <button className="header_button" onClick={this.props.handleExitTree}>EXIT</button>
             </nav>
         );

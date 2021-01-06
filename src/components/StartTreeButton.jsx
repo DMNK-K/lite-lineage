@@ -24,9 +24,11 @@ class StartTreeButton extends Component
     {
         const confirmation = (
             <div className="start_button_delete_confirmation">
-                <p>{"Do you really want to delete " + this.props.treeName}</p>
-                <button onClick={this.props.handleDeleteTree.bind(this, this.props.treeName)}>YES</button>
-                <button onClick={this.handleCancelingDelete}>NO</button>
+                <p>{"Do you really want to delete " + this.props.treeName + "?"}</p>
+                <div>
+                    <button className="confirmation_button_warning" onClick={this.props.handleDeleteTree.bind(this, this.props.treeName)}>YES</button>
+                    <button className="confirmation_button_neutral" onClick={this.handleCancelingDelete}>NO</button>
+                </div>
             </div>
         );
 

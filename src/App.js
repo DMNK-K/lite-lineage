@@ -6,6 +6,7 @@ import Content from './components/Content';
 import React, { Component } from 'react';
 // import Cookies from 'js-cookies';
 import FamilyTree from './FamilyTree';
+import Person from './Person';
 
 class App extends Component
 {
@@ -22,6 +23,19 @@ class App extends Component
       this.handleExitTree = this.handleExitTree.bind(this);
       this.handleRenameTree = this.handleRenameTree.bind(this);
       this.handleOpenTree = this.handleOpenTree.bind(this);
+      //this exists so all those handler functions can be passed as props with a ... operator:
+      this.treeHandlers = {
+        handleNewTree: this.handleNewTree,
+        handleDeleteTree: this.handleDeleteTree,
+        handleExitTree: this.handleExitTree,
+        handleRenameTree: this.handleRenameTree,
+        handleOpenTree: this.handleOpenTree,
+      };
+
+      //similar thing with this:
+      this.familyHandlers = {
+
+      };
   }
 
   loadTreeNames()
@@ -147,12 +161,60 @@ class App extends Component
     });
   }
 
+  addFamMember(person)
+  {
+    
+  }
+
+  handleAddFamMember(mode = "default", locationX, locationY, anchorPersonId)
+  {
+    if (!this.state.currentTree){return;}
+    const viableModes = ["default", "parent", "child"];
+    if (viableModes.includes(mode))
+    {
+      let newId = 0;
+      while (this.state.currentTree.family.includes(newId))
+      {
+        newId++;
+      }
+      const newPerson = new Person(newId);
+      newPerson.locationInTreeX = locationX;
+      newPerson.locationInTreeY = locationY;
+      if (anchorPersonId >= 0)
+      {
+        if(mode === "parent")
+        {
+          newPerson.childrenIds.push(anchorPersonId);
+        }
+        else if(mode === "child")
+        {
+          newPerson.parentId0 = anchorPersonId;
+        }
+      }
+      this.addFamMember(newPerson);
+    }
+    else
+    {
+      console.error("Invalid mode of adding a family member.");
+    }
+  }
+
+  handleEditFamMember(personId, replacerPersonObj)
+  {
+
+  }
+
+  handleDeleteFamMember(personId)
+  {
+
+  }
+
   render()
   {
     return (
       <div className="app">
-        <Header isInTree={this.state.isInTree} handleExitTree={this.handleExitTree}/>
-        <Content {...this.state} handleOpenTree={this.handleOpenTree} handleNewTree={this.handleNewTree} handleDeleteTree={this.handleDeleteTree}/>
+        <Header isInTree={this.state.isInTree} {...this.treeHandlers} {...this.familyHandlers}/>
+        <Content {...this.state} {...this.treeHandlers} {...this.familyHandlers}/>
         <Footer/>
       </div>
     );

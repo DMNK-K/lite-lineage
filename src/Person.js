@@ -1,9 +1,15 @@
 class Person
 {
     id;
+    locationInTreeX;
+    locationInTreeY;
     firstName = "";
     secondName = "";
     lastName = "";
+
+    parentId0;
+    parentId1;
+    childrenIds = [];
 
     isDead = false;
     dateBirth;
