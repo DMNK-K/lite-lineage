@@ -32,7 +32,7 @@ class StartTreeButton extends Component
 
         return (
             <div className="start_button_wrapper">
-                <button className="start_button">
+                <button onClick={this.props.handleOpenTree.bind(this, this.props.treeName)} className="start_button">
                     {this.props.treeName}
                 </button>
                 <button onClick={this.handleTryingToDelete} className="start_button_delete">

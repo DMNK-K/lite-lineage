@@ -15,7 +15,7 @@ class Header extends Component
         return(
         <header className="main_header">
             <h1>LiteLineage</h1>
-            {this.props.isInTree === true && <NavInFamily/>}
+            {this.props.isInTree === true && <NavInFamily handleExitTree={this.props.handleExitTree}/>}
         </header>
         );
     }

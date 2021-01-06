@@ -19,6 +19,9 @@ class App extends Component
       }
       this.handleNewTree = this.handleNewTree.bind(this);
       this.handleDeleteTree = this.handleDeleteTree.bind(this);
+      this.handleExitTree = this.handleExitTree.bind(this);
+      this.handleRenameTree = this.handleRenameTree.bind(this);
+      this.handleOpenTree = this.handleOpenTree.bind(this);
   }
 
   loadTreeNames()
@@ -49,7 +52,8 @@ class App extends Component
       if (loadedTreeStr)
       {
         const treeObj = new FamilyTree(treeName, Date(), []);
-        return treeObj.fillDataFromJSON(loadedTreeStr);
+        treeObj.fillDataFromJSON(loadedTreeStr);
+        return treeObj;
       }
       else
       {
@@ -76,7 +80,7 @@ class App extends Component
     }, () => {
         this.saveTreeNames();
         newTree.save();
-        //console.log(this.state);
+        console.log(this.state);
       }
     );
   }
@@ -96,12 +100,59 @@ class App extends Component
     );
   }
 
+  handleRenameTree(oldTreeName, newTreeName)
+  {
+    if (oldTreeName === newTreeName || this.state.currentTree.treeName !== oldTreeName || !this.state.treeNames.includes(oldTreeName) || this.state.treeNames.includes(newTreeName))
+    {
+      console.log("handleRenameTree was ignored.");
+      return;
+    }
+
+    let newTreeNames = [...this.state.treeNames];
+    const i = newTreeNames.indexOf(oldTreeName);
+    newTreeNames[i] = newTreeName;
+
+    let copyOfCurrentTree = {...this.state.currentTree};
+    copyOfCurrentTree.treeName = newTreeName;
+    this.setState(
+      {
+        treeNames: newTreeNames,
+        currentTree: copyOfCurrentTree
+      },
+      () => {
+        this.saveTreeNames();
+        this.state.currentTree.save();
+      }
+    );
+  }
+
+  handleOpenTree(treeName)
+  {
+    const loaded = this.loadTree(treeName);
+    if (loaded !== null)
+    {
+      this.setState({
+        currentTree: loaded,
+        isInTree: true
+      });
+    }
+  }
+
+  handleExitTree()
+  {
+    this.state.currentTree.save();
+    this.setState({
+      currentTree: null,
+      isInTree: false
+    });
+  }
+
   render()
   {
     return (
       <div className="app">
-        <Header isInTree={this.state.isInTree}/>
-        <Content {...this.state} handleNewTree={this.handleNewTree} handleDeleteTree={this.handleDeleteTree}/>
+        <Header isInTree={this.state.isInTree} handleExitTree={this.handleExitTree}/>
+        <Content {...this.state} handleOpenTree={this.handleOpenTree} handleNewTree={this.handleNewTree} handleDeleteTree={this.handleDeleteTree}/>
         <Footer/>
       </div>
     );

@@ -13,7 +13,6 @@ class Content extends Component
     
     render()
     {
-        //the ternary was too long, broken up for clarity:
         let view = null;
         if (this.props.isInTree === true)
         {
@@ -21,7 +20,7 @@ class Content extends Component
         }
         else
         {
-            view = <StartView treeNames={this.props.treeNames} handleNewTree={this.props.handleNewTree} handleDeleteTree={this.props.handleDeleteTree}/>;
+            view = <StartView treeNames={this.props.treeNames} handleOpenTree={this.props.handleOpenTree} handleNewTree={this.props.handleNewTree} handleDeleteTree={this.props.handleDeleteTree}/>;
         }
 
         return (

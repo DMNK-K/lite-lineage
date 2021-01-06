@@ -13,7 +13,7 @@ class StartView extends Component
     render()
     { 
         const treeButtons = this.props.treeNames.map((treeName) =>
-            <StartTreeButton handleDeleteTree={this.props.handleDeleteTree} treeName={treeName} key={treeName}/>
+            <StartTreeButton handleOpenTree={this.props.handleOpenTree} handleDeleteTree={this.props.handleDeleteTree} treeName={treeName} key={treeName}/>
         );
 
         return (
