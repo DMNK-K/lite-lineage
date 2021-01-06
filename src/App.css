@@ -208,17 +208,18 @@ h2
 .start_button_delete
 {
   position: absolute;
-  width:30px;
-  height:30px;
+  width:35px;
+  height:35px;
   top:0;
   right:0;
 }
 
 .start_button_delete img
 {
-  width:80%;
+  width:90%;
   height: auto;
   filter: invert();
+  opacity:0.6;
 }
 
 .start_button_delete_confirmation

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import IconDelete from '../icons/icon_delete.svg';
 class StartTreeButton extends Component
 {
     constructor(props)
@@ -36,7 +36,7 @@ class StartTreeButton extends Component
                     {this.props.treeName}
                 </button>
                 <button onClick={this.handleTryingToDelete} className="start_button_delete">
-                    <img src=""/>
+                    <img src={IconDelete}/>
                 </button>
                 {(this.state.tryingToDelete === true && confirmation)}
             </div>
