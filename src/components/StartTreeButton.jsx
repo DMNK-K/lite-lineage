@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import IconDelete from '../icons/icon_delete.svg';
+import TreeContext from '../TreeContext';
+
 class StartTreeButton extends Component
 {
+    static contextType = TreeContext;
+
     constructor(props)
     {
         super(props);
@@ -26,7 +30,7 @@ class StartTreeButton extends Component
             <div className="start_button_delete_confirmation">
                 <p>{"Do you really want to delete " + this.props.treeName + "?"}</p>
                 <div>
-                    <button className="confirmation_button_warning" onClick={this.props.handleDeleteTree.bind(this, this.props.treeName)}>YES</button>
+                    <button className="confirmation_button_warning" onClick={this.context.treeHandlers.handleDeleteTree.bind(this, this.props.treeName)}>YES</button>
                     <button className="confirmation_button_neutral" onClick={this.handleCancelingDelete}>NO</button>
                 </div>
             </div>
@@ -34,7 +38,7 @@ class StartTreeButton extends Component
 
         return (
             <div className="start_button_wrapper">
-                <button onClick={this.props.handleOpenTree.bind(this, this.props.treeName)} className="start_button">
+                <button onClick={this.context.treeHandlers.handleOpenTree.bind(this, this.props.treeName)} className="start_button">
                     {this.props.treeName}
                 </button>
                 <button onClick={this.handleTryingToDelete} className="start_button_delete">

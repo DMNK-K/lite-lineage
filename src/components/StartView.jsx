@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import '../App.css';
 import StartTreeButton from './StartTreeButton';
+import TreeContext from '../TreeContext';
 
 class StartView extends Component
 {
+    static contextType = TreeContext;
+
     constructor(props)
     {
         super(props);
@@ -12,8 +15,8 @@ class StartView extends Component
 
     render()
     { 
-        const treeButtons = this.props.treeNames.map((treeName) =>
-            <StartTreeButton handleOpenTree={this.props.handleOpenTree} handleDeleteTree={this.props.handleDeleteTree} treeName={treeName} key={treeName}/>
+        const treeButtons = this.context.treeNames.map((treeName) =>
+            <StartTreeButton treeName={treeName} key={treeName}/>
         );
 
         return (
@@ -24,7 +27,7 @@ class StartView extends Component
                     <div className="start_button_tray">
                         {treeButtons}
                         <div className="start_button_wrapper">
-                            <button className="start_button start_button_special" onClick={this.props.handleNewTree}>NEW TREE</button>
+                            <button className="start_button start_button_special" onClick={this.context.treeHandlers.handleNewTree}>NEW TREE</button>
                         </div>
                     </div>
                 </div>

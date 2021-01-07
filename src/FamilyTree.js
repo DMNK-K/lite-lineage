@@ -48,6 +48,18 @@ class FamilyTree
         }
     }
 
+    fillDataFromOther(otherTree)
+    {
+        this.treeName = otherTree.treeName;
+        this.creationDate = otherTree.creationDate;
+        this.family = otherTree.family;
+    }
+
+    static cloneFromOther(otherTree)
+    {
+        return new FamilyTree(otherTree.treeName, otherTree.creationDate, [...otherTree.family]);
+    }
+
     save()
     {
         localStorage.setItem(this.treeName, JSON.stringify(this));

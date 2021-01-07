@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import '../App.css';
 import NavInFamily from './NavInFamily';
+import TreeContext from '../TreeContext';
 
 class Header extends Component
 {
+    static contextType = TreeContext;
+
     constructor(props)
     {
         super(props);
@@ -15,7 +18,7 @@ class Header extends Component
         return(
         <header className="main_header">
             <h1>LiteLineage</h1>
-            {this.props.isInTree === true && <NavInFamily handleExitTree={this.props.handleExitTree}/>}
+            {this.context.isInTree === true && <NavInFamily/>}
         </header>
         );
     }

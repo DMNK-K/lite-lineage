@@ -7,6 +7,7 @@ import React, { Component } from 'react';
 // import Cookies from 'js-cookies';
 import FamilyTree from './FamilyTree';
 import Person from './Person';
+import TreeContext from './TreeContext';
 
 class App extends Component
 {
@@ -23,7 +24,9 @@ class App extends Component
       this.handleExitTree = this.handleExitTree.bind(this);
       this.handleRenameTree = this.handleRenameTree.bind(this);
       this.handleOpenTree = this.handleOpenTree.bind(this);
-      //this exists so all those handler functions can be passed as props with a ... operator:
+      
+      this.handleAddFamMember = this.handleAddFamMember.bind(this);
+
       this.treeHandlers = {
         handleNewTree: this.handleNewTree,
         handleDeleteTree: this.handleDeleteTree,
@@ -34,7 +37,7 @@ class App extends Component
 
       //similar thing with this:
       this.familyHandlers = {
-
+        handleAddFamMember: this.handleAddFamMember,
       };
   }
 
@@ -163,7 +166,19 @@ class App extends Component
 
   addFamMember(person)
   {
-    
+    if (person)
+    {
+      console.log("Adding family member: " + person.getDisplayName() + ", id will be: " + person.id);
+      const newFamily = [...this.state.currentTree.family, person];
+      const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
+      draftTree.family = newFamily;
+      this.setState(
+        {
+          currentTree: draftTree,
+        },
+        () => {this.state.currentTree.save();}
+      );
+    }
   }
 
   handleAddFamMember(mode = "default", locationX, locationY, anchorPersonId)
@@ -180,7 +195,7 @@ class App extends Component
       const newPerson = new Person(newId);
       newPerson.locationInTreeX = locationX;
       newPerson.locationInTreeY = locationY;
-      if (anchorPersonId >= 0)
+      if (anchorPersonId !== undefined && anchorPersonId >= 0)
       {
         if(mode === "parent")
         {
@@ -212,11 +227,11 @@ class App extends Component
   render()
   {
     return (
-      <div className="app">
-        <Header isInTree={this.state.isInTree} {...this.treeHandlers} {...this.familyHandlers}/>
-        <Content {...this.state} {...this.treeHandlers} {...this.familyHandlers}/>
+      <TreeContext.Provider className="app" value={{...this.state, treeHandlers: this.treeHandlers, familyHandlers: this.familyHandlers}}>
+        <Header/>
+        <Content/>
         <Footer/>
-      </div>
+      </TreeContext.Provider>
     );
   }
 }

@@ -2,9 +2,12 @@ import React, { Component } from 'react';
 import FamilyView from './FamilyView';
 import StartView from './StartView';
 import '../App.css';
+import TreeContext from '../TreeContext';
 
 class Content extends Component
 {
+    static contextType = TreeContext;
+
     constructor(props)
     {
         super(props);
@@ -13,19 +16,9 @@ class Content extends Component
     
     render()
     {
-        let view = null;
-        if (this.props.isInTree === true)
-        {
-            view = <FamilyView currentTree={this.props.currentTree}/>;
-        }
-        else
-        {
-            view = <StartView treeNames={this.props.treeNames} handleOpenTree={this.props.handleOpenTree} handleNewTree={this.props.handleNewTree} handleDeleteTree={this.props.handleDeleteTree}/>;
-        }
-
         return (
             <div className="main_content">
-                {view}
+                {(this.context.isInTree === true) ? <FamilyView/> : <StartView/>}
             </div>
         );
     }

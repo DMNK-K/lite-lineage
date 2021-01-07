@@ -3,9 +3,12 @@ import SideDrawer from './SideDrawer';
 import FamilyMember from './FamilyMember';
 import SideDrawerEditMemberForm from './SideDrawerEditMemberForm';
 import '../App.css';
+import TreeContext from '../TreeContext';
 
 class FamilyView extends Component
 {
+    static contextType = TreeContext;
+
     constructor(props)
     {
         super(props);
@@ -14,7 +17,7 @@ class FamilyView extends Component
     
     render()
     {
-        const familyMembers = this.props.currentTree.family.map((member) =>
+        const familyMembers = this.context.currentTree.family.map((member) =>
             <FamilyMember person={member}/>
         );
 
