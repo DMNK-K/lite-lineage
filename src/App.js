@@ -172,6 +172,35 @@ class App extends Component
     {
       console.log("Adding family member: " + person.getDisplayName() + ", id will be: " + person.id);
       const newFamily = [...this.state.currentTree.family, person];
+      //since a person might be added as a child or parent of some other exisitng person
+      //this needs to be updated in those family members too
+      //they can be mutated directly since a whole tree will be assigned in setState anyway
+      if (person.parentId0 != undefined)
+      {
+        const parentIndex = newFamily.findIndex(item => item.id == person.parentId0);
+        if (parentIndex >= 0)
+        {
+          //making the parent of newly added person have its id in childrenIds[]
+          newFamily[parentIndex].childrenIds.push(person.id);
+        }
+      }
+      for(let i = 0; i < person.childrenIds.length; i++)
+      {
+        const childIndex = newFamily.findIndex(item => item.id == person.childrenIds[i]);
+        if (childIndex >= 0)
+        {
+          //making the i-th child of newly added person have its id in one of the 2 parent slots
+          //it will override the second parent if both are taken
+          if (newFamily[childIndex].parentId0 == undefined)
+          {
+            newFamily[childIndex].parentId0 = person.id;
+          }
+          else
+          {
+            newFamily[childIndex].parentId1 = person.id;
+          }
+        }
+      }
       const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
       draftTree.family = newFamily;
       this.setState(

@@ -15,7 +15,7 @@ class SideDrawer extends Component
             <div className="side_drawer">
                 <div className="side_drawer_bar">
                     <h3>{this.props.name}</h3>
-                    <button className="side_drawer_close_button">x</button>
+                    <button className="side_drawer_close_button" onClick={this.props.closeAction}>x</button>
                 </div>
                 <div className="side_drawer_content">
                     {this.props.content}
