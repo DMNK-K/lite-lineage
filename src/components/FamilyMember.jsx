@@ -40,8 +40,17 @@ class FamilyMember extends Component
                 <div className="family_member_name_wrapper">
                     <p className="family_member_name">{this.props.person.getDisplayName()}</p>
                 </div>
-                <p className="family_member_info"><img src={IconBirth} className="family_member_icon"/>20.06.1955</p>
-                <p className="family_member_info"><img src={IconDeath} className="family_member_icon"/>14.11.2003</p>
+                <p className="family_member_info">
+                    <img src={IconBirth} className="family_member_icon"/>
+                    {this.props.person.getDisplayDateBirth()}
+                </p>
+                {
+                    this.props.person.isDead === true && 
+                    <p className="family_member_info">
+                        <img src={IconDeath} className="family_member_icon"/>
+                        {this.props.person.getDisplayDateDeath()}
+                    </p>
+                }
 
                 <button className="family_member_extend" onClick={this.toggleExtend}>{(this.state.extended === true) ? "HIDE DETAILS" : "SHOW DETAILS"}</button>
                 {this.state.extended === true && <FamilyMemberExtension/>}

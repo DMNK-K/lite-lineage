@@ -14,10 +14,10 @@ class Person
     isDead = false;
     dateBirth;
     dateDeath;
-    useDayOfBirth;
-    useDayOfDeath;
-    useMonthOfBirth;
-    useMonthOfDeath;
+    useDayOfBirth = true;
+    useDayOfDeath = true;
+    useMonthOfBirth = true;
+    useMonthOfDeath = true;
     unsurePreciseYearOfBirth = false;
     unsurePreciseYearOfDeath = false;
 
@@ -38,6 +38,7 @@ class Person
     constructor(id)
     {
         this.id = id;
+        this.dateBirth = new Date("2000/01/01");
     }
     
     fillDataFromParsedJSON(parsedJsonObj)
@@ -57,14 +58,26 @@ class Person
         return displayName;
     }
 
+    getDisplayDate(date, useDay, useMonth, unsureOfYear)
+    {
+        let str = (useDay === true && useMonth === true) ? date.getDate().toString().padStart(2, "0") + "." : "";
+        str += (useMonth === true) ? (date.getMonth() + 1).toString().padStart(2, "0") + "." : "";
+        let year = date.getFullYear().toString();
+        if (unsureOfYear === true)
+        {
+            year = year.slice(0, -1) + this.#signUnsure;
+        }
+        return str.toString() + year.toString();
+    }
+
     getDisplayDateBirth()
     {
-        
+        return this.getDisplayDate(this.dateBirth, this.useDayOfBirth, this.useMonthOfBirth, this.unsurePreciseYearOfBirth);
     }
 
     getDisplayDateDeath()
     {
-
+        return this.getDisplayDate(this.dateDeath, this.useDayOfDeath, this.useMonthOfDeath, this.unsurePreciseYearOfDeath);
     }
 }
 
