@@ -26,6 +26,7 @@ class App extends Component
       this.handleOpenTree = this.handleOpenTree.bind(this);
       
       this.handleAddFamMember = this.handleAddFamMember.bind(this);
+      this.handleDeleteFamMember = this.handleDeleteFamMember.bind(this);
 
       this.treeHandlers = {
         handleNewTree: this.handleNewTree,
@@ -38,6 +39,7 @@ class App extends Component
       //similar thing with this:
       this.familyHandlers = {
         handleAddFamMember: this.handleAddFamMember,
+        handleDeleteFamMember: this.handleDeleteFamMember,
       };
   }
 
@@ -187,11 +189,7 @@ class App extends Component
     const viableModes = ["default", "parent", "child"];
     if (viableModes.includes(mode))
     {
-      let newId = 0;
-      while (this.state.currentTree.family.includes(newId))
-      {
-        newId++;
-      }
+      const newId = this.state.currentTree.findLowestUnusedFamilyMemberId();  
       const newPerson = new Person(newId);
       newPerson.locationInTreeX = locationX;
       newPerson.locationInTreeY = locationY;
@@ -221,7 +219,20 @@ class App extends Component
 
   handleDeleteFamMember(personId)
   {
-
+    const newFamily = [...this.state.currentTree.family];
+    const i = newFamily.findIndex(item => item.id == personId);
+    if (i >= 0)
+    {
+      newFamily.splice(i, 1);
+      const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
+      draftTree.family = newFamily;
+      this.setState(
+        {
+          currentTree: draftTree,
+        },
+        () => {this.state.currentTree.save();}
+      );
+    }
   }
 
   render()

@@ -12,18 +12,18 @@ class FamilyView extends Component
     constructor(props)
     {
         super(props);
-        this.state = {editingPerson: false}
+        this.state = {editingPerson: false, editedPerson: null}
     }
     
     render()
     {
         const familyMembers = this.context.currentTree.family.map((member) =>
-            <FamilyMember person={member}/>
+            <FamilyMember key={member.id} person={member} familyHandlers={this.context.familyHandlers}/>
         );
 
         return (
             <div className="family_view">
-                {this.state.editingPerson === true && <SideDrawer name="Editing..." content={<SideDrawerEditMemberForm/>}/>}
+                {this.state.editingPerson === true && <SideDrawer name="Editing..." editedPerson={this.state.editedPerson} content={<SideDrawerEditMemberForm/>}/>}
                 <div className="family_box">
                     <div className="family_tree">
                         {familyMembers}

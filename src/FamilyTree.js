@@ -55,6 +55,22 @@ class FamilyTree
         this.family = otherTree.family;
     }
 
+    findLowestUnusedFamilyMemberId()
+    {
+        let newId = -1;
+        let idExists = true;
+        while (idExists)
+        {
+            newId++;
+            idExists = false;
+            for(let i = 0; i < this.family.length; i++)
+            {
+                if (newId == this.family[i].id) {idExists = true;}
+            }
+        }
+        return newId;
+    }
+
     static cloneFromOther(otherTree)
     {
         return new FamilyTree(otherTree.treeName, otherTree.creationDate, [...otherTree.family]);
