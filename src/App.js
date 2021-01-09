@@ -27,6 +27,7 @@ class App extends Component
       
       this.handleAddFamMember = this.handleAddFamMember.bind(this);
       this.handleDeleteFamMember = this.handleDeleteFamMember.bind(this);
+      this.handleEditFamMember = this.handleEditFamMember.bind(this);
 
       this.treeHandlers = {
         handleNewTree: this.handleNewTree,
@@ -40,6 +41,7 @@ class App extends Component
       this.familyHandlers = {
         handleAddFamMember: this.handleAddFamMember,
         handleDeleteFamMember: this.handleDeleteFamMember,
+        handleEditFamMember: this.handleEditFamMember,
       };
   }
 
@@ -243,7 +245,22 @@ class App extends Component
 
   handleEditFamMember(personId, replacerPersonObj)
   {
-
+    //edited data should already be validated before it gets here
+    //console.log("handling edit of person with id: " + personId + " (should match this one: "+ replacerPersonObj.id +")");
+    const newFamily = [...this.state.currentTree.family];
+    const i = newFamily.findIndex(item => item.id == personId);
+    if (i >= 0)
+    {
+      newFamily[i] = replacerPersonObj;
+      const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
+      draftTree.family = newFamily;
+      this.setState(
+        {
+          currentTree: draftTree,
+        },
+        () => {this.state.currentTree.save();}
+      );
+    }
   }
 
   handleDeleteFamMember(personId)

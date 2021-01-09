@@ -12,7 +12,10 @@ class FamilyView extends Component
     constructor(props)
     {
         super(props);
-        this.state = {editingPerson: false, editedPerson: null}
+        this.state = {
+            editingPerson: false,
+            editedPersonId: null
+        }
         this.startEdit = this.startEdit.bind(this);
         this.reportDeletionToEdit = this.reportDeletionToEdit.bind(this);
         this.endEdit = this.endEdit.bind(this);
@@ -20,13 +23,12 @@ class FamilyView extends Component
 
     startEdit(personId)
     {
-        const index = this.context.currentTree.family.findIndex(item => item.id == personId);
-        this.setState({editingPerson: true, editedPerson: this.context.currentTree.family[index]});
+        this.setState({editingPerson: true, editedPersonId: personId});
     }
 
     reportDeletionToEdit(personId)
     {
-        if (this.state.editingPerson === true && this.state.editedPerson && personId == this.state.editedPerson.id)
+        if (this.state.editingPerson === true && this.state.editedPersonId != null && personId == this.state.editedPersonId)
         {
             this.endEdit();
         }
@@ -34,7 +36,7 @@ class FamilyView extends Component
 
     endEdit()
     {
-        this.setState({editingPerson: false, editedPerson: null});
+        this.setState({editingPerson: false, editedPersonId: null});
     }
     
     render()
@@ -43,12 +45,19 @@ class FamilyView extends Component
             <FamilyMember key={member.id} person={member} familyHandlers={this.context.familyHandlers} reportDeletionToEdit={this.reportDeletionToEdit} startEdit={this.startEdit}/>
         );
 
+        const editedPersonIndex = this.context.currentTree.family.findIndex(item => item.id == this.state.editedPersonId);
+        const editedPerson = (editedPersonIndex >= 0) ? this.context.currentTree.family[editedPersonIndex] : null;
+
         const sideDrawer = (
             <SideDrawer
                 name="Editing..."
-                editedPerson={this.state.editedPerson}
-                content={<SideDrawerEditMemberForm/>}
-                closeAction={this.endEdit}/>
+                content={
+                    <SideDrawerEditMemberForm
+                        editedPerson={editedPerson}
+                        handleEdit={this.context.familyHandlers.handleEditFamMember}
+                    />}
+                closeAction={this.endEdit}
+            />
         );
 
         return (
