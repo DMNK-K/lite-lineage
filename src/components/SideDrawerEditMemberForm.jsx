@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../App.css';
 import Person from '../Person';
+import SpecialDateInput from './SpecialDateInput';
 
 class EditMemberForm extends Component
 {
@@ -12,6 +13,7 @@ class EditMemberForm extends Component
         this.changeStr = this.changeStr.bind(this);
         this.changeBool = this.changeBool.bind(this);
         this.changeNotes = this.changeNotes.bind(this);
+        this.changeDate = this.changeDate.bind(this);
     }
 
     //there's a bunch of similar methods, might need different processing for different types later
@@ -23,6 +25,10 @@ class EditMemberForm extends Component
         {
             draftPerson[propertyName] = e.target.value;
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
+        }
+        else
+        {
+            console.error("propertyName:" + propertyName + " not recognized as a possible variant, or is not an own property of a Person obj");
         }
     }
 
@@ -42,16 +48,39 @@ class EditMemberForm extends Component
             draftPerson[propertyName] = e.target.value;
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
+        else
+        {
+            console.error("propertyName:" + propertyName + " not recognized as a possible variant, or is not an own property of a Person obj");
+        }
     }
 
     changeBool(e, propertyName)
     {
         const draftPerson = Person.cloneFromOther(this.props.editedPerson);
-        const possibleVariants = ["isDead", "lastName", "secondName"];
+        const possibleVariants = ["isDead", "lastName", "secondName", "useFullDateBirth", "useFullDateDeath", "unsurePreciseYearOfBirth", "unsurePreciseYearOfDeath"];
         if (possibleVariants.includes(propertyName) && draftPerson.hasOwnProperty(propertyName))
         {
-            draftPerson[propertyName] = e.target.value;
+            draftPerson[propertyName] = e.target.checked;
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
+        }
+        else
+        {
+            console.error("propertyName:" + propertyName + " not recognized as a possible variant, or is not an own property of a Person obj");
+        }
+    }
+
+    changeDate(dateObj, propertyName)
+    {
+        const draftPerson = Person.cloneFromOther(this.props.editedPerson);
+        const possibleVariants = ["dateBirth", "dateDeath"];
+        if (possibleVariants.includes(propertyName) && draftPerson.hasOwnProperty(propertyName))
+        {
+            draftPerson[propertyName] = dateObj;
+            this.props.handleEdit(this.props.editedPerson.id, draftPerson);
+        }
+        else
+        {
+            console.error("propertyName:" + propertyName + " not recognized as a possible variant, or is not an own property of a Person obj");
         }
     }
 
@@ -70,24 +99,33 @@ class EditMemberForm extends Component
                     <input value={this.props.editedPerson.lastName} onChange={(e) => this.changeName(e, "lastName")} type="text" name="name_last" className="word_input side_drawer_input"/>
                 </div>
 
+                <SpecialDateInput
+                    date={this.props.editedPerson.dateBirth}
+                    useFull={this.props.editedPerson.useFullDateBirth}
+                    impreciseYear={this.props.editedPerson.unsurePreciseYearOfBirth}
+                    dateOfStr={"birth"}
+                    displayedDate={this.props.editedPerson.getDisplayDateBirth()}
+                    handleChangeDate={this.changeDate}
+                    handleChangeBool={this.changeBool}
+                    propertySuffix={"Birth"}
+                />
+
+                {this.props.editedPerson.isDead && (
+                    <SpecialDateInput
+                        date={this.props.editedPerson.dateDeath}
+                        useFull={this.props.editedPerson.useFullDateDeath}
+                        unsurePreciseYear={this.props.editedPerson.unsurePreciseYearOfDeath}
+                        dateOfStr={"death"}
+                        displayedDate={this.props.editedPerson.getDisplayDateDeath()}
+                        handleChangeDate={this.changeDate}
+                        handleChangeBool={this.changeBool}
+                        propertySuffix={"Death"}
+                    />
+                )}
+
                 <div className="side_drawer_content_section">
-                    <p className="side_drawer_full_line">Date of death:</p>
-                    <label htmlFor="death_day" className="date_input_label">dd:</label>
-                    <input type="number" name="death_day" className="date_input side_drawer_input"/>
-                    <label htmlFor="death_month" className="date_input_label">mm:</label>
-                    <input type="number" name="death_month" className="date_input side_drawer_input"/>
-                    <label htmlFor="death_year" className="date_input_label">yyyy:</label>
-                    <input type="number" name="death_year" className="date_input side_drawer_input"/>
-                    <p className="side_drawer_full_line">Displayed date: {this.props.editedPerson.getDisplayDateDeath()}</p>
-
-                    <label htmlFor="death_date_imprecise" className="checkbox_input_label">Uncertain of exact year:</label>
-                    <input type="checkbox" name="death_date_imprecise" className="checkbox_input side_drawer_input"/>
-                    
-                    <label htmlFor="death_date_full" className="checkbox_input_label">Use full date of death:</label>
-                    <input type="checkbox" name="death_date_full" className="checkbox_input side_drawer_input"/>
-
                     <label htmlFor="is_dead" className="checkbox_input_label">Deceased:</label>
-                    <input value={this.props.editedPerson.isDead} type="checkbox" name="is_dead" className="checkbox_input side_drawer_input"/>
+                    <input checked={this.props.editedPerson.isDead} onChange={(e) => this.changeBool(e, "isDead")} type="checkbox" name="is_dead" className="checkbox_input side_drawer_input"/>
 
                     <label htmlFor="cause_of_death" className="word_input_label">Cause of death:</label>
                     <input value={this.props.editedPerson.causeOfDeath} onChange={(e) => this.changeStr(e, "causeOfDeath")} type="text" name="cause_of_death" className="word_input side_drawer_input"/>

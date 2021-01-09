@@ -15,10 +15,8 @@ class Person
     causeOfDeath = "";
     dateBirth;
     dateDeath;
-    useDayOfBirth = true;
-    useDayOfDeath = true;
-    useMonthOfBirth = true;
-    useMonthOfDeath = true;
+    useFullDateBirth = false;
+    useFullDateDeath = false;
     unsurePreciseYearOfBirth = false;
     unsurePreciseYearOfDeath = false;
 
@@ -79,10 +77,10 @@ class Person
         return displayName;
     }
 
-    getDisplayDate(date, useDay, useMonth, unsureOfYear)
+    getDisplayDate(date, useFull, unsureOfYear)
     {
-        let str = (useDay === true && useMonth === true) ? date.getDate().toString().padStart(2, "0") + "." : "";
-        str += (useMonth === true) ? (date.getMonth() + 1).toString().padStart(2, "0") + "." : "";
+        let str = (useFull === true) ? date.getDate().toString().padStart(2, "0") + "." : "";
+        str += (useFull === true) ? (date.getMonth() + 1).toString().padStart(2, "0") + "." : "";
         let year = date.getFullYear().toString();
         if (unsureOfYear === true)
         {
@@ -93,12 +91,12 @@ class Person
 
     getDisplayDateBirth()
     {
-        return this.getDisplayDate(this.dateBirth, this.useDayOfBirth, this.useMonthOfBirth, this.unsurePreciseYearOfBirth);
+        return this.getDisplayDate(this.dateBirth, this.useFullDateBirth, this.unsurePreciseYearOfBirth);
     }
 
     getDisplayDateDeath()
     {
-        return this.getDisplayDate(this.dateDeath, this.useDayOfDeath, this.useMonthOfDeath, this.unsurePreciseYearOfDeath);
+        return this.getDisplayDate(this.dateDeath, this.useFullDateDeath, this.unsurePreciseYearOfDeath);
     }
 
     static cloneFromOther(otherPerson)
