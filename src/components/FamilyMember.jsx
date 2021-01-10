@@ -29,11 +29,18 @@ class FamilyMember extends Component
         this.props.familyHandlers.handleDeleteFamMember(this.props.person.id);
         this.props.reportDeletionToEdit(this.props.person.id);
     }
+
+    calcCssPosObj()
+    {
+        const top = this.props.person.locationInTreeY * this.props.locationScale;
+        const left = this.props.person.locationInTreeX * this.props.locationScale;
+        return {top: top + "px", left: left + "px"}
+    }
     
     render()
     {
         return (
-            <div className="family_member">
+            <div className="family_member" style={this.calcCssPosObj()}>
                 <div className="family_member_dragger">
                     <img src={IconDrag}/>
                 </div>

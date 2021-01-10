@@ -14,7 +14,8 @@ class FamilyView extends Component
         super(props);
         this.state = {
             editingPerson: false,
-            editedPersonId: null
+            editedPersonId: null,
+            locationScale: 50,
         }
         this.startEdit = this.startEdit.bind(this);
         this.reportDeletionToEdit = this.reportDeletionToEdit.bind(this);
@@ -42,7 +43,14 @@ class FamilyView extends Component
     render()
     {
         const familyMembers = this.context.currentTree.family.map((member) =>
-            <FamilyMember key={member.id} person={member} familyHandlers={this.context.familyHandlers} reportDeletionToEdit={this.reportDeletionToEdit} startEdit={this.startEdit}/>
+            <FamilyMember
+                key={member.id}
+                person={member}
+                familyHandlers={this.context.familyHandlers}
+                reportDeletionToEdit={this.reportDeletionToEdit}
+                startEdit={this.startEdit}
+                locationScale={this.state.locationScale}
+            />
         );
 
         const editedPersonIndex = this.context.currentTree.family.findIndex(item => item.id == this.state.editedPersonId);
@@ -63,10 +71,8 @@ class FamilyView extends Component
         return (
             <div className="family_view">
                 {this.state.editingPerson === true && sideDrawer}
-                <div className="family_box">
-                    <div className="family_tree">
-                        {familyMembers}
-                    </div>
+                <div className="family_tree">
+                    {familyMembers}
                 </div>
             </div>
         );

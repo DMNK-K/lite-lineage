@@ -265,22 +265,23 @@ h2
 {
   position: relative;
   height:100%;
+  /* overflow:auto; */
 }
 
 /* Side drawer of family view */
 .side_drawer
 {
-  position: absolute;
-  /* display: hidden; */
+  position: fixed;
   width:27%;
   height: 100%;
   background-color: var(--color_primary);
   color: var(--color_text_prim);
+  z-index: 99999;
 }
 
 .side_drawer_bar
 {
-  height:4vh;
+  height:5%;
   font-size: 0;
   background-color: rgba(0, 0, 0, 0.05);
 }
@@ -291,6 +292,8 @@ h2
   padding-left: 2.5%;
   padding-right: 2.5%;
   line-height: 3vh;
+  height:95%;
+  overflow-y:auto;
 }
 
 .side_drawer_content_section
@@ -376,22 +379,20 @@ h3
   resize: none;
 }
 
-/* Family box stuff */
-#family_box
+/* Family tree stuff */
+.family_tree
 {
-  position: absolute;
-}
-
-#family_tree
-{
-
+  height:100%;
+  position:relative;
+  overflow:auto;
+  padding:20px;
 }
 
 .family_member
 {
   position: absolute;
-  top:300px;
-  left:700px;
+  top:0px;
+  left:0px;
   width:300px;
   height:150px;
   background-color: var(--color_secondary);
