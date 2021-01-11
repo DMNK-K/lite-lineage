@@ -85,6 +85,52 @@ class FamilyTree
     {
         return this.family.length;
     }
+
+    findFreeLocationUpwards(idOfRefPerson, marginX, marginY)
+    {
+        const i = this.family.findIndex(item => item.id == idOfRefPerson);
+        if (i < 0) {return null;}
+        const refPerson =  this.family[i];
+        const searchRangeY = 100 + marginY;
+        for(let i = marginY + 1; i < searchRangeY; i++)
+        {
+            if (this.isLocationFree(refPerson.locationInTreeX, refPerson.locationInTreeY - i, marginX, marginY))
+            {
+                return {x: refPerson.locationInTreeX, y: refPerson.locationInTreeY - i};
+            }
+            //now check a bit to the left and right
+            if (this.isLocationFree(refPerson.locationInTreeX - 2, refPerson.locationInTreeY - i, marginX, marginY))
+            {
+                return {x: refPerson.locationInTreeX - 2, y: refPerson.locationInTreeY - i};
+            }
+            if (this.isLocationFree(refPerson.locationInTreeX + 2, refPerson.locationInTreeY - i, marginX, marginY))
+            {
+                return {x: refPerson.locationInTreeX + 2, y: refPerson.locationInTreeY - i};
+            }
+        }
+        return {x: 0, y: 0}; //fallback
+    }
+
+    findFreeLocationDownwards(idOfRefPerson, marginX, marginY)
+    {
+
+    }
+
+    isLocationFree(x, y, marginX, marginY)
+    {
+        for(let i = 0; i < this.family.length; i++)
+        {
+            if (this.family[i].locationInTreeX >= x - marginX && this.family[i].locationInTreeX <= x + marginX)
+            {
+                return false;
+            }
+            if (this.family[i].locationInTreeY >= y - marginY && this.family[i].locationInTreeY <= y + marginY)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 }
 
 export default FamilyTree;

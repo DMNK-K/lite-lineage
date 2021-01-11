@@ -1,8 +1,8 @@
 class Person
 {
     id;
-    locationInTreeX;
-    locationInTreeY;
+    locationInTreeX = 0;
+    locationInTreeY = 0;
     firstName = "";
     secondName = "";
     lastName = "";

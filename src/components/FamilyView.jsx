@@ -4,6 +4,8 @@ import FamilyMember from './FamilyMember';
 import SideDrawerEditMemberForm from './SideDrawerEditMemberForm';
 import '../App.css';
 import TreeContext from '../TreeContext';
+import Person from '../Person';
+import Helpers from '../Helpers';
 
 class FamilyView extends Component
 {
@@ -15,11 +17,16 @@ class FamilyView extends Component
         this.state = {
             editingPerson: false,
             editedPersonId: null,
-            locationScale: 50,
+            locationScale: 75,
+            isDragging: false,
+            draggedId: null,
         }
         this.startEdit = this.startEdit.bind(this);
         this.reportDeletionToEdit = this.reportDeletionToEdit.bind(this);
         this.endEdit = this.endEdit.bind(this);
+        this.startDrag = this.startDrag.bind(this);
+        this.tryDrag = this.tryDrag.bind(this);
+        this.endDrag = this.endDrag.bind(this);
     }
 
     startEdit(personId)
@@ -39,6 +46,43 @@ class FamilyView extends Component
     {
         this.setState({editingPerson: false, editedPersonId: null});
     }
+
+    startDrag(personId)
+    {
+        console.log("starting drag");
+        this.setState({isDragging: true, draggedId: personId});
+    }
+
+    tryDrag(e, referenceElement)
+    {
+        //this was the only solution that calculated coords correctly, but it needs a ref element passed somehow
+        const offset = Helpers.getRelativeCoords(e.nativeEvent, referenceElement); 
+        console.log("dragging "+ this.state.draggedId +" to [" + offset.x + ", " + offset.y + "]");
+        if (this.state.isDragging === true && this.state.draggedId != null && this.state.draggedId >= 0)
+        {
+            const newLocation = this.calcLocationFromOffset(offset);
+            const i = this.context.currentTree.family.findIndex(item => item.id == this.state.draggedId);
+            const draftPerson = Person.cloneFromOther(this.context.currentTree.family[i]);
+            console.log("new location: [" + newLocation.x + ", " + newLocation.y + "]");
+            draftPerson.locationInTreeX = newLocation.x;
+            draftPerson.locationInTreeY = newLocation.y;
+            this.context.familyHandlers.handleEditFamMember(this.state.draggedId, draftPerson);
+        }
+    }
+
+    endDrag()
+    {
+        console.log("ending drag");
+        this.setState({isDragging: false, draggedId: null});
+    }
+
+    calcLocationFromOffset(offset)
+    {
+        return {
+            x: Math.round(offset.x / this.state.locationScale),
+            y: Math.round(offset.y / this.state.locationScale)
+        };
+    }
     
     render()
     {
@@ -50,6 +94,8 @@ class FamilyView extends Component
                 reportDeletionToEdit={this.reportDeletionToEdit}
                 startEdit={this.startEdit}
                 locationScale={this.state.locationScale}
+                startDrag={this.startDrag}
+                endDrag={this.endDrag}
             />
         );
 
@@ -71,7 +117,7 @@ class FamilyView extends Component
         return (
             <div className="family_view">
                 {this.state.editingPerson === true && sideDrawer}
-                <div className="family_tree">
+                <div id="family_tree" className="family_tree" onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, document.getElementById("family_tree")) : undefined}>
                     {familyMembers}
                 </div>
             </div>

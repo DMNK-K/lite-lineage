@@ -385,7 +385,6 @@ h3
   height:100%;
   position:relative;
   overflow:auto;
-  padding:20px;
 }
 
 .family_member
@@ -425,6 +424,7 @@ h3
   margin-top:3px;
   filter:invert();
   opacity:0.3;
+  pointer-events: none;
 }
 
 .family_member_task_button

@@ -41,7 +41,7 @@ class FamilyMember extends Component
     {
         return (
             <div className="family_member" style={this.calcCssPosObj()}>
-                <div className="family_member_dragger">
+                <div className="family_member_dragger" onMouseDown={this.props.startDrag.bind(this, this.props.person.id)} onMouseUp={this.props.endDrag}>
                     <img src={IconDrag}/>
                 </div>
                 <div className="family_member_bar">
