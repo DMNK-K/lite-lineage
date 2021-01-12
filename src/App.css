@@ -395,6 +395,11 @@ h3
   width:300px;
   height:150px;
   background-color: var(--color_secondary);
+
+  -webkit-user-select: none; /* Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
 }
 
 .family_member_bar

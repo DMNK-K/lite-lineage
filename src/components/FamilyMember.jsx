@@ -41,17 +41,17 @@ class FamilyMember extends Component
     {
         return (
             <div className="family_member" style={this.calcCssPosObj()}>
-                <div className="family_member_dragger" onMouseDown={this.props.startDrag.bind(this, this.props.person.id)} onMouseUp={this.props.endDrag}>
+                <div className="family_member_dragger" onMouseDown={this.props.startDrag.bind(this, this.props.person.id)}>
                     <img src={IconDrag}/>
                 </div>
                 <div className="family_member_bar">
                     <button className="family_member_task_button" onClick={this.props.startEdit.bind(this, this.props.person.id)}>
                         <img src={IconEdit} className="family_member_task_icon"/>
                     </button>
-                    <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "child", 0, 0, this.props.person.id)}>
+                    <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "child", this.props.person.id)}>
                         ADD CHILD
                     </button>
-                    <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "parent", 0, 0, this.props.person.id)}>
+                    <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "parent", this.props.person.id)}>
                         ADD PARENT
                     </button>
                     <button className="family_member_task_button" onClick={this.onDelete.bind(this, this.props.person.id)}>

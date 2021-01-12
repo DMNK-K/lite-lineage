@@ -88,43 +88,97 @@ class FamilyTree
 
     findFreeLocationUpwards(idOfRefPerson, marginX, marginY)
     {
+        //upwards dir is -1 since coords are counted from top
+        return this.findFreeLocationVertically(idOfRefPerson, marginX, marginY, -1, true, marginX + 1);
+    }
+
+    findFreeLocationDownwards(idOfRefPerson, marginX, marginY)
+    {
+        return this.findFreeLocationVertically(idOfRefPerson, marginX, marginY, 1, true, marginX + 1);
+    }
+
+    findFreeLocationVertically(idOfRefPerson, marginX, marginY, dir, checkPerifery, periferyRange)
+    {
         const i = this.family.findIndex(item => item.id == idOfRefPerson);
         if (i < 0) {return null;}
         const refPerson =  this.family[i];
         const searchRangeY = 100 + marginY;
         for(let i = marginY + 1; i < searchRangeY; i++)
         {
-            if (this.isLocationFree(refPerson.locationInTreeX, refPerson.locationInTreeY - i, marginX, marginY))
+            const y = (dir > 0) ? refPerson.locationInTreeY + i : refPerson.locationInTreeY - i;
+            if (this.isLocationFree(refPerson.locationInTreeX, y, marginX, marginY))
             {
-                return {x: refPerson.locationInTreeX, y: refPerson.locationInTreeY - i};
+                return {x: refPerson.locationInTreeX, y: y};
             }
-            //now check a bit to the left and right
-            if (this.isLocationFree(refPerson.locationInTreeX - 2, refPerson.locationInTreeY - i, marginX, marginY))
+            //now check perifery a bit to left and right
+            if (checkPerifery)
             {
-                return {x: refPerson.locationInTreeX - 2, y: refPerson.locationInTreeY - i};
-            }
-            if (this.isLocationFree(refPerson.locationInTreeX + 2, refPerson.locationInTreeY - i, marginX, marginY))
-            {
-                return {x: refPerson.locationInTreeX + 2, y: refPerson.locationInTreeY - i};
+                if (this.isLocationFree(refPerson.locationInTreeX - periferyRange, y, marginX, marginY))
+                {
+                    return {x: refPerson.locationInTreeX - periferyRange, y: y};
+                }
+                if (this.isLocationFree(refPerson.locationInTreeX + periferyRange, y, marginX, marginY))
+                {
+                    return {x: refPerson.locationInTreeX + periferyRange, y: y};
+                }
             }
         }
         return {x: 0, y: 0}; //fallback
     }
 
-    findFreeLocationDownwards(idOfRefPerson, marginX, marginY)
+    findFreeLocationNearby(idOfRefPerson, marginX, marginY, rangeX, rangeY)
     {
-
+        //searches first to the sides, then moves up or down, first favouring down
+        const i = this.family.findIndex(item => item.id == idOfRefPerson);
+        if (i < 0) {return null;}
+        const refPerson =  this.family[i];
+        const searchRangeX = rangeX + marginX;
+        const searchRangeY = rangeY + marginY;
+        let x;
+        //to the sides:
+        for(let i = marginX + 1; i < searchRangeX; i++)
+        {
+            x = refPerson.locationInTreeX - i;
+            if (this.isLocationFree(x, refPerson.locationInTreeY, marginX, marginY))
+            {
+                return {x: x, y: refPerson.locationInTreeY};
+            }
+            x = refPerson.locationInTreeX + i;
+            if (this.isLocationFree(x, refPerson.locationInTreeY, marginX, marginY))
+            {
+                return {x: x, y: refPerson.locationInTreeY};
+            }
+        }
+        //up and down alternating, with down first, to the sides, proioritizing left
+        let y;
+        for(let i = marginY + 1; i < searchRangeY; i++)
+        {
+            for(let q = marginX + 1; q < searchRangeX; q++)
+            {
+                y = refPerson.locationInTreeY + i;
+                x = refPerson.locationInTreeX - q;
+                if (this.isLocationFree(x, y, marginX, marginY)) { return {x: x, y: y};}
+                x = refPerson.locationInTreeX + q;
+                if (this.isLocationFree(x, y, marginX, marginY)) { return {x: x, y: y};}
+                y = refPerson.locationInTreeY - i;
+                x = refPerson.locationInTreeX - q;
+                if (this.isLocationFree(x, y, marginX, marginY)) { return {x: x, y: y};}
+                x = refPerson.locationInTreeX + q;
+                if (this.isLocationFree(x, y, marginX, marginY)) { return {x: x, y: y};}
+            }
+        }
+        return {x: 0, y: 0}; //fallback
     }
 
     isLocationFree(x, y, marginX, marginY)
     {
+        const minX = x - marginX;
+        const minY = y - marginY;
+        const maxX = x + marginX;
+        const maxY = y + marginY;
         for(let i = 0; i < this.family.length; i++)
         {
-            if (this.family[i].locationInTreeX >= x - marginX && this.family[i].locationInTreeX <= x + marginX)
-            {
-                return false;
-            }
-            if (this.family[i].locationInTreeY >= y - marginY && this.family[i].locationInTreeY <= y + marginY)
+            if (this.family[i].locationInTreeX >= minX && this.family[i].locationInTreeX <= maxX && this.family[i].locationInTreeY >= minY && this.family[i].locationInTreeY <= maxY)
             {
                 return false;
             }

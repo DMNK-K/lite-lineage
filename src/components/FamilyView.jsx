@@ -49,21 +49,31 @@ class FamilyView extends Component
 
     startDrag(personId)
     {
-        console.log("starting drag");
+        // console.log("starting drag");
         this.setState({isDragging: true, draggedId: personId});
+    }
+
+    componentDidMount()
+    {
+        window.addEventListener("mouseup", this.endDrag);
+    }
+
+    componentWillUnmount()
+    {
+        window.removeEventListener("mouseup", this.endDrag);
     }
 
     tryDrag(e, referenceElement)
     {
         //this was the only solution that calculated coords correctly, but it needs a ref element passed somehow
-        const offset = Helpers.getRelativeCoords(e.nativeEvent, referenceElement); 
-        console.log("dragging "+ this.state.draggedId +" to [" + offset.x + ", " + offset.y + "]");
+        const offset = Helpers.getRelativeCoords(e.nativeEvent, referenceElement);
+        // console.log("dragging "+ this.state.draggedId +" to [" + offset.x + ", " + offset.y + "]");
         if (this.state.isDragging === true && this.state.draggedId != null && this.state.draggedId >= 0)
         {
             const newLocation = this.calcLocationFromOffset(offset);
             const i = this.context.currentTree.family.findIndex(item => item.id == this.state.draggedId);
             const draftPerson = Person.cloneFromOther(this.context.currentTree.family[i]);
-            console.log("new location: [" + newLocation.x + ", " + newLocation.y + "]");
+            // console.log("new location: [" + newLocation.x + ", " + newLocation.y + "]");
             draftPerson.locationInTreeX = newLocation.x;
             draftPerson.locationInTreeY = newLocation.y;
             this.context.familyHandlers.handleEditFamMember(this.state.draggedId, draftPerson);
@@ -72,7 +82,7 @@ class FamilyView extends Component
 
     endDrag()
     {
-        console.log("ending drag");
+        // console.log("ending drag");
         this.setState({isDragging: false, draggedId: null});
     }
 
@@ -95,7 +105,6 @@ class FamilyView extends Component
                 startEdit={this.startEdit}
                 locationScale={this.state.locationScale}
                 startDrag={this.startDrag}
-                endDrag={this.endDrag}
             />
         );
 

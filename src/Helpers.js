@@ -34,8 +34,8 @@ const helpers = {
         };
       
         const offset ={
-          left: referenceElement.offsetLeft,
-          top: referenceElement.offsetTop
+          left: referenceElement.offsetLeft - referenceElement.scrollLeft,
+          top: referenceElement.offsetTop - referenceElement.scrollTop
         };
       
         let reference = referenceElement.offsetParent;

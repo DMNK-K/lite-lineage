@@ -214,7 +214,7 @@ class App extends Component
     }
   }
 
-  handleAddFamMember(mode = "default", locationX, locationY, anchorPersonId)
+  handleAddFamMember(mode = "default", anchorPersonId)
   {
     if (!this.state.currentTree){return;}
     const viableModes = ["default", "parent", "child"];
@@ -222,18 +222,26 @@ class App extends Component
     {
       const newId = this.state.currentTree.findLowestUnusedFamilyMemberId();  
       const newPerson = new Person(newId);
-      newPerson.locationInTreeX = locationX;
-      newPerson.locationInTreeY = locationY;
       if (anchorPersonId !== undefined && anchorPersonId >= 0)
       {
+        let loc;
         if(mode === "parent")
         {
           newPerson.childrenIds.push(anchorPersonId);
+          loc = this.state.currentTree.findFreeLocationUpwards(anchorPersonId, 4, 2);
         }
         else if(mode === "child")
         {
           newPerson.parentId0 = anchorPersonId;
+          loc = this.state.currentTree.findFreeLocationDownwards(anchorPersonId, 4, 2);
         }
+        else
+        {
+          loc = this.state.currentTree.findFreeLocationNearby(anchorPersonId, 4, 2, 100, 100);
+        }
+        console.log(loc);
+        newPerson.locationInTreeX = loc.x;
+        newPerson.locationInTreeY = loc.y;
       }
       this.addFamMember(newPerson);
     }

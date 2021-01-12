@@ -16,7 +16,7 @@ class NavInFamily extends Component
         return (
             <nav className="main_nav">
                 {/* <button className="header_button">EXPORT</button> */}
-                <button className="header_button" onClick={this.context.familyHandlers.handleAddFamMember.bind(this, "default", 0, 0)}>
+                <button className="header_button" onClick={this.context.familyHandlers.handleAddFamMember.bind(this, "default")}>
                     NEW PERSON
                 </button>
                 {/* <button className="header_button">HIGHLIGHT: OFF</button> */}
