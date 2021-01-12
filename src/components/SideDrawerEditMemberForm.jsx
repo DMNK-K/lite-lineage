@@ -84,6 +84,46 @@ class EditMemberForm extends Component
         }
     }
 
+    changeParents(e, parentIndex, newParentId)
+    {
+        const draftPerson = Person.cloneFromOther(this.props.editedPerson);
+        if (parentIndex == 0 || parentIndex == 1)
+        {
+            //first if there is a parent already in that index, remove person as a child since Person class has both childrenIds array and 2 slots for parent
+            let i;
+            const oldParentId = this.editedPerson["parentId" + parentIndex];
+            if (oldParentId)
+            {
+                i = this.props.family.findIndex(item => item.id == oldParentId);
+                if (i >= 0)
+                {
+                    const draftOldParent = Person.cloneFromOther(this.props.family[i]);
+                    const q = draftOldParent.childrenIds.findIndex(item => item == this.editedPerson.id);
+                    if (q >= 0)
+                    {
+                        draftOldParent.childrenIds.splice(q, 1);
+                        this.props.handleEdit(oldParentId, draftOldParent);
+                    }
+                }
+            }
+            //now assign parent, but because of Person class having childrenIds too, edit that parent as well
+            draftPerson["parentId" + parentIndex] = newParentId;
+            this.props.handleEdit(this.props.editedPerson.id, draftPerson);
+
+            i = this.props.family.findIndex(item => item.id == newParentId);
+            if (i >= 0)
+            {
+                const draftNewParent = Person.cloneFromOther(this.props.family[i]);
+                draftNewParent.childrenIds.push(this.props.editedPerson.id);    
+                this.props.handleEdit(newParentId, draftNewParent);
+            }
+        }
+        else
+        {
+            console.error("invalid parentIndex, should be 0 or 1: " + parentIndex);
+        }
+    }
+
     render()
     {
         return (

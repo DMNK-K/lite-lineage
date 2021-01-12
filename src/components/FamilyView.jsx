@@ -6,6 +6,7 @@ import '../App.css';
 import TreeContext from '../TreeContext';
 import Person from '../Person';
 import Helpers from '../Helpers';
+import Line from './Line';
 
 class FamilyView extends Component
 {
@@ -108,6 +109,33 @@ class FamilyView extends Component
             />
         );
 
+        //finding people on both ends of lines using children ids
+        const lineEndMembers = [];
+        for (let i = 0; i < this.context.currentTree.family.length; i++)
+        {
+            const a = this.context.currentTree.family[i];
+            for (let q = 0; q < a.childrenIds.length; q++)
+            {
+                const index = this.context.currentTree.family.findIndex(item => item.id == a.childrenIds[q]);
+                if (index >= 0)
+                {
+                    lineEndMembers.push({
+                        a: a,
+                        b: this.context.currentTree.family[index]
+                    });
+                }
+            }
+        }
+
+        const lines = lineEndMembers.map((lineEnds) =>
+            <Line
+                key={lineEnds.a.id + "-" + lineEnds.b.id}
+                personA={lineEnds.a}
+                personB={lineEnds.b}
+                locationScale={this.state.locationScale}
+            />
+        );
+
         const editedPersonIndex = this.context.currentTree.family.findIndex(item => item.id == this.state.editedPersonId);
         const editedPerson = (editedPersonIndex >= 0) ? this.context.currentTree.family[editedPersonIndex] : null;
 
@@ -118,6 +146,7 @@ class FamilyView extends Component
                     <SideDrawerEditMemberForm
                         editedPerson={editedPerson}
                         handleEdit={this.context.familyHandlers.handleEditFamMember}
+                        family={this.context.currentTree.family}
                     />}
                 closeAction={this.endEdit}
             />
@@ -128,6 +157,7 @@ class FamilyView extends Component
                 {this.state.editingPerson === true && sideDrawer}
                 <div id="family_tree" className="family_tree" onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, document.getElementById("family_tree")) : undefined}>
                     {familyMembers}
+                    {lines}
                 </div>
             </div>
         );
