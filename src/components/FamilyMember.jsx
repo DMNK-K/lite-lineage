@@ -40,7 +40,7 @@ class FamilyMember extends Component
     render()
     {
         return (
-            <div className="family_member" style={this.calcCssPosObj()}>
+            <div className={"family_member family_member_zoom_" + this.props.zoomLvl} style={this.calcCssPosObj()}>
                 <div className="family_member_dragger" onMouseDown={this.props.startDrag.bind(this, this.props.person.id)}>
                     <img src={IconDrag}/>
                 </div>

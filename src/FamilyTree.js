@@ -81,11 +81,6 @@ class FamilyTree
         localStorage.setItem(this.treeName, JSON.stringify(this));
     }
 
-    getNumberOfNodes()
-    {
-        return this.family.length;
-    }
-
     findFreeLocationUpwards(idOfRefPerson, marginX, marginY)
     {
         //upwards dir is -1 since coords are counted from top
@@ -184,6 +179,22 @@ class FamilyTree
             }
         }
         return true;
+    }
+
+    /**
+     * Get maximal locations of family members in this tree, both in x and y axis. Can be stretched by overhead.
+     */
+    getBounds(overheadX = 0, overheadY = 0)
+    {
+        const bounds = {x: 0, y: 0};
+        for(let i = 0; i < this.family.length; i++)
+        {
+            if (this.family[i].locationInTreeX > bounds.x) {bounds.x = this.family[i].locationInTreeX;}
+            if (this.family[i].locationInTreeY > bounds.y) {bounds.y = this.family[i].locationInTreeY;}
+        }
+        bounds.x += overheadX;
+        bounds.y += overheadY;
+        return bounds;
     }
 }
 

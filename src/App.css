@@ -379,6 +379,31 @@ h3
   resize: none;
 }
 
+/* Zooming stuff */
+
+.zoom_wrapper
+{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  bottom: 50%;
+  right:0;
+  z-index: 999;
+}
+
+.zoom_wrapper button
+{
+  width:60px;
+  height:60px;
+  margin-right:30px;
+}
+
+.zoom_wrapper button:disabled
+{
+  background-color: rgb(0, 0, 0, 0.1);
+}
+
 /* Family tree stuff */
 .family_tree
 {
@@ -392,8 +417,6 @@ h3
   position: absolute;
   top:0px;
   left:0px;
-  width:300px;
-  height:150px;
   background-color: var(--color_secondary);
 
   -webkit-user-select: none; /* Safari */        
@@ -402,11 +425,55 @@ h3
   user-select: none; /* Standard */
 }
 
+/*  These are used for in-app zooming:
+    It works, because all the children of .family_member use values for size
+    relative to the size of the family member, so just by swapping this class
+    inside the app, you scale all the relevant stuff, without doing it through
+    inline styles, although it would work too.
+*/
+
+.family_member_zoom_0
+{
+  width: 80px;
+  height: 40px;
+  font-size: 6px;
+}
+
+.family_member_zoom_1
+{
+  width: 120px;
+  height: 60px;
+  font-size: 9px;
+}
+
+.family_member_zoom_2
+{
+  width: 160px;
+  height: 80px;
+  font-size: 12px;
+}
+
+.family_member_zoom_3
+{
+  width: 240px;
+  height: 120px;
+  font-size: 18px;
+}
+
+.family_member_zoom_4
+{
+  width: 320px;
+  height: 160px;
+  font-size: 24px;
+}
+
 .family_member_bar
 {
-  height:20px;
-  text-align: right;
-  font-size: 0;
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  height:14%;
+  font-size:inherit;
   /* vertical-align: top; */
 }
 
@@ -415,16 +482,17 @@ h3
   position: absolute;
   top:0;
   left:0;
-  height:30px;
-  width:30px;
+  height:20%;
+  /* this makes it square since the whole fam member is in proportions of 2:1 */
+  width:10%; 
   cursor:move;
   /* border:1px solid green; */
 }
 
 .family_member_dragger img
 {
-  width:25px;
-  height:25px;
+  width:82%;
+  height:82%;
   margin-left:3px;
   margin-top:3px;
   filter:invert();
@@ -435,10 +503,10 @@ h3
 .family_member_task_button
 {
   display: inline-block;
-  height:20px;
-  min-width:20px;
+  height:100%;
+  min-width:6.66%;
   vertical-align: middle;
-  font-size: 12px;
+  font-size: 55%;
   margin:0;
   background: none;
   padding:0;
@@ -446,13 +514,13 @@ h3
 
 .family_member_task_button_with_text
 {
-  padding-left: 8px;
-  padding-right:8px;
+  padding-left: 2.5%;
+  padding-right: 2.5%;
 }
 
 .family_member_task_icon
 {
-  height:16px;
+  height:80%;
   width:auto;
   filter:invert();
   opacity: 0.9;
@@ -461,7 +529,7 @@ h3
 .family_member_icon
 {
   height:14px;
-  margin-right:6px;
+  margin-right:2%;
   width:auto;
   filter:invert();
   opacity: 0.9;
@@ -472,8 +540,8 @@ h3
   position: absolute;
   bottom:0;
   width:100%;
-  height:20px;
-  font-size:12px;
+  height:14%;
+  font-size:55%;
 }
 
 .family_member_extended
@@ -489,7 +557,7 @@ h3
   display: flex;
   justify-content: center;
   align-items: center; 
-  height:64px;
+  height:42.5%;
   position: relative;
   /* border:1px solid yellow; */
 }
@@ -497,7 +565,7 @@ h3
 .family_member_name
 {
   color:var(--color_text_prim);
-  font-size:20px;
+  font-size:100%;
   text-align:center;
   width:100%;
   padding-left: 3%;
@@ -508,5 +576,14 @@ h3
 {
   color:var(--color_text_sec);
   text-align:center;
-  font-size:14px;
+  font-size:70%;
+}
+
+/* line rendering */
+
+.line_renderer
+{
+  position: absolute;
+  top:0;
+  left:0;
 }

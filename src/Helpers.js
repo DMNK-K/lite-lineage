@@ -19,6 +19,10 @@ const helpers = {
         return monthIntZeroBased >= 0 && monthIntZeroBased < 12 && dayInt > 0 && dayInt <= maxDay;
     },
 
+    /**
+     * Force a value to be between min and max.
+     * @param {Number} n, @param {Number} min, @param {Number} max
+     */
     clamp(n, min, max)
     {
         if (n < min){return min;}

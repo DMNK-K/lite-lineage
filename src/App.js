@@ -209,7 +209,7 @@ class App extends Component
         {
           currentTree: draftTree,
         },
-        () => {this.state.currentTree.save();}
+        () => {this.state.currentTree.save(); console.log(this.state.currentTree.family.length);}
       );
     }
   }

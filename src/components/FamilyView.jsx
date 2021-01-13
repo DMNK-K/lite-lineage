@@ -6,11 +6,22 @@ import '../App.css';
 import TreeContext from '../TreeContext';
 import Person from '../Person';
 import Helpers from '../Helpers';
-import Line from './Line';
+import ConnectionRenderer from './ConnectionRenderer';
+import FamilyConnection from './FamilyConnection';
 
 class FamilyView extends Component
 {
     static contextType = TreeContext;
+    #zoomMin = 0;
+    #zoomMax = 4;
+    #locationScalesByZoom = [20, 30, 40, 60, 80];
+    #lineCenteringOffsetByZoom = [
+        {x: 40, y: 20},
+        {x: 60, y: 30},
+        {x: 80, y: 40},
+        {x: 120, y: 60},
+        {x: 160, y: 80}
+    ];
 
     constructor(props)
     {
@@ -18,9 +29,12 @@ class FamilyView extends Component
         this.state = {
             editingPerson: false,
             editedPersonId: null,
-            locationScale: 75,
+            zoomLvl: 2,
+            locationScale: 40,
+            stretcherOverhead: {x: 7, y: 5},
             isDragging: false,
             draggedId: null,
+            lineCenteringOffset: {x: 80, y: 40},
         }
         this.startEdit = this.startEdit.bind(this);
         this.reportDeletionToEdit = this.reportDeletionToEdit.bind(this);
@@ -28,6 +42,7 @@ class FamilyView extends Component
         this.startDrag = this.startDrag.bind(this);
         this.tryDrag = this.tryDrag.bind(this);
         this.endDrag = this.endDrag.bind(this);
+        this.zoom = this.zoom.bind(this);
     }
 
     startEdit(personId)
@@ -94,6 +109,30 @@ class FamilyView extends Component
             y: Math.round(offset.y / this.state.locationScale)
         };
     }
+
+    calcCssSizeOfConnectionRenderer()
+    {
+        //bounds of the tree incremented by 2 in both axis, so the line renderer also acts as a stretcher
+        //for the whole area of the tree
+        const bounds = this.context.currentTree.getBounds(this.state.stretcherOverhead.x, this.state.stretcherOverhead.y);
+        return {
+            width: (bounds.x * this.state.locationScale) + "px",
+            height: (bounds.y * this.state.locationScale) + "px"
+        };
+    }
+
+    zoom(dir)
+    {
+        if (dir == 0){return;}
+        dir = (dir > 0) ? 1 : -1;
+        this.setState((prevState, props) => (
+            {
+                zoomLvl: prevState.zoomLvl + dir,
+                locationScale: this.#locationScalesByZoom[prevState.zoomLvl + dir],
+                lineCenteringOffset: this.#lineCenteringOffsetByZoom[prevState.zoomLvl + dir]
+            }
+        ));
+    }
     
     render()
     {
@@ -105,6 +144,7 @@ class FamilyView extends Component
                 reportDeletionToEdit={this.reportDeletionToEdit}
                 startEdit={this.startEdit}
                 locationScale={this.state.locationScale}
+                zoomLvl={this.state.zoomLvl}
                 startDrag={this.startDrag}
             />
         );
@@ -127,12 +167,13 @@ class FamilyView extends Component
             }
         }
 
-        const lines = lineEndMembers.map((lineEnds) =>
-            <Line
+        const connections = lineEndMembers.map((lineEnds) =>
+            <FamilyConnection
                 key={lineEnds.a.id + "-" + lineEnds.b.id}
                 personA={lineEnds.a}
                 personB={lineEnds.b}
                 locationScale={this.state.locationScale}
+                lineCenteringOffset={this.state.lineCenteringOffset}
             />
         );
 
@@ -155,9 +196,15 @@ class FamilyView extends Component
         return (
             <div className="family_view">
                 {this.state.editingPerson === true && sideDrawer}
+                <div className="zoom_wrapper">
+                    <button onClick={this.zoom.bind(this, 1)} disabled={this.state.zoomLvl == this.#zoomMax}>+</button>
+                    <button onClick={this.zoom.bind(this, -1)} disabled={this.state.zoomLvl == this.#zoomMin}>-</button>
+                </div>
                 <div id="family_tree" className="family_tree" onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, document.getElementById("family_tree")) : undefined}>
                     {familyMembers}
-                    {lines}
+                    <ConnectionRenderer style={this.calcCssSizeOfConnectionRenderer()}>
+                        {connections}
+                    </ConnectionRenderer>
                 </div>
             </div>
         );

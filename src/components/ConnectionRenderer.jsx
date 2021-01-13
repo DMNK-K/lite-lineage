@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
 
-class Line extends Component
+class ConnectionRenderer extends Component
 {
     constructor(props)
     {
         super(props);
-        //this.state = {}
     }
     
     render()
     {
-        
-
         return (
-            <svg/>
+            <svg style={this.props.style}>{this.props.children}</svg>
         );
     }
 }
 
-export default Line;
+export default ConnectionRenderer;
