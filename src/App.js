@@ -129,22 +129,25 @@ class App extends Component
       return;
     }
 
-    let newTreeNames = [...this.state.treeNames];
+    const newTreeNames = [...this.state.treeNames];
     const i = newTreeNames.indexOf(oldTreeName);
-    newTreeNames[i] = newTreeName;
+    if (i >= 0)
+    {
+      newTreeNames[i] = newTreeName;
 
-    let copyOfCurrentTree = {...this.state.currentTree};
-    copyOfCurrentTree.treeName = newTreeName;
-    this.setState(
-      {
-        treeNames: newTreeNames,
-        currentTree: copyOfCurrentTree
-      },
-      () => {
-        this.saveTreeNames();
-        this.state.currentTree.save();
-      }
-    );
+      const copyOfCurrentTree = FamilyTree.cloneFromOther(this.state.currentTree);
+      copyOfCurrentTree.treeName = newTreeName;
+      this.setState(
+        {
+          treeNames: newTreeNames,
+          currentTree: copyOfCurrentTree
+        },
+        () => {
+          this.saveTreeNames();
+          this.state.currentTree.save();
+        }
+      );
+    }
   }
 
   handleOpenTree(treeName)

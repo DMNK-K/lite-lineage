@@ -88,10 +88,12 @@ p
 .main_header
 {
   position: fixed;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
   width:100%;
   height:6%;
   top:0;
-  font-size: 0;/*a fix for whitespace breaking the fit of inline-block elems*/
   background-color: var(--color_secondary);
   z-index: 3;
 }
@@ -117,7 +119,6 @@ p
 
 h1
 {
-  display: inline-block;
   font-family: var(--font_title);
   font-size:3vh;
   line-height: 6vh;
@@ -125,15 +126,12 @@ h1
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 1.5%;
-  width:25%;
 }
 
 .main_nav
 {
-  display:inline-block;
-  vertical-align: top;
-  text-align: right;
-  width:73.5%;
+  display:flex;
+  justify-content: flex-end;
   height:100%;
 }
 
@@ -141,13 +139,32 @@ h1
 {
   display: inline-block;
   height:100%;
-  min-width: 10%;
+  min-width: 7vw;
   background-color: var(--color_tertiary);
 }
 
 .header_button:hover
 {
   background-color: var(--color_secondary);
+}
+
+.header_tree_title_form
+{
+  height:100%;
+}
+
+.header_tree_title
+{
+  height:100%;
+  width:auto;
+  background-color: rgba(255, 255, 255, 0.07);
+  border:none;
+  padding-left:0.5%;
+  padding-right:0.5%;
+  text-align: center;
+  font-family:var(--font_main);
+  color:var(--color_text_prim);
+  font-size:24px;
 }
 
 /* ====== Start view and contents ====== */

@@ -55,8 +55,9 @@ const helpers = {
           x: position.x - offset.left,
           y: position.y - offset.top,
         }; 
-      
     }
+
+    
 };
 
 export default helpers;
