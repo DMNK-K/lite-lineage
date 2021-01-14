@@ -19,6 +19,8 @@ class App extends Component
         isInTree: false,
         currentTree: null //null when none loaded, otherwise an instance of FamilyTree class
       }
+      this.handleWindowClose = this.handleWindowClose.bind(this);
+
       this.handleNewTree = this.handleNewTree.bind(this);
       this.handleDeleteTree = this.handleDeleteTree.bind(this);
       this.handleExitTree = this.handleExitTree.bind(this);
@@ -43,6 +45,24 @@ class App extends Component
         handleDeleteFamMember: this.handleDeleteFamMember,
         handleEditFamMember: this.handleEditFamMember,
       };
+  }
+
+  componentDidMount()
+  {
+    window.addEventListener("beforeunload", this.handleWindowClose);
+  }
+
+  componentWillUnmount()
+  {
+    window.removeEventListener("beforeunload", this.handleWindowClose);
+  }
+
+  handleWindowClose()
+  {
+    if (this.state.isInTree)
+    {
+      this.state.currentTree.save();
+    }
   }
 
   loadTreeNames()

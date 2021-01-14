@@ -223,6 +223,11 @@ h2
   text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.5);
 }
 
+.start_button_special input
+{
+  display:none;
+}
+
 .start_button_delete
 {
   position: absolute;

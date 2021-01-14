@@ -11,6 +11,19 @@ class StartView extends Component
     {
         super(props);
         //this.state = {tryingToDeleteTree: false}
+        this.fileInput = React.createRef();
+        this.openFileImport = this.openFileImport.bind(this);
+        this.onChooseImport = this.onChooseImport.bind(this);
+    }
+
+    openFileImport()
+    {
+        this.fileInput.current.click();
+    }
+
+    onChooseImport(e)
+    {
+
     }
 
     render()
@@ -28,6 +41,12 @@ class StartView extends Component
                         {treeButtons}
                         <div className="start_button_wrapper">
                             <button className="start_button start_button_special" onClick={this.context.treeHandlers.handleNewTree}>NEW TREE</button>
+                        </div>
+                        <div className="start_button_wrapper">
+                            <button className="start_button start_button_special" onClick={this.openFileImport}>
+                                IMPORT . JSON FILE
+                                <input onChange={(e) => this.onChooseImport(e)} ref={this.fileInput} type="file" accept=".json"></input>
+                            </button>
                         </div>
                     </div>
                 </div>

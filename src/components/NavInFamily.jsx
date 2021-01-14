@@ -9,13 +9,25 @@ class NavInFamily extends Component
     {
         super(props);
         //this.state = {}
+
+        this.exportCurrentTree = this.exportCurrentTree.bind(this);
+    }
+
+    exportCurrentTree()
+    {
+        const fileName = this.context.currentTree.treeName + ".json";
+        const element = document.createElement("a");
+        const obj = (localStorage.getItem(this.context.currentTree.treeName));
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(obj));
+        element.setAttribute('download', fileName);
+        element.click();
     }
     
     render()
     {
         return (
             <nav className="main_nav">
-                {/* <button className="header_button">EXPORT</button> */}
+                <button className="header_button" onClick={this.exportCurrentTree}>EXPORT</button>
                 <button className="header_button" onClick={this.context.familyHandlers.handleAddFamMember.bind(this, "default")}>
                     NEW PERSON
                 </button>
