@@ -15,6 +15,9 @@ class Person
     causeOfDeath = "";
     dateBirth;
     dateDeath;
+    unknownDateOfBirth = true;
+    unknownDateOfDeath = true;
+
     useFullDateBirth = false;
     useFullDateDeath = false;
     unsurePreciseYearOfBirth = false;
@@ -29,7 +32,7 @@ class Person
 
     colorEyes = "";
     colorHair = "";
-    healthProblems = [];
+    healthProblems = [""];
     notes = "";
 
     #signUnknown = "?";
@@ -37,8 +40,8 @@ class Person
     constructor(id)
     {
         this.id = id;
-        this.dateBirth = new Date("1950/01/01");
-        this.dateDeath = new Date("2000/01/01");
+        this.dateBirth = new Date(1950, 0, 1);
+        this.dateDeath = new Date(2000, 0, 1);
     }
     
     fillDataFromParsedJSON(parsedJsonObj)
@@ -79,10 +82,10 @@ class Person
 
     getDisplayDate(date, useFull, unsureOfYear)
     {
-        let str = (useFull === true) ? date.getDate().toString().padStart(2, "0") + "." : "";
-        str += (useFull === true) ? (date.getMonth() + 1).toString().padStart(2, "0") + "." : "";
+        let str = (useFull) ? date.getDate().toString().padStart(2, "0") + "." : "";
+        str += (useFull) ? (date.getMonth() + 1).toString().padStart(2, "0") + "." : "";
         let year = date.getFullYear().toString();
-        if (unsureOfYear === true)
+        if (unsureOfYear)
         {
             year = year.slice(0, -1) + this.#signUnsure;
         }
@@ -91,11 +94,13 @@ class Person
 
     getDisplayDateBirth()
     {
+        if (this.unknownDateOfBirth) {return this.#signUnknown;}
         return this.getDisplayDate(this.dateBirth, this.useFullDateBirth, this.unsurePreciseYearOfBirth);
     }
 
     getDisplayDateDeath()
     {
+        if (this.unknownDateOfDeath) { return this.#signUnknown; }
         return this.getDisplayDate(this.dateDeath, this.useFullDateDeath, this.unsurePreciseYearOfDeath);
     }
 

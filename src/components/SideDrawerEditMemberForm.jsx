@@ -14,6 +14,8 @@ class EditMemberForm extends Component
         this.changeBool = this.changeBool.bind(this);
         this.changeNotes = this.changeNotes.bind(this);
         this.changeDate = this.changeDate.bind(this);
+        this.changeNumberOfHealthProblems = this.changeNumberOfHealthProblems.bind(this);
+        this.changeHealthProblem = this.changeHealthProblem.bind(this);
     }
 
     //there's a bunch of similar methods, might need different processing for different types later
@@ -42,30 +44,28 @@ class EditMemberForm extends Component
     changeStr(e, propertyName)
     {
         const draftPerson = Person.cloneFromOther(this.props.editedPerson);
-        const possibleVariants = ["placeBirth", "placeDeath", "causeOfDeath", "colorEyes", "colorHair"];
-        if (possibleVariants.includes(propertyName) && draftPerson.hasOwnProperty(propertyName))
+        if (draftPerson.hasOwnProperty(propertyName))
         {
-            draftPerson[propertyName] = e.target.value;
+            draftPerson[propertyName] = e.target.value.toString();
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
         else
         {
-            console.error("propertyName:" + propertyName + " not recognized as a possible variant, or is not an own property of a Person obj");
+            console.error("propertyName:" + propertyName + " is not an own property of a Person obj");
         }
     }
 
     changeBool(e, propertyName)
     {
         const draftPerson = Person.cloneFromOther(this.props.editedPerson);
-        const possibleVariants = ["isDead", "lastName", "secondName", "useFullDateBirth", "useFullDateDeath", "unsurePreciseYearOfBirth", "unsurePreciseYearOfDeath"];
-        if (possibleVariants.includes(propertyName) && draftPerson.hasOwnProperty(propertyName))
+        if (draftPerson.hasOwnProperty(propertyName))
         {
             draftPerson[propertyName] = e.target.checked;
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
         else
         {
-            console.error("propertyName:" + propertyName + " not recognized as a possible variant, or is not an own property of a Person obj");
+            console.error("propertyName:" + propertyName + " is not an own property of a Person obj");
         }
     }
 
@@ -124,8 +124,41 @@ class EditMemberForm extends Component
         }
     }
 
+    changeHealthProblem(e)
+    {
+        const index = e.target.name.replace("health_problem_", "");
+        console.log(e);
+        if (this.props.editedPerson.healthProblems.length > index && index >= 0)
+        {
+            const draftPerson = Person.cloneFromOther(this.props.editedPerson);
+            draftPerson.healthProblems[index] = e.target.value;
+            this.props.handleEdit(this.props.editedPerson.id, draftPerson);
+        }
+    }
+
+    changeNumberOfHealthProblems(n)
+    {
+        if (n == 0){return;}
+        if (n == -1 && this.props.editedPerson.healthProblems.length < 1){return;}
+
+        const draftPerson = Person.cloneFromOther(this.props.editedPerson);
+        if (n > 0)
+        {
+            draftPerson.healthProblems.push("");
+        }
+        else
+        {
+            draftPerson.healthProblems.splice(-1, 1);
+        }
+        this.props.handleEdit(this.props.editedPerson.id, draftPerson);
+    }
+
     render()
     {
+        const healthProblemInputs = this.props.editedPerson.healthProblems.map((problem, index) => (
+            <input value={problem} onChange={this.changeHealthProblem.bind(this)} type="text" key={index} name={"health_problem_" + index} className="word_input side_drawer_input"/>
+        ));
+
         return (
             <form>
                 <div className="side_drawer_content_section">
@@ -137,12 +170,16 @@ class EditMemberForm extends Component
 
                     <label htmlFor="name_last" className="word_input_label">Last name:</label>
                     <input value={this.props.editedPerson.lastName} onChange={(e) => this.changeName(e, "lastName")} type="text" name="name_last" className="word_input side_drawer_input"/>
+
+                    <label htmlFor="is_dead" className="checkbox_input_label">Deceased:</label>
+                    <input checked={this.props.editedPerson.isDead} onChange={(e) => this.changeBool(e, "isDead")} type="checkbox" name="is_dead" className="checkbox_input side_drawer_input"/>
                 </div>
 
                 <SpecialDateInput
                     date={this.props.editedPerson.dateBirth}
                     useFull={this.props.editedPerson.useFullDateBirth}
                     impreciseYear={this.props.editedPerson.unsurePreciseYearOfBirth}
+                    unknownDate={this.props.editedPerson.unknownDateOfBirth}
                     dateOfStr={"birth"}
                     displayedDate={this.props.editedPerson.getDisplayDateBirth()}
                     handleChangeDate={this.changeDate}
@@ -155,6 +192,7 @@ class EditMemberForm extends Component
                         date={this.props.editedPerson.dateDeath}
                         useFull={this.props.editedPerson.useFullDateDeath}
                         unsurePreciseYear={this.props.editedPerson.unsurePreciseYearOfDeath}
+                        unknownDate={this.props.editedPerson.unknownDateOfDeath}
                         dateOfStr={"death"}
                         displayedDate={this.props.editedPerson.getDisplayDateDeath()}
                         handleChangeDate={this.changeDate}
@@ -164,9 +202,6 @@ class EditMemberForm extends Component
                 )}
 
                 <div className="side_drawer_content_section">
-                    <label htmlFor="is_dead" className="checkbox_input_label">Deceased:</label>
-                    <input checked={this.props.editedPerson.isDead} onChange={(e) => this.changeBool(e, "isDead")} type="checkbox" name="is_dead" className="checkbox_input side_drawer_input"/>
-
                     <label htmlFor="cause_of_death" className="word_input_label">Cause of death:</label>
                     <input value={this.props.editedPerson.causeOfDeath} onChange={(e) => this.changeStr(e, "causeOfDeath")} type="text" name="cause_of_death" className="word_input side_drawer_input"/>
 
@@ -186,11 +221,9 @@ class EditMemberForm extends Component
 
                     <div className="side_drawer_input_list">
                         <p className="side_drawer_full_line">Diseases and health problems:</p>
-                        <input type="text" name="disease_0" className="word_input side_drawer_input"/>
-                        <input type="text" name="disease_1" className="word_input side_drawer_input"/>
-                        <input type="text" name="disease_2" className="word_input side_drawer_input"/>
-                        <button>+</button>
-                        <button>-</button>
+                        {healthProblemInputs}
+                        <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, 1)}>+</button>
+                        <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, -1)}>-</button>
                     </div>
 
                     <label htmlFor="notes" className="side_drawer_full_line">Notes:</label>
