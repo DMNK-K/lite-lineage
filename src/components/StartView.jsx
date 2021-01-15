@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import StartTreeButton from './StartTreeButton';
 import TreeContext from '../TreeContext';
+import FamilyTree from '../FamilyTree';
 
 class StartView extends Component
 {
@@ -14,6 +15,7 @@ class StartView extends Component
         this.fileInput = React.createRef();
         this.openFileImport = this.openFileImport.bind(this);
         this.onChooseImport = this.onChooseImport.bind(this);
+        this.onReadImport = this.onReadImport.bind(this);
     }
 
     openFileImport()
@@ -23,7 +25,27 @@ class StartView extends Component
 
     onChooseImport(e)
     {
+        if (e.target.files.length > 0)
+        {
+            const file = e.target.files[0];
+            console.log(file);
+            const blob = new Blob([file], {type : 'application/json'});
+            const reader = new FileReader();
+            reader.addEventListener("load", e => this.onReadImport(reader.result));
+            reader.readAsText(blob);
+        }
+    }
 
+    onReadImport(fileReaderResult)
+    {
+        const obj = JSON.parse(fileReaderResult);
+        // console.log(obj);
+        if (obj.hasOwnProperty("treeName") && obj.hasOwnProperty("family") && obj.hasOwnProperty("creationDate"))
+        {
+            const newTree = new FamilyTree("imported", new Date(), []);
+            newTree.fillDataFromParsedJSON(obj);
+            this.context.treeHandlers.handleImportTree(newTree);
+        }
     }
 
     render()

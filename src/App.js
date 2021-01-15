@@ -22,6 +22,7 @@ class App extends Component
       this.handleWindowClose = this.handleWindowClose.bind(this);
 
       this.handleNewTree = this.handleNewTree.bind(this);
+      this.handleImportTree = this.handleImportTree.bind(this);
       this.handleDeleteTree = this.handleDeleteTree.bind(this);
       this.handleExitTree = this.handleExitTree.bind(this);
       this.handleRenameTree = this.handleRenameTree.bind(this);
@@ -37,6 +38,7 @@ class App extends Component
         handleExitTree: this.handleExitTree,
         handleRenameTree: this.handleRenameTree,
         handleOpenTree: this.handleOpenTree,
+        handleImportTree: this.handleImportTree,
       };
 
       //similar thing with this:
@@ -124,6 +126,21 @@ class App extends Component
         console.log(this.state);
       }
     );
+  }
+
+  handleImportTree(importedTree)
+  {
+    //imported tree might have a name identical to exisitng one, need to account for that
+    let i = 1;
+    const originalName = importedTree.treeName;
+    while (this.state.treeNames.includes(importedTree.treeName))
+    {
+      importedTree.treeName = originalName + " " + i;
+      i++;
+    }
+    const newTreeNames = [...this.state.treeNames, importedTree.treeName];
+    importedTree.save();
+    this.setState({treeNames: newTreeNames});
   }
 
   handleDeleteTree(nameOfTreeToDelete)
