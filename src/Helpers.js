@@ -19,6 +19,21 @@ const helpers = {
         return monthIntZeroBased >= 0 && monthIntZeroBased < 12 && dayInt > 0 && dayInt <= maxDay;
     },
 
+    ceilDateYearTo(date, target)
+    {
+      return new Date(this.ceilTo(date.getFullYear(), target), date.getMonth(), date.getDate());
+    },
+
+    floorDateYearTo(date, target)
+    {
+      return new Date(this.floorTo(date.getFullYear(), target), date.getMonth(), date.getDate());
+    },
+
+    roundDateYearTo(date, target)
+    {
+      return new Date(this.roundTo(date.getFullYear(), target), date.getMonth(), date.getDate());
+    },
+
     /**
      * Force a value to be between min and max.
      * @param {Number} n, @param {Number} min, @param {Number} max
@@ -28,6 +43,21 @@ const helpers = {
         if (n < min){return min;}
         if (n > max){return max;}
         return n;
+    },
+
+    ceilTo(n, target)
+    {
+      return Math.ceil(n / target) * target;
+    },
+
+    floorTo(n, target)
+    {
+      return Math.floor(n / target) * target;
+    },
+
+    roundTo(n, target)
+    {
+      return Math.round(n / target) * target;
     },
 
     getRelativeCoords (event, referenceElement)

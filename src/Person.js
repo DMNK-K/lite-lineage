@@ -1,3 +1,5 @@
+import Helpers from './Helpers';
+
 class Person
 {
     id;
@@ -102,6 +104,36 @@ class Person
     {
         if (this.unknownDateOfDeath) { return this.#signUnknown; }
         return this.getDisplayDate(this.dateDeath, this.useFullDateDeath, this.unsurePreciseYearOfDeath);
+    }
+
+    getValidPotentialParents(family, includeParent0 = false, includeParent1 = false)
+    {
+        //a person is valid as a parent when they are born earlier than this person, or when any of the 2 dates is unknown
+        //and when they are not already a parent of this person, unless specified to include that parent in the result
+        //and when they are not a child of this person
+
+        //when exact years are unsure, then the most permissive scenario has to be considered, where the parent is the oldest possible
+        //and the child is the youngest possible
+        //we only compare just the years when one of the dates is marked as not full, then it is permitted for the 2 people to have the same year
+        //even though those timeframes are unrealistic, someone might want to use this tool to make a family tree not for humans, but hamsters
+
+        const potentialParents = [];
+        const dateBirthThis = (this.unsurePreciseYearOfBirth) ? Helpers.floorDateYearTo(this.dateBirth, 10) : this.dateBirth;
+        for(let i = 0; i < family.length; i++)
+        {
+            if (this.id == family[i].id || this.childrenIds.includes(family[i].id)){continue;}
+            if (family[i].id == this.parentId0 && !includeParent0){continue;}
+            if (family[i].id == this.parentId1 && !includeParent1){continue;}
+
+            const dateBirthParent = (family[i].unsurePreciseYearOfBirth) ? Helpers.ceilDateYearTo(family[i].dateBirth, 10) : family[i].dateBirth;
+            const fullDatesInBoth = this.useFullDateBirth && family[i].useFullDateBirth;
+            const someDateUnknown = this.unknownDateOfBirth || family[i].unknownDateOfBirth;
+            if ((fullDatesInBoth && dateBirthThis > dateBirthParent) || dateBirthThis.getFullYear() >= dateBirthParent.getFullYear() || someDateUnknown)
+            {
+                potentialParents.push(family[i]);
+            }
+        }
+        return potentialParents;
     }
 
     static cloneFromOther(otherPerson)

@@ -84,14 +84,17 @@ class EditMemberForm extends Component
         }
     }
 
-    changeParents(e, parentIndex, newParentId)
+    changeParents(e, parentIndex)
     {
+        // console.log("trying to change parent " + parentIndex);
+        const newParentId = e.target.value;
+        console.log("newParentId: " + newParentId);
         const draftPerson = Person.cloneFromOther(this.props.editedPerson);
         if (parentIndex == 0 || parentIndex == 1)
         {
             //first if there is a parent already in that index, remove person as a child since Person class has both childrenIds array and 2 slots for parent
             let i;
-            const oldParentId = this.editedPerson["parentId" + parentIndex];
+            const oldParentId = this.props.editedPerson["parentId" + parentIndex];
             if (oldParentId)
             {
                 i = this.props.family.findIndex(item => item.id == oldParentId);
@@ -158,6 +161,21 @@ class EditMemberForm extends Component
         const healthProblemInputs = this.props.editedPerson.healthProblems.map((problem, index) => (
             <input value={problem} onChange={this.changeHealthProblem.bind(this)} type="text" key={index} name={"health_problem_" + index} className="word_input side_drawer_input"/>
         ));
+            //unsure if parent related stuff would be better as array, since only has 2 elements, always
+        const parentIndex0 = this.props.family.findIndex(item => item.id == this.props.editedPerson.parentId0);
+        const parentIndex1 = this.props.family.findIndex(item => item.id == this.props.editedPerson.parentId1);
+        const potentialParents0 = this.props.editedPerson.getValidPotentialParents(this.props.family, true);
+        const potentialParents1 = this.props.editedPerson.getValidPotentialParents(this.props.family, false, true);
+        const parentOptions0 = potentialParents0.map((potentialParent) =>
+            <option value={potentialParent.id} key={potentialParent.id}>
+                {potentialParent.getDisplayName() + ", born " + potentialParent.getDisplayDateBirth()}
+            </option>
+        );
+        const parentOptions1 = potentialParents1.map((potentialParent) =>
+            <option value={potentialParent.id} key={potentialParent.id}>
+                {potentialParent.getDisplayName() + ", born " + potentialParent.getDisplayDateBirth()}
+            </option>
+        );
 
         return (
             <form>
@@ -173,6 +191,18 @@ class EditMemberForm extends Component
 
                     <label htmlFor="is_dead" className="checkbox_input_label">Deceased:</label>
                     <input checked={this.props.editedPerson.isDead} onChange={(e) => this.changeBool(e, "isDead")} type="checkbox" name="is_dead" className="checkbox_input side_drawer_input"/>
+                </div>
+
+                <div className="side_drawer_content_section">
+                    <p className="side_drawer_full_line">Parents:</p>
+                    <select name="parent_0" onChange={(e) => this.changeParents(e, 0)} value={(parentIndex0 >= 0) ? this.props.family[parentIndex0].getDisplayName() : "-"}>
+                        <option value={undefined}>none</option>
+                        {parentOptions0}
+                    </select>
+                    <select name="parent_1" onChange={(e) => this.changeParents(e, 1)} value={(parentIndex1 >= 0) ? this.props.family[parentIndex1].getDisplayName() : "-"}>
+                        <option value={undefined}>none</option>
+                        {parentOptions1}
+                    </select>
                 </div>
 
                 <SpecialDateInput

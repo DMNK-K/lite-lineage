@@ -212,7 +212,7 @@ class App extends Component
   {
     if (person)
     {
-      console.log("Adding family member: " + person.getDisplayName() + ", id will be: " + person.id);
+      // console.log("Adding family member: " + person.getDisplayName() + ", id will be: " + person.id);
       const newFamily = [...this.state.currentTree.family, person];
       //since a person might be added as a child or parent of some other exisitng person
       //this needs to be updated in those family members too
