@@ -136,6 +136,16 @@ class Person
         return potentialParents;
     }
 
+    getCurrentParents(family)
+    {
+        const i0 = family.findIndex(item => item.id == this.parentId0);
+        const i1 = family.findIndex(item => item.id == this.parentId1);
+        const returnArray = [null, null];
+        if (i0 >= 0) {returnArray[0] = family[i0];}
+        if (i1 >= 0) {returnArray[1] = family[i1];}
+        return returnArray;
+    }
+
     static cloneFromOther(otherPerson)
     {
         const clone = new Person(otherPerson.id);

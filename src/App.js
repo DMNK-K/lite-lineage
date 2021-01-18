@@ -31,6 +31,7 @@ class App extends Component
       this.handleAddFamMember = this.handleAddFamMember.bind(this);
       this.handleDeleteFamMember = this.handleDeleteFamMember.bind(this);
       this.handleEditFamMember = this.handleEditFamMember.bind(this);
+      this.handleEditFamMembers = this.handleEditFamMembers.bind(this);
 
       this.treeHandlers = {
         handleNewTree: this.handleNewTree,
@@ -46,6 +47,7 @@ class App extends Component
         handleAddFamMember: this.handleAddFamMember,
         handleDeleteFamMember: this.handleDeleteFamMember,
         handleEditFamMember: this.handleEditFamMember,
+        handleEditFamMembers: this.handleEditFamMembers,
       };
   }
 
@@ -309,6 +311,29 @@ class App extends Component
         () => {this.state.currentTree.save();}
       );
     }
+  }
+
+  handleEditFamMembers(personIds, replacerPersonObjs)
+  {
+    if (personIds.length != replacerPersonObjs.length){return;}
+    console.log("trying to change multiple fam members");
+    const newFamily = [...this.state.currentTree.family];
+    for(let i = 0; i < personIds.length; i++)
+    {
+      const index = newFamily.findIndex(item => item.id == personIds[i]);
+      if (index >= 0)
+      {
+        newFamily[index] = replacerPersonObjs[i];
+      }
+    }
+    const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
+    draftTree.family = newFamily;
+    this.setState(
+      {
+        currentTree: draftTree,
+      },
+      () => {this.state.currentTree.save();}
+    );
   }
 
   handleDeleteFamMember(personId)

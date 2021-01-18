@@ -187,6 +187,7 @@ class FamilyView extends Component
                     <SideDrawerEditMemberForm
                         editedPerson={editedPerson}
                         handleEdit={this.context.familyHandlers.handleEditFamMember}
+                        handleEditMultiple={this.context.familyHandlers.handleEditFamMembers}
                         family={this.context.currentTree.family}
                     />}
                 closeAction={this.endEdit}

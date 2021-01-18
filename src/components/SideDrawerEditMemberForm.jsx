@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import '../App.css';
 import Person from '../Person';
+import SelectParent from './SelectParent';
 import SpecialDateInput from './SpecialDateInput';
 
 class EditMemberForm extends Component
 {
+    #noneSign = "-";
+
     constructor(props)
     {
         super(props);
@@ -16,6 +19,7 @@ class EditMemberForm extends Component
         this.changeDate = this.changeDate.bind(this);
         this.changeNumberOfHealthProblems = this.changeNumberOfHealthProblems.bind(this);
         this.changeHealthProblem = this.changeHealthProblem.bind(this);
+        this.changeParents = this.changeParents.bind(this);
     }
 
     //there's a bunch of similar methods, might need different processing for different types later
@@ -86,40 +90,45 @@ class EditMemberForm extends Component
 
     changeParents(e, parentIndex)
     {
-        // console.log("trying to change parent " + parentIndex);
         const newParentId = e.target.value;
-        console.log("newParentId: " + newParentId);
-        const draftPerson = Person.cloneFromOther(this.props.editedPerson);
         if (parentIndex == 0 || parentIndex == 1)
         {
-            //first if there is a parent already in that index, remove person as a child since Person class has both childrenIds array and 2 slots for parent
+            const idsToChange = [];
+            const drafts = [];
+            //first we need to make sure to remove the edited person id from one of its current parent's array of childrenIds
             let i;
             const oldParentId = this.props.editedPerson["parentId" + parentIndex];
+            console.log("oldParentId: " + oldParentId + " | newParentId: " + newParentId);
             if (oldParentId)
             {
                 i = this.props.family.findIndex(item => item.id == oldParentId);
                 if (i >= 0)
                 {
                     const draftOldParent = Person.cloneFromOther(this.props.family[i]);
-                    const q = draftOldParent.childrenIds.findIndex(item => item == this.editedPerson.id);
+                    const q = draftOldParent.childrenIds.findIndex(item => item == this.props.editedPerson.id);
                     if (q >= 0)
                     {
                         draftOldParent.childrenIds.splice(q, 1);
-                        this.props.handleEdit(oldParentId, draftOldParent);
+                        idsToChange.push(oldParentId);
+                        drafts.push(draftOldParent);
                     }
                 }
             }
             //now assign parent, but because of Person class having childrenIds too, edit that parent as well
-            draftPerson["parentId" + parentIndex] = newParentId;
-            this.props.handleEdit(this.props.editedPerson.id, draftPerson);
+            const draftPerson = Person.cloneFromOther(this.props.editedPerson);
+            draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : newParentId;
+            idsToChange.push(this.props.editedPerson.id);
+            drafts.push(draftPerson);
 
             i = this.props.family.findIndex(item => item.id == newParentId);
             if (i >= 0)
             {
                 const draftNewParent = Person.cloneFromOther(this.props.family[i]);
                 draftNewParent.childrenIds.push(this.props.editedPerson.id);    
-                this.props.handleEdit(newParentId, draftNewParent);
+                idsToChange.push(newParentId);
+                drafts.push(draftNewParent);
             }
+            this.props.handleEditMultiple(idsToChange, drafts);
         }
         else
         {
@@ -161,21 +170,10 @@ class EditMemberForm extends Component
         const healthProblemInputs = this.props.editedPerson.healthProblems.map((problem, index) => (
             <input value={problem} onChange={this.changeHealthProblem.bind(this)} type="text" key={index} name={"health_problem_" + index} className="word_input side_drawer_input"/>
         ));
-            //unsure if parent related stuff would be better as array, since only has 2 elements, always
-        const parentIndex0 = this.props.family.findIndex(item => item.id == this.props.editedPerson.parentId0);
-        const parentIndex1 = this.props.family.findIndex(item => item.id == this.props.editedPerson.parentId1);
-        const potentialParents0 = this.props.editedPerson.getValidPotentialParents(this.props.family, true);
+
+        const potentialParents0 = this.props.editedPerson.getValidPotentialParents(this.props.family, true, false);
         const potentialParents1 = this.props.editedPerson.getValidPotentialParents(this.props.family, false, true);
-        const parentOptions0 = potentialParents0.map((potentialParent) =>
-            <option value={potentialParent.id} key={potentialParent.id}>
-                {potentialParent.getDisplayName() + ", born " + potentialParent.getDisplayDateBirth()}
-            </option>
-        );
-        const parentOptions1 = potentialParents1.map((potentialParent) =>
-            <option value={potentialParent.id} key={potentialParent.id}>
-                {potentialParent.getDisplayName() + ", born " + potentialParent.getDisplayDateBirth()}
-            </option>
-        );
+        const currentParents = this.props.editedPerson.getCurrentParents(this.props.family);
 
         return (
             <form>
@@ -195,14 +193,8 @@ class EditMemberForm extends Component
 
                 <div className="side_drawer_content_section">
                     <p className="side_drawer_full_line">Parents:</p>
-                    <select name="parent_0" onChange={(e) => this.changeParents(e, 0)} value={(parentIndex0 >= 0) ? this.props.family[parentIndex0].getDisplayName() : "-"}>
-                        <option value={undefined}>none</option>
-                        {parentOptions0}
-                    </select>
-                    <select name="parent_1" onChange={(e) => this.changeParents(e, 1)} value={(parentIndex1 >= 0) ? this.props.family[parentIndex1].getDisplayName() : "-"}>
-                        <option value={undefined}>none</option>
-                        {parentOptions1}
-                    </select>
+                    <SelectParent handleChange={this.changeParents} currentParent={currentParents[0]} potentialParents={potentialParents0} parentSlotIndex={0} noneSign={this.#noneSign}/>
+                    <SelectParent handleChange={this.changeParents} currentParent={currentParents[1]} potentialParents={potentialParents1} parentSlotIndex={1} noneSign={this.#noneSign}/>
                 </div>
 
                 <SpecialDateInput
