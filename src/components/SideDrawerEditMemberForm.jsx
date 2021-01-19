@@ -93,42 +93,9 @@ class EditMemberForm extends Component
         const newParentId = e.target.value;
         if (parentIndex == 0 || parentIndex == 1)
         {
-            const idsToChange = [];
-            const drafts = [];
-            //first we need to make sure to remove the edited person id from one of its current parent's array of childrenIds
-            let i;
-            const oldParentId = this.props.editedPerson["parentId" + parentIndex];
-            console.log("oldParentId: " + oldParentId + " | newParentId: " + newParentId);
-            if (oldParentId)
-            {
-                i = this.props.family.findIndex(item => item.id == oldParentId);
-                if (i >= 0)
-                {
-                    const draftOldParent = Person.cloneFromOther(this.props.family[i]);
-                    const q = draftOldParent.childrenIds.findIndex(item => item == this.props.editedPerson.id);
-                    if (q >= 0)
-                    {
-                        draftOldParent.childrenIds.splice(q, 1);
-                        idsToChange.push(oldParentId);
-                        drafts.push(draftOldParent);
-                    }
-                }
-            }
-            //now assign parent, but because of Person class having childrenIds too, edit that parent as well
             const draftPerson = Person.cloneFromOther(this.props.editedPerson);
             draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : newParentId;
-            idsToChange.push(this.props.editedPerson.id);
-            drafts.push(draftPerson);
-
-            i = this.props.family.findIndex(item => item.id == newParentId);
-            if (i >= 0)
-            {
-                const draftNewParent = Person.cloneFromOther(this.props.family[i]);
-                draftNewParent.childrenIds.push(this.props.editedPerson.id);    
-                idsToChange.push(newParentId);
-                drafts.push(draftNewParent);
-            }
-            this.props.handleEditMultiple(idsToChange, drafts);
+            this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
         else
         {

@@ -125,7 +125,7 @@ class App extends Component
     }, () => {
         this.saveTreeNames();
         newTree.save();
-        console.log(this.state);
+        // console.log(this.state);
       }
     );
   }
@@ -164,7 +164,7 @@ class App extends Component
   {
     if (oldTreeName === newTreeName || this.state.currentTree.treeName !== oldTreeName || !this.state.treeNames.includes(oldTreeName) || this.state.treeNames.includes(newTreeName))
     {
-      console.log("handleRenameTree was ignored.");
+      // console.log("handleRenameTree was ignored.");
       return;
     }
 
@@ -210,87 +210,57 @@ class App extends Component
     });
   }
 
-  addFamMember(person)
-  {
-    if (person)
-    {
-      // console.log("Adding family member: " + person.getDisplayName() + ", id will be: " + person.id);
-      const newFamily = [...this.state.currentTree.family, person];
-      //since a person might be added as a child or parent of some other exisitng person
-      //this needs to be updated in those family members too
-      //they can be mutated directly since a whole tree will be assigned in setState anyway
-      if (person.parentId0 != undefined)
-      {
-        const parentIndex = newFamily.findIndex(item => item.id == person.parentId0);
-        if (parentIndex >= 0)
-        {
-          //making the parent of newly added person have its id in childrenIds[]
-          newFamily[parentIndex].childrenIds.push(person.id);
-        }
-      }
-      for(let i = 0; i < person.childrenIds.length; i++)
-      {
-        const childIndex = newFamily.findIndex(item => item.id == person.childrenIds[i]);
-        if (childIndex >= 0)
-        {
-          //making the i-th child of newly added person have its id in one of the 2 parent slots
-          //it will override the second parent if both are taken
-          if (newFamily[childIndex].parentId0 == undefined)
-          {
-            newFamily[childIndex].parentId0 = person.id;
-          }
-          else
-          {
-            newFamily[childIndex].parentId1 = person.id;
-          }
-        }
-      }
-      const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
-      draftTree.family = newFamily;
-      this.setState(
-        {
-          currentTree: draftTree,
-        },
-        () => {this.state.currentTree.save(); console.log(this.state.currentTree.family.length);}
-      );
-    }
-  }
-
   handleAddFamMember(mode = "default", anchorPersonId)
   {
     if (!this.state.currentTree){return;}
     const viableModes = ["default", "parent", "child"];
-    if (viableModes.includes(mode))
-    {
-      const newId = this.state.currentTree.findLowestUnusedFamilyMemberId();  
-      const newPerson = new Person(newId);
-      if (anchorPersonId !== undefined && anchorPersonId >= 0)
-      {
-        let loc;
-        if(mode === "parent")
-        {
-          newPerson.childrenIds.push(anchorPersonId);
-          loc = this.state.currentTree.findFreeLocationUpwards(anchorPersonId, 4, 2);
-        }
-        else if(mode === "child")
-        {
-          newPerson.parentId0 = anchorPersonId;
-          loc = this.state.currentTree.findFreeLocationDownwards(anchorPersonId, 4, 2);
-        }
-        else
-        {
-          loc = this.state.currentTree.findFreeLocationNearby(anchorPersonId, 4, 2, 100, 100);
-        }
-        console.log(loc);
-        newPerson.locationInTreeX = loc.x;
-        newPerson.locationInTreeY = loc.y;
-      }
-      this.addFamMember(newPerson);
-    }
-    else
+    if (!viableModes.includes(mode))
     {
       console.error("Invalid mode of adding a family member.");
+      return;
     }
+    const newId = this.state.currentTree.findLowestUnusedFamilyMemberId();  
+    const newPerson = new Person(newId);
+    const anchorPersonIndex = this.state.currentTree.family.findIndex(item => item.id == anchorPersonId);
+    let draftAnchorPerson = null;
+    if (anchorPersonIndex >= 0) {draftAnchorPerson = Person.cloneFromOther(this.state.currentTree.family[anchorPersonIndex]);}
+
+    let loc = {x: 0, y: 0};
+    //doing mode specific things
+    if (anchorPersonId !== undefined && anchorPersonId >= 0)
+    {
+      if(mode === "parent")
+      {
+        draftAnchorPerson?.addParentId(newId);
+        loc = this.state.currentTree.findFreeLocationUpwards(anchorPersonId, 4, 2);
+      }
+      else if(mode === "child")
+      {
+        newPerson.addParentId(anchorPersonId);
+        loc = this.state.currentTree.findFreeLocationDownwards(anchorPersonId, 4, 2);
+      }
+      else
+      {
+        loc = this.state.currentTree.findFreeLocationNearby(anchorPersonId, 4, 2, 100, 100);
+      }
+    }
+    newPerson.locationInTreeX = loc.x;
+    newPerson.locationInTreeY = loc.y;
+    const draftFamily = [...this.state.currentTree.family, newPerson];
+    if (draftAnchorPerson && anchorPersonIndex >= 0) {draftFamily[anchorPersonIndex] = draftAnchorPerson;}
+    const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
+    draftTree.family = draftFamily;
+    // console.log(draftAnchorPerson);
+    this.setState(
+      {
+        currentTree: draftTree,
+      },
+      () => {
+        this.state.currentTree.save();
+        // console.log(this.state.currentTree.family[anchorPersonIndex]);
+        // console.log(this.state.currentTree.family.length);
+      }
+    );
   }
 
   handleEditFamMember(personId, replacerPersonObj)
@@ -308,7 +278,10 @@ class App extends Component
         {
           currentTree: draftTree,
         },
-        () => {this.state.currentTree.save();}
+        () => {
+          this.state.currentTree.save();
+          // console.log(this.state.currentTree.family[i]);
+        }
       );
     }
   }

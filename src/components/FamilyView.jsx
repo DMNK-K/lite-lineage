@@ -149,14 +149,15 @@ class FamilyView extends Component
             />
         );
 
-        //finding people on both ends of lines using children ids
+        //finding people on both ends of lines using parent ids
         const lineEndMembers = [];
         for (let i = 0; i < this.context.currentTree.family.length; i++)
         {
             const a = this.context.currentTree.family[i];
-            for (let q = 0; q < a.childrenIds.length; q++)
+
+            for (let q = 0; q < 2; q++)
             {
-                const index = this.context.currentTree.family.findIndex(item => item.id == a.childrenIds[q]);
+                const index = this.context.currentTree.family.findIndex(item => item.id == a["parentId" + q]);
                 if (index >= 0)
                 {
                     lineEndMembers.push({

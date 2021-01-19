@@ -9,9 +9,8 @@ class Person
     secondName = "";
     lastName = "";
 
-    parentId0;
-    parentId1;
-    childrenIds = [];
+    parentId0 = null;
+    parentId1 = null;
 
     isDead = false;
     causeOfDeath = "";
@@ -121,7 +120,7 @@ class Person
         const dateBirthThis = (this.unsurePreciseYearOfBirth) ? Helpers.floorDateYearTo(this.dateBirth, 10) : this.dateBirth;
         for(let i = 0; i < family.length; i++)
         {
-            if (this.id == family[i].id || this.childrenIds.includes(family[i].id)){continue;}
+            if (this.id == family[i].id || family[i].parentId0 == this.id || family[i].parentId1 == this.id) {continue;}
             if (family[i].id == this.parentId0 && !includeParent0){continue;}
             if (family[i].id == this.parentId1 && !includeParent1){continue;}
 
@@ -146,6 +145,16 @@ class Person
         return returnArray;
     }
 
+    /**
+     * Adds parent id to a slot that is not full, if none found replaces parentId0.
+     */
+    addParentId(newId)
+    {
+        if (!this.parentId0) {this.parentId0 = newId;}
+        else if (!this.parentId1) {this.parentId1 = newId;}
+        else {this.parentId0 = newId;}
+    }
+
     static cloneFromOther(otherPerson)
     {
         const clone = new Person(otherPerson.id);
@@ -156,7 +165,6 @@ class Person
                 clone[property] = otherPerson[property];
             }
         }
-        clone.childrenIds = [...otherPerson.childrenIds];
         clone.healthProblems = [...otherPerson.healthProblems];
         return clone;
     }
