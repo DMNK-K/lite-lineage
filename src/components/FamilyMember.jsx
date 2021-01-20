@@ -74,7 +74,7 @@ class FamilyMember extends Component
                 }
 
                 <button className="family_member_extend" onClick={this.toggleExtend}>{(this.state.extended === true) ? "HIDE DETAILS" : "SHOW DETAILS"}</button>
-                {this.state.extended === true && <FamilyMemberExtension/>}
+                {this.state.extended === true && <FamilyMemberExtension person={this.props.person}/>}
             </div>
         );
     }

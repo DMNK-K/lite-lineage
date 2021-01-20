@@ -20,7 +20,7 @@ class SelectParent extends Component
             <option key={potentialParent.id} value={potentialParent.id}>{this.getLabel(potentialParent)}</option>
         );
 
-        console.log(this.props.currentParent);
+        // console.log(this.props.currentParent);
 
         return (
             <select onChange={(e) => this.props.handleChange(e, this.props.parentSlotIndex)} value={(this.props.currentParent) ? this.props.currentParent.id : this.props.noneSign}>

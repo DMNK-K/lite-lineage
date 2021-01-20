@@ -2,6 +2,8 @@ import Person from './Person';
 
 class FamilyTree
 {
+    static minFamilyMemberLocation = {x: 1, y: 1};
+
     treeName;
     creationDate;
     family = []; //array of instances of Person class
@@ -23,6 +25,45 @@ class FamilyTree
             newName = "My Tree " + i;
         }
         return newName;
+    }
+
+    static isFamilyMemberLocationBelowMin(location)
+    {
+        return (location.x < this.minFamilyMemberLocation.x || location.y < this.minFamilyMemberLocation.y);
+    }
+
+    static getShiftVector(location)
+    {
+        const x = (location.x < this.minFamilyMemberLocation.x) ? this.minFamilyMemberLocation.x - location.x : 0;
+        const y = (location.y < this.minFamilyMemberLocation.y) ? this.minFamilyMemberLocation.y - location.y : 0;
+        return {x: x, y: y};
+    }
+
+    static shiftFamily(family, vector)
+    {
+        for(let i = 0; i < family.length; i++)
+        {
+            family[i].locationInTreeX += vector.x;
+            family[i].locationInTreeY += vector.y;
+        }
+    }
+
+    /**
+     * Shifts location of all members of a provided family by a vector.
+     * This returns a new array and also its contents are clones, to provide immutability for react.
+     */
+    static shiftFamilyImmutably(family, vector)
+    {
+        const newFam = [];
+        let draft;
+        for(let i = 0; i < family.length; i++)
+        {
+            draft = Person.cloneFromOther(family[i]);
+            draft.locationInTreeX += vector.x;
+            draft.locationInTreeY += vector.y;
+            newFam.push(draft);
+        }
+        return newFam;
     }
 
     fillDataFromJSON(unparsedJson)

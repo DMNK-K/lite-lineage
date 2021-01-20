@@ -155,6 +155,11 @@ class Person
         else {this.parentId0 = newId;}
     }
 
+    getLocation()
+    {
+        return {x: this.locationInTreeX, y: this.locationInTreeY};
+    }
+
     static cloneFromOther(otherPerson)
     {
         const clone = new Person(otherPerson.id);

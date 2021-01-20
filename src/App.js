@@ -246,8 +246,14 @@ class App extends Component
     }
     newPerson.locationInTreeX = loc.x;
     newPerson.locationInTreeY = loc.y;
-    const draftFamily = [...this.state.currentTree.family, newPerson];
+    //we can get away with just spreading old family, since those people inside won't be mutated anyway
+    let draftFamily = [...this.state.currentTree.family, newPerson];
     if (draftAnchorPerson && anchorPersonIndex >= 0) {draftFamily[anchorPersonIndex] = draftAnchorPerson;}
+    //if the new person's location is below the tree's minimum, the entire family is shifted to accomodate the new person
+    if (FamilyTree.isFamilyMemberLocationBelowMin(loc))
+    {
+      draftFamily = FamilyTree.shiftFamilyImmutably(draftFamily, FamilyTree.getShiftVector(loc));
+    }
     const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
     draftTree.family = draftFamily;
     // console.log(draftAnchorPerson);
@@ -267,11 +273,16 @@ class App extends Component
   {
     //edited data should already be validated before it gets here
     //console.log("handling edit of person with id: " + personId + " (should match this one: "+ replacerPersonObj.id +")");
-    const newFamily = [...this.state.currentTree.family];
+    let newFamily = [...this.state.currentTree.family];
     const i = newFamily.findIndex(item => item.id == personId);
     if (i >= 0)
     {
       newFamily[i] = replacerPersonObj;
+      if (FamilyTree.isFamilyMemberLocationBelowMin(replacerPersonObj.getLocation()))
+      {
+        const vector = FamilyTree.getShiftVector(replacerPersonObj.getLocation());
+        newFamily = FamilyTree.shiftFamilyImmutably(newFamily, vector);
+      }
       const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
       draftTree.family = newFamily;
       this.setState(
@@ -326,6 +337,8 @@ class App extends Component
       );
     }
   }
+
+  shift
 
   render()
   {
