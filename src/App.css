@@ -67,6 +67,7 @@ button
   color:var(--color_text_prim);
   background-color: var(--color_primary);
   border:none;
+  transition: background-color 0.15s;
 }
 
 button:focus, button:active
@@ -445,6 +446,8 @@ h3
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+/Edge */
   user-select: none; /* Standard */
+
+  transition: top 0.04s, left 0.04s;
 }
 
 /*  These are used for in-app zooming:
@@ -550,9 +553,9 @@ h3
 
 .family_member_icon
 {
-  height:14px;
-  margin-right:2%;
+  height:80%;
   width:auto;
+  margin-right:2%;
   filter:invert();
   opacity: 0.9;
 }
@@ -571,7 +574,10 @@ h3
   position: absolute;
   top:100%;
   width:100%;
+  padding:3%;
   background-color: var(--color_secondary);
+  font-size: inherit;
+  z-index: 999999;
 }
 
 .family_member_name_wrapper
@@ -579,7 +585,7 @@ h3
   display: flex;
   justify-content: center;
   align-items: center; 
-  height:42.5%;
+  height:42%;
   position: relative;
   /* border:1px solid yellow; */
 }
@@ -597,8 +603,18 @@ h3
 .family_member_info
 {
   color:var(--color_text_sec);
-  text-align:center;
   font-size:70%;
+}
+
+.family_member_info_single_line
+{
+  text-align:center;
+  height: 14%;
+}
+
+.family_member_info_extended
+{
+
 }
 
 /* line rendering */

@@ -225,7 +225,7 @@ class App extends Component
     let draftAnchorPerson = null;
     if (anchorPersonIndex >= 0) {draftAnchorPerson = Person.cloneFromOther(this.state.currentTree.family[anchorPersonIndex]);}
 
-    let loc = {x: 0, y: 0};
+    let loc = FamilyTree.minFamilyMemberLocation;
     //doing mode specific things
     if (anchorPersonId !== undefined && anchorPersonId >= 0)
     {

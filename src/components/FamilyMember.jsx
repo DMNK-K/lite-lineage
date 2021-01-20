@@ -61,13 +61,13 @@ class FamilyMember extends Component
                 <div className="family_member_name_wrapper">
                     <p className="family_member_name">{this.props.person.getDisplayName()}</p>
                 </div>
-                <p className="family_member_info">
+                <p className="family_member_info family_member_info_single_line">
                     <img src={IconBirth} className="family_member_icon"/>
                     {this.props.person.getDisplayDateBirth()}
                 </p>
                 {
                     this.props.person.isDead === true && 
-                    <p className="family_member_info">
+                    <p className="family_member_info family_member_info_single_line">
                         <img src={IconDeath} className="family_member_icon"/>
                         {this.props.person.getDisplayDateDeath()}
                     </p>
