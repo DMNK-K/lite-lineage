@@ -149,30 +149,46 @@ class FamilyView extends Component
             />
         );
 
-        //finding people on both ends of lines using parent ids
-        const lineEndMembers = [];
+        //finding people taking part in a connection
+        const connectionMembers = [];
+        const establishedParentIdPairs = [];
         for (let i = 0; i < this.context.currentTree.family.length; i++)
         {
-            const a = this.context.currentTree.family[i];
-
-            for (let q = 0; q < 2; q++)
+            const b = this.context.currentTree.family[i];
+            const parents = b.getCurrentParents(this.context.currentTree.family);
+            if (parents[0] || parents[1])
             {
-                const index = this.context.currentTree.family.findIndex(item => item.id == a["parentId" + q]);
-                if (index >= 0)
+                //there is a connection that exists for b
+                connectionMembers.push({
+                    a1: parents[0],
+                    a2: parents[1],
+                    b: b
+                });
+
+                if (parents[0] && parents[1])
                 {
-                    lineEndMembers.push({
-                        a: a,
-                        b: this.context.currentTree.family[index]
-                    });
+                    //check if this parent pair was already established (checking both orders of being saved since they might differ in different child)
+                    //we're doing it in order not to duplicate connections that are suppoosed to represent relationships between 2 people that had children together
+                    //since they are distinct from the child-parent connections 
+                    if (!establishedParentIdPairs.includes(parents[0].id + "_" + parents[1].id) && !establishedParentIdPairs.includes(parents[1].id + "_" + parents[0].id))
+                    {
+                        connectionMembers.push({
+                            a1: parents[0],
+                            a2: parents[1],
+                            b: null
+                        });
+                        establishedParentIdPairs.push(parents[0].id + "_" + parents[1].id);
+                    }
                 }
             }
         }
 
-        const connections = lineEndMembers.map((lineEnds) =>
+        const connections = connectionMembers.map((connectionMember) =>
             <FamilyConnection
-                key={lineEnds.a.id + "-" + lineEnds.b.id}
-                personA={lineEnds.a}
-                personB={lineEnds.b}
+                key={connectionMember.a1?.id + "_" + connectionMember.a2?.id + "|" + connectionMember.b?.id}
+                personA1={connectionMember.a1}
+                personA2={connectionMember.a2}
+                personB={connectionMember.b}
                 locationScale={this.state.locationScale}
                 lineCenteringOffset={this.state.lineCenteringOffset}
             />
