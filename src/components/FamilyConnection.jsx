@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import V2 from '../../geo/V2';
+import V2 from '../geo/V2';
 class FamilyConnection extends Component
 {
     constructor(props)

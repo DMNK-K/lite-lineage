@@ -1,0 +1,3 @@
+[submodule "src/geo"]
+	path = src/geo
+	url = https://github.com/DMNK-K/generic-geo
