@@ -58,7 +58,9 @@ class StartView extends Component
             <div className="start_view">
                 <div className="start_box">
                     <h2>Welcome to LiteLineage</h2>
-                    <p className="start_desc">A simple tool for making family trees, with all key family data kept on your machine and no need to create an account. To begin, create a new tree, or pick an existing one.</p>
+                    <p className="start_desc">
+                        A simple tool for making family trees, with no need to create an account. All key data is kept on your machine. To begin, create a new tree, pick an existing one, or import a tree that you've exported to a file.
+                    </p>
                     <div className="start_button_tray">
                         {treeButtons}
                         <div className="start_button_wrapper">
@@ -66,7 +68,7 @@ class StartView extends Component
                         </div>
                         <div className="start_button_wrapper">
                             <button className="start_button start_button_special" onClick={this.openFileImport}>
-                                IMPORT . JSON FILE
+                                IMPORT FROM FILE
                                 <input onChange={(e) => this.onChooseImport(e)} ref={this.fileInput} type="file" accept=".json"></input>
                             </button>
                         </div>
