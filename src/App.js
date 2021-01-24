@@ -338,8 +338,6 @@ class App extends Component
     }
   }
 
-  shift
-
   render()
   {
     return (

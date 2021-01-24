@@ -10,6 +10,7 @@ class SpecialDateInput extends Component
         this.changeDay = this.changeDay.bind(this);
         this.changeMonth = this.changeMonth.bind(this);
         this.changeYear = this.changeYear.bind(this);
+        this.getLabelClass = this.getLabelClass.bind(this);
     }
 
     changeDay(e)
@@ -33,7 +34,7 @@ class SpecialDateInput extends Component
 
     changeYear(e)
     {
-        const yearInt = Helpers.clamp(e.target.value, -9999, 9999); //just to limit to 4 digits, users may want fictional dates set in the future
+        const yearInt = Helpers.clamp(e.target.value, -999999, 999999); //just to limit to 6 digits, users may want fictional dates set in the future
         console.log("year: " + yearInt + " month: " + this.props.date.getMonth() + " day: " + this.props.date.getDate());
         if (Helpers.isDateValid(yearInt, this.props.date.getMonth(), this.props.date.getDate()))
         {
@@ -42,36 +43,42 @@ class SpecialDateInput extends Component
             this.props.handleChangeDate(newDate, "date" + this.props.propertySuffix);
         }
     }
-    
+
+    getLabelClass(base, additionalDisabledCondition)
+    {
+        return base + (this.props.disabled || additionalDisabledCondition ? " label_disabled" : "");
+    }
+
     render()
     {
         return (
             <div className="side_drawer_content_section">
-                <p className="side_drawer_full_line">Date of {this.props.dateOfStr}:</p>
-                <label htmlFor={this.props.dateOfStr + "_date_unknown"} className="checkbox_input_label">Unknown:</label>
-                <input checked={this.props.unknownDate} onChange={(e) => this.props.handleChangeBool(e, "unknownDateOf" + this.props.propertySuffix)} type="checkbox" name={this.props.dateOfStr + "_date_unknown"} className="checkbox_input side_drawer_input"/>
-                
-                {!this.props.unknownDate &&
-                    <Fragment>
-                        <label htmlFor={this.props.dateOfStr + "_date_imprecise"} className="checkbox_input_label">Uncertain of exact year:</label>
-                        <input checked={this.props.unsurePreciseYear} onChange={(e) => this.props.handleChangeBool(e, "unsurePreciseYearOf" + this.props.propertySuffix)} type="checkbox" name={this.props.dateOfStr + "_date_imprecise"} className="checkbox_input side_drawer_input"/>
-                        
-                        <label htmlFor={this.props.dateOfStr + "_date_full"} className="checkbox_input_label">Use full date of {this.props.dateOfStr}:</label>
-                        <input checked={this.props.useFull} onChange={(e) => this.props.handleChangeBool(e, "useFullDate" + this.props.propertySuffix)} type="checkbox" name={this.props.dateOfStr + "_date_full"} className="checkbox_input side_drawer_input"/>
-                        
-                        <label htmlFor={this.props.dateOfStr + "_day"} className="date_input_label">dd:</label>
-                        <input value={this.props.date.getDate()} onChange={(e) => this.changeDay(e)} type="number" name={this.props.dateOfStr + "_day"} className="date_input side_drawer_input"/>
-                        <label htmlFor={this.props.dateOfStr + "_month"} className="date_input_label">mm:</label>
-                        <input value={this.props.date.getMonth() + 1} onChange={(e) => this.changeMonth(e)} type="number" name={this.props.dateOfStr + "_month"} className="date_input side_drawer_input"/>
-                        <label htmlFor={this.props.dateOfStr + "_year"} className="date_input_label">yyyy:</label>
-                        <input value={this.props.date.getFullYear()} onChange={(e) => this.changeYear(e)} type="number" name={this.props.dateOfStr + "_year"} className="date_input side_drawer_input"/>
-                    </Fragment>
-                }
+                <p className={this.getLabelClass("side_drawer_row")}>
+                    Date of {this.props.dateOfStr}:
+                </p>
+                <div className="side_drawer_row">
+                    
+                    <label htmlFor={this.props.dateOfStr + "_date_unknown"} className={this.getLabelClass("checkbox_input_label")}>Unknown:</label>
+                    <input disabled={this.props.disabled} checked={this.props.unknownDate} onChange={(e) => this.props.handleChangeBool(e, "unknownDateOf" + this.props.propertySuffix)} type="checkbox" name={this.props.dateOfStr + "_date_unknown"} className="checkbox_input side_drawer_input"/>
+                </div>
 
-                <p className="side_drawer_full_line">Displayed date: {this.props.displayedDate}</p>
+                <div className="side_drawer_row">
+                    <label htmlFor={this.props.dateOfStr + "_date_imprecise"} className={this.getLabelClass("checkbox_input_label", this.props.unknownDate)}>Uncertain of exact year:</label>
+                    <input disabled={this.props.disabled || this.props.unknownDate} checked={this.props.unsurePreciseYear} onChange={(e) => this.props.handleChangeBool(e, "unsurePreciseYearOf" + this.props.propertySuffix)} type="checkbox" name={this.props.dateOfStr + "_date_imprecise"} className="checkbox_input side_drawer_input"/>
+                    
+                    <label htmlFor={this.props.dateOfStr + "_date_full"} className={this.getLabelClass("checkbox_input_label", this.props.unknownDate)}>Use month and day:</label>
+                    <input disabled={this.props.disabled || this.props.unknownDate} checked={this.props.useFull} onChange={(e) => this.props.handleChangeBool(e, "useFullDate" + this.props.propertySuffix)} type="checkbox" name={this.props.dateOfStr + "_date_full"} className="checkbox_input side_drawer_input"/>
+                </div>
 
-
-                
+                <div className="side_drawer_row">
+                    <label htmlFor={this.props.dateOfStr + "_day"} className={this.getLabelClass("date_input_label", this.props.unknownDate)}>Day:</label>
+                    <input disabled={this.props.disabled || this.props.unknownDate} value={this.props.date.getDate()} onChange={(e) => this.changeDay(e)} type="number" name={this.props.dateOfStr + "_day"} className="date_input side_drawer_input"/>
+                    <label htmlFor={this.props.dateOfStr + "_month"} className={this.getLabelClass("date_input_label", this.props.unknownDate)}>Month:</label>
+                    <input disabled={this.props.disabled || this.props.unknownDate} value={this.props.date.getMonth() + 1} onChange={(e) => this.changeMonth(e)} type="number" name={this.props.dateOfStr + "_month"} className="date_input side_drawer_input"/>
+                    <label htmlFor={this.props.dateOfStr + "_year"} className={this.getLabelClass("date_input_label", this.props.unknownDate)}>Year:</label>
+                    <input disabled={this.props.disabled || this.props.unknownDate} value={this.props.date.getFullYear()} onChange={(e) => this.changeYear(e)} type="number" name={this.props.dateOfStr + "_year"} className="date_input side_drawer_input"/>
+                </div>
+                <p className="side_drawer_row">Displayed date: {(this.props.disabled) ? "none" : this.props.displayedDate}</p>                
             </div>
         );
     }

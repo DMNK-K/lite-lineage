@@ -22,7 +22,8 @@ box-sizing: border-box;
   --color_text_prim: rgb(255, 255, 255);
   --color_text_sec: rgb(219, 219, 219);
   --color_text_tert: rgba(197, 197, 197, 0.5);
-  --color_text_input: rgb(0, 0, 0);
+  --color_text_input: rgb(224, 224, 224);
+  --color_text_disabled: rgb(255, 255, 255, 0.2);
 
   --space-cadet: rgb(42, 50, 75);
 
@@ -311,17 +312,17 @@ h2
 
 .side_drawer_content
 {
-  padding-top:1vh;
+  padding-top:10px;
   padding-left: 2.5%;
   padding-right: 2.5%;
-  line-height: 3vh;
+  font-size: 16px;
   height:95%;
   overflow-y:auto;
 }
 
 .side_drawer_content_section
 {
-  margin-bottom: 3vh;
+  margin-bottom: 36px;
 }
 
 h3
@@ -347,51 +348,90 @@ h3
   border-radius: 0;
 }
 
-.side_drawer_full_line
+.side_drawer_row
+{
+  display:block;
+  width:100%;
+  height:32px;
+  padding-top: 4px;
+  padding-bottom:4px;
+  font-size:15px;
+  line-height: 24px;
+  /* border:yellow solid 1px; */
+}
+
+.word_input_label
 {
   display: inline-block;
-  width:100%;
+  height:100%;
+  width:40%;
+}
+
+.checkbox_input_label
+{
+  display: inline-block;
+  height:100%;
+}
+
+.date_input_label
+{
+  display: inline-block;
+  height:100%;
+}
+
+.label_disabled
+{
+  color:var(--color_text_disabled);
 }
 
 .side_drawer_input
 {
   text-align: center;
   font-family: var(--font_input);
+  background-color: var(--color_bcg);
+  color:var(--color_text_input);
+  border: none;
 }
 
-.word_input_label
+.side_drawer_input:disabled
 {
-  display: inline-block;
-  width:42%;
-}
-
-.checkbox_input_label
-{
-  display: inline-block;
-  width:80%;
-  text-align: right;
-}
-
-.date_input_label
-{
-  display: inline-block;
-  width:18%;
-  text-align: right;
+  color:var(--color_text_disabled);
+  cursor: default;
 }
 
 .word_input
 {
-  width:56%;
+  width:58%;
+  height:100%;
 }
 
 .checkbox_input
 {
+  cursor:pointer;
+  width:18px;
+  height:18px;
+  margin:3px 4% 3px 1%;
+  vertical-align: middle;
+}
 
+.parent_select
+{
+  width:40%;
+  height:100%;
+  margin-left: 2%;
+  background-color: var(--color_tertiary);
+  color:var(--color_text_prim);
+  font-family:var(--font_input);
+  border:none;
+  cursor:pointer;
 }
 
 .date_input
 {
   width: 15%;
+  height: 100%;;
+  margin-left:2%;
+  margin-right:4%;
 }
 
 .multiline_input

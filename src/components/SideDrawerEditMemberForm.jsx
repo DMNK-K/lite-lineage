@@ -135,7 +135,9 @@ class EditMemberForm extends Component
     render()
     {
         const healthProblemInputs = this.props.editedPerson.healthProblems.map((problem, index) => (
-            <input value={problem} onChange={this.changeHealthProblem.bind(this)} type="text" key={index} name={"health_problem_" + index} className="word_input side_drawer_input"/>
+            <div className="side_drawer_row">
+                <input value={problem} onChange={this.changeHealthProblem.bind(this)} type="text" key={index} name={"health_problem_" + index} className="word_input side_drawer_input"/>
+            </div>
         ));
 
         const potentialParents0 = this.props.editedPerson.getValidPotentialParents(this.props.family, true, false);
@@ -143,25 +145,34 @@ class EditMemberForm extends Component
         const currentParents = this.props.editedPerson.getCurrentParents(this.props.family);
 
         return (
-            <form>
+            <div>
                 <div className="side_drawer_content_section">
-                    <label htmlFor="name_first" className="word_input_label">First name:</label>
-                    <input value={this.props.editedPerson.firstName} onChange={(e) => this.changeName(e, "firstName")} type="text" name="name_first" className="word_input side_drawer_input"/>
+                    <div className="side_drawer_row">
+                        <label htmlFor="name_first" className="word_input_label">First name:</label>
+                        <input value={this.props.editedPerson.firstName} onChange={(e) => this.changeName(e, "firstName")} type="text" name="name_first" className="word_input side_drawer_input"/>
+                    </div>
 
-                    <label htmlFor="name_second" className="word_input_label">Second name:</label>
-                    <input value={this.props.editedPerson.secondName} onChange={(e) => this.changeName(e, "secondName")} type="text" name="name_second" className="word_input side_drawer_input"/>
+                    <div className="side_drawer_row">
+                        <label htmlFor="name_second" className="word_input_label">Second name:</label>
+                        <input value={this.props.editedPerson.secondName} onChange={(e) => this.changeName(e, "secondName")} type="text" name="name_second" className="word_input side_drawer_input"/>
+                    </div>
 
-                    <label htmlFor="name_last" className="word_input_label">Last name:</label>
-                    <input value={this.props.editedPerson.lastName} onChange={(e) => this.changeName(e, "lastName")} type="text" name="name_last" className="word_input side_drawer_input"/>
+                    <div className="side_drawer_row">
+                        <label htmlFor="name_last" className="word_input_label">Last name:</label>
+                        <input value={this.props.editedPerson.lastName} onChange={(e) => this.changeName(e, "lastName")} type="text" name="name_last" className="word_input side_drawer_input"/>
+                    </div>
 
-                    <label htmlFor="is_dead" className="checkbox_input_label">Deceased:</label>
-                    <input checked={this.props.editedPerson.isDead} onChange={(e) => this.changeBool(e, "isDead")} type="checkbox" name="is_dead" className="checkbox_input side_drawer_input"/>
+                    <div className="side_drawer_row">
+                        <label htmlFor="is_dead" className="checkbox_input_label">Deceased:</label>
+                        <input checked={this.props.editedPerson.isDead} onChange={(e) => this.changeBool(e, "isDead")} type="checkbox" name="is_dead" className="checkbox_input side_drawer_input"/>
+                    </div>
                 </div>
 
                 <div className="side_drawer_content_section">
-                    <p className="side_drawer_full_line">Parents:</p>
-                    <SelectParent handleChange={this.changeParents} currentParent={currentParents[0]} potentialParents={potentialParents0} parentSlotIndex={0} noneSign={this.#noneSign}/>
-                    <SelectParent handleChange={this.changeParents} currentParent={currentParents[1]} potentialParents={potentialParents1} parentSlotIndex={1} noneSign={this.#noneSign}/>
+                    <div className="side_drawer_row">Parents:
+                        <SelectParent handleChange={this.changeParents} currentParent={currentParents[0]} potentialParents={potentialParents0} parentSlotIndex={0} noneSign={this.#noneSign}/>
+                        <SelectParent handleChange={this.changeParents} currentParent={currentParents[1]} potentialParents={potentialParents1} parentSlotIndex={1} noneSign={this.#noneSign}/>
+                    </div>
                 </div>
 
                 <SpecialDateInput
@@ -174,51 +185,65 @@ class EditMemberForm extends Component
                     handleChangeDate={this.changeDate}
                     handleChangeBool={this.changeBool}
                     propertySuffix={"Birth"}
+                    disabled={false}
                 />
 
-                {this.props.editedPerson.isDead && (
-                    <SpecialDateInput
-                        date={this.props.editedPerson.dateDeath}
-                        useFull={this.props.editedPerson.useFullDateDeath}
-                        unsurePreciseYear={this.props.editedPerson.unsurePreciseYearOfDeath}
-                        unknownDate={this.props.editedPerson.unknownDateOfDeath}
-                        dateOfStr={"death"}
-                        displayedDate={this.props.editedPerson.getDisplayDateDeath()}
-                        handleChangeDate={this.changeDate}
-                        handleChangeBool={this.changeBool}
-                        propertySuffix={"Death"}
-                    />
-                )}
+                <SpecialDateInput
+                    date={this.props.editedPerson.dateDeath}
+                    useFull={this.props.editedPerson.useFullDateDeath}
+                    unsurePreciseYear={this.props.editedPerson.unsurePreciseYearOfDeath}
+                    unknownDate={this.props.editedPerson.unknownDateOfDeath}
+                    dateOfStr={"death"}
+                    displayedDate={this.props.editedPerson.getDisplayDateDeath()}
+                    handleChangeDate={this.changeDate}
+                    handleChangeBool={this.changeBool}
+                    propertySuffix={"Death"}
+                    disabled={!this.props.editedPerson.isDead}
+                />
 
                 <div className="side_drawer_content_section">
+                    <div className="side_drawer_row">
                     <label htmlFor="cause_of_death" className="word_input_label">Cause of death:</label>
-                    <input value={this.props.editedPerson.causeOfDeath} onChange={(e) => this.changeStr(e, "causeOfDeath")} type="text" name="cause_of_death" className="word_input side_drawer_input"/>
+                    <input disabled={!this.props.editedPerson.isDead} value={this.props.editedPerson.causeOfDeath} onChange={(e) => this.changeStr(e, "causeOfDeath")} type="text" name="cause_of_death" className="word_input side_drawer_input"/>
+                    </div>
 
+                    <div className="side_drawer_row">
                     <label htmlFor="place_birth" className="word_input_label">Place of birth:</label>
                     <input value={this.props.editedPerson.placeBirth} onChange={(e) => this.changeStr(e, "placeBirth")} type="text" name="place_birth" className="word_input side_drawer_input"/>
+                    </div>
 
+                    <div className="side_drawer_row">
                     <label htmlFor="place_death" className="word_input_label">Place of death:</label>
-                    <input value={this.props.editedPerson.placeDeath} onChange={(e) => this.changeStr(e, "placeDeath")} type="text" name="place_death" className="word_input side_drawer_input"/>
+                    <input disabled={!this.props.editedPerson.isDead} value={this.props.editedPerson.placeDeath} onChange={(e) => this.changeStr(e, "placeDeath")} type="text" name="place_death" className="word_input side_drawer_input"/>
+                    </div>
                 </div>
                 
                 <div className="side_drawer_content_section">
+                    <div className="side_drawer_row">
                     <label htmlFor="color_eye" className="word_input_label">Eye color:</label>
                     <input value={this.props.editedPerson.colorEyes} onChange={(e) => this.changeStr(e, "colorEyes")} type="text" name="color_eye" className="word_input side_drawer_input"/>
-
-                    <label htmlFor="color_hair" className="word_input_label">Hair color:</label>
-                    <input value={this.props.editedPerson.colorHair} onChange={(e) => this.changeStr(e, "colorHair")} type="text" name="color_hair" className="word_input side_drawer_input"/>
-
-                    <div className="side_drawer_input_list">
-                        <p className="side_drawer_full_line">Diseases and health problems:</p>
-                        {healthProblemInputs}
-                        <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, 1)}>+</button>
-                        <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, -1)}>-</button>
                     </div>
 
-                    <label htmlFor="notes" className="side_drawer_full_line">Notes:</label>
+                    <div className="side_drawer_row">
+                    <label htmlFor="color_hair" className="word_input_label">Hair color:</label>
+                    <input value={this.props.editedPerson.colorHair} onChange={(e) => this.changeStr(e, "colorHair")} type="text" name="color_hair" className="word_input side_drawer_input"/>
+                    </div>
+                </div>
+
+                <div className="side_drawer_content_section">
+                    <div className="side_drawer_input_list">
+                        <p className="side_drawer_row">Diseases and health problems:</p>
+                        {healthProblemInputs}
+                        <div className="side_drawer_row">
+                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, 1)}>+</button>
+                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, -1)}>-</button>
+                        </div>
+                    </div>
+
+                    <label htmlFor="notes" className="side_drawer_row">Notes:</label>
                     <textarea value={this.props.editedPerson.notes} onChange={this.changeNotes} name="notes" className="multiline_input side_drawer_input"/> 
                 </div>
-            </form>
+            </div>
         );
     }
 }

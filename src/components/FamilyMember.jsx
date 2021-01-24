@@ -42,11 +42,11 @@ class FamilyMember extends Component
         return (
             <div className={"family_member family_member_zoom_" + this.props.zoomLvl} style={this.calcCssPosObj()}>
                 <div className="family_member_dragger" onMouseDown={this.props.startDrag.bind(this, this.props.person.id)}>
-                    <img src={IconDrag}/>
+                    <img alt="indicator of drag" src={IconDrag}/>
                 </div>
                 <div className="family_member_bar">
                     <button className="family_member_task_button" onClick={this.props.startEdit.bind(this, this.props.person.id)}>
-                        <img src={IconEdit} className="family_member_task_icon"/>
+                        <img alt="edit icon" src={IconEdit} className="family_member_task_icon"/>
                     </button>
                     <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "child", this.props.person.id)}>
                         ADD CHILD
@@ -55,20 +55,20 @@ class FamilyMember extends Component
                         ADD PARENT
                     </button>
                     <button className="family_member_task_button" onClick={this.onDelete.bind(this, this.props.person.id)}>
-                        <img src={IconDelete} className="family_member_task_icon"/>
+                        <img alt="delete icon" src={IconDelete} className="family_member_task_icon"/>
                     </button>
                 </div>
                 <div className="family_member_name_wrapper">
                     <p className="family_member_name">{this.props.person.getDisplayName()}</p>
                 </div>
                 <p className="family_member_info family_member_info_single_line">
-                    <img src={IconBirth} className="family_member_icon"/>
+                    <img alt="icon birth" src={IconBirth} className="family_member_icon"/>
                     {this.props.person.getDisplayDateBirth()}
                 </p>
                 {
                     this.props.person.isDead === true && 
                     <p className="family_member_info family_member_info_single_line">
-                        <img src={IconDeath} className="family_member_icon"/>
+                        <img alt="icon death" src={IconDeath} className="family_member_icon"/>
                         {this.props.person.getDisplayDateDeath()}
                     </p>
                 }
