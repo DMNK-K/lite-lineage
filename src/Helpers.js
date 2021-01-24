@@ -4,7 +4,7 @@ const helpers = {
         //month 0-based as in js Date obj .getMonth(), eg january is 0
         switch (monthIntZeroBased) {
             case 1 :
-                return (yearInt % 4 == 0 && yearInt % 100 != 0) || yearInt % 400 == 0 ? 29 : 28;
+                return (yearInt % 4 === 0 && yearInt % 100 !== 0) || yearInt % 400 === 0 ? 29 : 28;
             case 8 : case 3 : case 5 : case 10 :
                 return 30;
             default :
@@ -87,7 +87,7 @@ const helpers = {
         }; 
     },
 
-    getSmallestAbsentPositiveNumber(array)
+    getSmallestAbsentNonNegativeNumber(array)
     {
       let i = 0;
       while(array.includes(i))

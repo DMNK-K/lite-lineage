@@ -52,7 +52,7 @@ class FamilyView extends Component
 
     reportDeletionToEdit(personId)
     {
-        if (this.state.editingPerson === true && this.state.editedPersonId != null && personId == this.state.editedPersonId)
+        if (this.state.editingPerson === true && this.state.editedPersonId != null && personId === this.state.editedPersonId)
         {
             this.endEdit();
         }
@@ -87,7 +87,7 @@ class FamilyView extends Component
         if (this.state.isDragging === true && this.state.draggedId != null && this.state.draggedId >= 0)
         {
             const newLocation = this.calcLocationFromOffset(offset);
-            const i = this.context.currentTree.family.findIndex(item => item.id == this.state.draggedId);
+            const i = this.context.currentTree.family.findIndex(item => item.id === this.state.draggedId);
             const draftPerson = Person.cloneFromOther(this.context.currentTree.family[i]);
             // console.log("new location: [" + newLocation.x + ", " + newLocation.y + "]");
             draftPerson.locationInTreeX = newLocation.x;
@@ -123,7 +123,7 @@ class FamilyView extends Component
 
     zoom(dir)
     {
-        if (dir == 0){return;}
+        if (dir === 0){return;}
         dir = (dir > 0) ? 1 : -1;
         this.setState((prevState, props) => (
             {
@@ -194,7 +194,7 @@ class FamilyView extends Component
             />
         );
 
-        const editedPersonIndex = this.context.currentTree.family.findIndex(item => item.id == this.state.editedPersonId);
+        const editedPersonIndex = this.context.currentTree.family.findIndex(item => item.id === this.state.editedPersonId);
         const editedPerson = (editedPersonIndex >= 0) ? this.context.currentTree.family[editedPersonIndex] : null;
 
         const sideDrawer = (
@@ -215,8 +215,8 @@ class FamilyView extends Component
             <div className="family_view">
                 {this.state.editingPerson === true && sideDrawer}
                 <div className="zoom_wrapper">
-                    <button onClick={this.zoom.bind(this, 1)} disabled={this.state.zoomLvl == this.#zoomMax}>+</button>
-                    <button onClick={this.zoom.bind(this, -1)} disabled={this.state.zoomLvl == this.#zoomMin}>-</button>
+                    <button onClick={this.zoom.bind(this, 1)} disabled={this.state.zoomLvl === this.#zoomMax}>+</button>
+                    <button onClick={this.zoom.bind(this, -1)} disabled={this.state.zoomLvl === this.#zoomMin}>-</button>
                 </div>
                 <div id="family_tree" className="family_tree" onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, document.getElementById("family_tree")) : undefined}>
                     {familyMembers}

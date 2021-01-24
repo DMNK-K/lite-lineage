@@ -106,7 +106,7 @@ class FamilyTree
             idExists = false;
             for(let i = 0; i < this.family.length; i++)
             {
-                if (newId == this.family[i].id) {idExists = true;}
+                if (newId === this.family[i].id) {idExists = true;}
             }
         }
         return newId;
@@ -135,7 +135,7 @@ class FamilyTree
 
     findFreeLocationVertically(idOfRefPerson, marginX, marginY, dir, checkPerifery, periferyRange)
     {
-        const i = this.family.findIndex(item => item.id == idOfRefPerson);
+        const i = this.family.findIndex(item => item.id === idOfRefPerson);
         if (i < 0) {return null;}
         const refPerson =  this.family[i];
         const searchRangeY = 100 + marginY;
@@ -165,7 +165,7 @@ class FamilyTree
     findFreeLocationNearby(idOfRefPerson, marginX, marginY, rangeX, rangeY)
     {
         //searches first to the sides, then moves up or down, first favouring down
-        const i = this.family.findIndex(item => item.id == idOfRefPerson);
+        const i = this.family.findIndex(item => item.id === idOfRefPerson);
         if (i < 0) {return null;}
         const refPerson =  this.family[i];
         const searchRangeX = rangeX + marginX;

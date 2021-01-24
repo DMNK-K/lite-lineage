@@ -53,6 +53,7 @@ class Person
             {
                 //special case for dates since JSON.stringify() makes it into string
                 //and then  JSON.parse() reads it as a string
+                //and for id to parse into int for === comparisons
                 if (property === "dateBirth")
                 {
                     this.dateBirth = new Date(parsedJsonObj[property]);
@@ -60,6 +61,10 @@ class Person
                 else if (property === "dateDeath")
                 {
                     this.dateDeath = new Date(parsedJsonObj[property]);
+                }
+                else if(property === "id")
+                {
+                    this.id = parseInt(parsedJsonObj[property], 10);
                 }
                 else
                 {
@@ -120,9 +125,9 @@ class Person
         const dateBirthThis = (this.unsurePreciseYearOfBirth) ? Helpers.floorDateYearTo(this.dateBirth, 10) : this.dateBirth;
         for(let i = 0; i < family.length; i++)
         {
-            if (this.id == family[i].id || family[i].parentId0 == this.id || family[i].parentId1 == this.id) {continue;}
-            if (family[i].id == this.parentId0 && !includeParent0){continue;}
-            if (family[i].id == this.parentId1 && !includeParent1){continue;}
+            if (this.id === family[i].id || family[i].parentId0 === this.id || family[i].parentId1 === this.id) {continue;}
+            if (family[i].id === this.parentId0 && !includeParent0){continue;}
+            if (family[i].id === this.parentId1 && !includeParent1){continue;}
 
             const dateBirthParent = (family[i].unsurePreciseYearOfBirth) ? Helpers.ceilDateYearTo(family[i].dateBirth, 10) : family[i].dateBirth;
             const fullDatesInBoth = this.useFullDateBirth && family[i].useFullDateBirth;
@@ -137,8 +142,8 @@ class Person
 
     getCurrentParents(family)
     {
-        const i0 = family.findIndex(item => item.id == this.parentId0);
-        const i1 = family.findIndex(item => item.id == this.parentId1);
+        const i0 = family.findIndex(item => item.id === this.parentId0);
+        const i1 = family.findIndex(item => item.id === this.parentId1);
         const returnArray = [null, null];
         if (i0 >= 0) {returnArray[0] = family[i0];}
         if (i1 >= 0) {returnArray[1] = family[i1];}
@@ -170,7 +175,7 @@ class Person
             used = false;
             for (let i = 0; i < this.healthProblems.length; i++)
             {
-                if (this.healthProblems[i].id == smallestId)
+                if (this.healthProblems[i].id === smallestId)
                 {
                     used = true;
                     break;

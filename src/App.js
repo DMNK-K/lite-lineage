@@ -225,7 +225,7 @@ class App extends Component
     }
     const newId = this.state.currentTree.findLowestUnusedFamilyMemberId();  
     const newPerson = new Person(newId);
-    const anchorPersonIndex = this.state.currentTree.family.findIndex(item => item.id == anchorPersonId);
+    const anchorPersonIndex = this.state.currentTree.family.findIndex(item => item.id === anchorPersonId);
     let draftAnchorPerson = null;
     if (anchorPersonIndex >= 0) {draftAnchorPerson = Person.cloneFromOther(this.state.currentTree.family[anchorPersonIndex]);}
 
@@ -278,7 +278,7 @@ class App extends Component
     //edited data should already be validated before it gets here
     //console.log("handling edit of person with id: " + personId + " (should match this one: "+ replacerPersonObj.id +")");
     let newFamily = [...this.state.currentTree.family];
-    const i = newFamily.findIndex(item => item.id == personId);
+    const i = newFamily.findIndex(item => item.id === personId);
     if (i >= 0)
     {
       newFamily[i] = replacerPersonObj;
@@ -303,12 +303,12 @@ class App extends Component
 
   handleEditFamMembers(personIds, replacerPersonObjs)
   {
-    if (personIds.length != replacerPersonObjs.length){return;}
+    if (personIds.length !== replacerPersonObjs.length){return;}
     console.log("trying to change multiple fam members");
     const newFamily = [...this.state.currentTree.family];
     for(let i = 0; i < personIds.length; i++)
     {
-      const index = newFamily.findIndex(item => item.id == personIds[i]);
+      const index = newFamily.findIndex(item => item.id === personIds[i]);
       if (index >= 0)
       {
         newFamily[index] = replacerPersonObjs[i];
@@ -327,7 +327,7 @@ class App extends Component
   handleDeleteFamMember(personId)
   {
     const newFamily = [...this.state.currentTree.family];
-    const i = newFamily.findIndex(item => item.id == personId);
+    const i = newFamily.findIndex(item => item.id === personId);
     if (i >= 0)
     {
       newFamily.splice(i, 1);

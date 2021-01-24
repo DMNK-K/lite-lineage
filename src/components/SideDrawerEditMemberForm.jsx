@@ -91,7 +91,7 @@ class EditMemberForm extends Component
     changeParents(e, parentIndex)
     {
         const newParentId = e.target.value;
-        if (parentIndex == 0 || parentIndex == 1)
+        if (parentIndex === 0 || parentIndex === 1)
         {
             const draftPerson = Person.cloneFromOther(this.props.editedPerson);
             draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : newParentId;
