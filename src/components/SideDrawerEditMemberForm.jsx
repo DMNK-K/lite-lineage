@@ -137,8 +137,8 @@ class EditMemberForm extends Component
     render()
     {
         const healthProblemInputs = this.props.editedPerson.healthProblems.map((problem) => (
-            <div className="side_drawer_row">
-                <input value={problem.text} onChange={this.changeHealthProblem.bind(this)} type="text" key={problem.id} name={"health_problem_" + problem.id} className="word_input side_drawer_input"/>
+            <div className="side_drawer_row" key={"hp_" + problem.id}>
+                <input value={problem.text} onChange={this.changeHealthProblem.bind(this)} type="text" name={"health_problem_" + problem.id} className="word_input side_drawer_input"/>
             </div>
         ));
 

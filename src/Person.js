@@ -183,6 +183,7 @@ class Person
             }
 
         } while(used);
+        console.log("smallestId: " + smallestId);
         return smallestId;
     }
 
