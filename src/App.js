@@ -355,7 +355,9 @@ class App extends Component
       <div className="notice_wrapper">
         {this.state.notices.cookies &&
             <Notice title="Cookies and Other Technologies" name="cookies" handleClose={this.toggleNotice}>
-
+              <p>Cookies are small text files stored on your device when you visit sites on the web. They are used for various purposes related to the functioning of a site, including registering your activity and remembering your preferences.</p>
+              <p>LiteLineage does NOT use cookies, however it does use your browser's local storage to save tree data, which functions in a similar way. Data saved in such a way is persistent between browsing sessions and does not leave your device, unless you decide to export this data to a separate file and bring it with you somewhere else. However, you might lose data saved in local storage when clearing browser data. Check your browser settings for more information.</p>
+              <p>By using this website you agree to local storage being used for saving and loading data for the purposes of providing the basic features such as tree editing, deletion, loading and saving for future viewing and editing.</p>
             </Notice>
           }
       </div>;

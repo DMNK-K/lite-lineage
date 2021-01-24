@@ -749,7 +749,14 @@ footer span
 .notice_content
 {
   height:94%;
-  padding:2%;
+  padding:3%;
   color:var(--color_text_sec);
   overflow-y: auto;
+}
+
+.notice_content p
+{
+  margin-bottom: 3%;
+  font-size: 16px;
+  line-height: 24px;
 }
