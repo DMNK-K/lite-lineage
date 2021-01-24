@@ -8,6 +8,7 @@ import React, { Component } from 'react';
 import FamilyTree from './FamilyTree';
 import Person from './Person';
 import TreeContext from './TreeContext';
+import Notice from './components/Notice';
 
 class App extends Component
 {
@@ -17,7 +18,8 @@ class App extends Component
       this.state = {
         treeNames: this.loadTreeNames(), //array of treeNames
         isInTree: false,
-        currentTree: null //null when none loaded, otherwise an instance of FamilyTree class
+        currentTree: null, //null when none loaded, otherwise an instance of FamilyTree class
+        notices: {cookies: false}
       }
       this.handleWindowClose = this.handleWindowClose.bind(this);
 
@@ -32,6 +34,8 @@ class App extends Component
       this.handleDeleteFamMember = this.handleDeleteFamMember.bind(this);
       this.handleEditFamMember = this.handleEditFamMember.bind(this);
       this.handleEditFamMembers = this.handleEditFamMembers.bind(this);
+
+      this.toggleNotice = this.toggleNotice.bind(this);
 
       this.treeHandlers = {
         handleNewTree: this.handleNewTree,
@@ -338,13 +342,30 @@ class App extends Component
     }
   }
 
+  toggleNotice(name, desiredState)
+  {
+    const draftObj = {...this.state.notices};
+    draftObj[name] = desiredState;
+    this.setState({notices: draftObj});
+  }
+
   render()
   {
+    const noticeWrapper = 
+      <div className="notice_wrapper">
+        {this.state.notices.cookies &&
+            <Notice title="Cookies and Other Technologies" name="cookies" handleClose={this.toggleNotice}>
+
+            </Notice>
+          }
+      </div>;
+
     return (
       <TreeContext.Provider className="app" value={{...this.state, treeHandlers: this.treeHandlers, familyHandlers: this.familyHandlers}}>
         <Header/>
+        {Object.values(this.state.notices).some(item => item === true) && noticeWrapper}
         <Content/>
-        <Footer/>
+        <Footer toggleNotice={this.toggleNotice}/>
       </TreeContext.Provider>
     );
   }
