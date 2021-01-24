@@ -22,3 +22,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # my own ignores:
+/img_project_files
