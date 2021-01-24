@@ -85,9 +85,18 @@ const helpers = {
           x: position.x - offset.left,
           y: position.y - offset.top,
         }; 
+    },
+
+    getSmallestAbsentPositiveNumber(array)
+    {
+      let i = 0;
+      while(array.includes(i))
+      {
+        i++;
+      }
+      return i;
     }
 
-    
 };
 
 export default helpers;

@@ -8,12 +8,6 @@ class Content extends Component
 {
     static contextType = TreeContext;
 
-    constructor(props)
-    {
-        super(props);
-        //this.state = {}
-    }
-    
     render()
     {
         return (

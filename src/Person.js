@@ -33,7 +33,7 @@ class Person
 
     colorEyes = "";
     colorHair = "";
-    healthProblems = [""];
+    healthProblems = [{text: "", id: 0},];
     notes = "";
 
     #signUnknown = "?";
@@ -53,11 +53,11 @@ class Person
             {
                 //special case for dates since JSON.stringify() makes it into string
                 //and then  JSON.parse() reads it as a string
-                if (property == "dateBirth")
+                if (property === "dateBirth")
                 {
                     this.dateBirth = new Date(parsedJsonObj[property]);
                 }
-                else if (property == "dateDeath")
+                else if (property === "dateDeath")
                 {
                     this.dateDeath = new Date(parsedJsonObj[property]);
                 }
@@ -158,6 +158,27 @@ class Person
     getLocation()
     {
         return {x: this.locationInTreeX, y: this.locationInTreeY};
+    }
+
+    getUnusedHealthProblemId()
+    {
+        let smallestId = -1;
+        let used = true;
+        do
+        {
+            smallestId++;
+            used = false;
+            for (let i = 0; i < this.healthProblems.length; i++)
+            {
+                if (this.healthProblems[i].id == smallestId)
+                {
+                    used = true;
+                    break;
+                }
+            }
+
+        } while(used);
+        return smallestId;
     }
 
     static cloneFromOther(otherPerson)

@@ -3,12 +3,6 @@ import '../App.css';
 
 class FamilyMemberExtension extends Component
 {
-    constructor(props)
-    {
-        super(props);
-        //this.state = {}
-    }
-    
     render()
     {
         return (

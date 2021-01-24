@@ -19,13 +19,13 @@ class FamilyConnection extends Component
     coordsToStr(coords)
     {
         let str = "";
-        console.log(coords);
+        // console.log(coords);
         for (let i = 0; i < coords.length; i++)
         {
             str += coords[i].x + "," + coords[i].y + " ";
         }
         str = str.slice(0, -1);
-        console.log(str);
+        // console.log(str);
         return str;
     }
 

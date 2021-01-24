@@ -42,7 +42,7 @@ class StartTreeButton extends Component
                     {this.props.treeName}
                 </button>
                 <button onClick={this.handleTryingToDelete} className="start_button_delete">
-                    <img src={IconDelete}/>
+                    <img alt="delete icon" src={IconDelete}/>
                 </button>
                 {(this.state.tryingToDelete === true && confirmation)}
             </div>

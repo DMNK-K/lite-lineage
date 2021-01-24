@@ -22,7 +22,7 @@ class EditMemberForm extends Component
         this.changeParents = this.changeParents.bind(this);
     }
 
-    //there's a bunch of similar methods, might need different processing for different types later
+    //there's a bunch of similar methods, because might need different processing for different types later
     changeName(e, propertyName)
     {
         const draftPerson = Person.cloneFromOther(this.props.editedPerson);
@@ -117,13 +117,13 @@ class EditMemberForm extends Component
 
     changeNumberOfHealthProblems(n)
     {
-        if (n == 0){return;}
-        if (n == -1 && this.props.editedPerson.healthProblems.length < 1){return;}
+        if (n === 0){return;}
+        if (n === -1 && this.props.editedPerson.healthProblems.length < 1){return;}
 
         const draftPerson = Person.cloneFromOther(this.props.editedPerson);
         if (n > 0)
         {
-            draftPerson.healthProblems.push("");
+            draftPerson.healthProblems.push({text:"", id: draftPerson.getUnusedHealthProblemId()});
         }
         else
         {
@@ -132,11 +132,13 @@ class EditMemberForm extends Component
         this.props.handleEdit(this.props.editedPerson.id, draftPerson);
     }
 
+    component
+
     render()
     {
-        const healthProblemInputs = this.props.editedPerson.healthProblems.map((problem, index) => (
+        const healthProblemInputs = this.props.editedPerson.healthProblems.map((problem) => (
             <div className="side_drawer_row">
-                <input value={problem} onChange={this.changeHealthProblem.bind(this)} type="text" key={index} name={"health_problem_" + index} className="word_input side_drawer_input"/>
+                <input value={problem.text} onChange={this.changeHealthProblem.bind(this)} type="text" key={problem.id} name={"health_problem_" + problem.id} className="word_input side_drawer_input"/>
             </div>
         ));
 
