@@ -88,13 +88,14 @@ class EditMemberForm extends Component
         }
     }
 
-    changeParents(e, parentIndex)
+    changeParents(newParentId, parentIndex)
     {
-        const newParentId = e.target.value;
+        // console.log("newParentId: " + newParentId + " for parentIndex: " + parentIndex);
         if (parentIndex === 0 || parentIndex === 1)
         {
             const draftPerson = Person.cloneFromOther(this.props.editedPerson);
-            draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : newParentId;
+            draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : parseInt(newParentId, 10);
+            // console.log("draftPerson new parent: " + draftPerson["parentId" + parentIndex]);
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
         else
@@ -103,14 +104,15 @@ class EditMemberForm extends Component
         }
     }
 
-    changeHealthProblem(e)
+    changeHealthProblem(e, problemId)
     {
-        const index = e.target.name.replace("health_problem_", "");
-        console.log(e);
+        problemId = parseInt(problemId, 10);
+        const index = this.props.editedPerson.healthProblems.findIndex(item => item.id === problemId);
+        // console.log(e);
         if (this.props.editedPerson.healthProblems.length > index && index >= 0)
         {
             const draftPerson = Person.cloneFromOther(this.props.editedPerson);
-            draftPerson.healthProblems[index] = e.target.value;
+            draftPerson.healthProblems[index] = {text: e.target.value, id: problemId};
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
     }
@@ -138,7 +140,7 @@ class EditMemberForm extends Component
     {
         const healthProblemInputs = this.props.editedPerson.healthProblems.map((problem) => (
             <div className="side_drawer_row" key={"hp_" + problem.id}>
-                <input value={problem.text} onChange={this.changeHealthProblem.bind(this)} type="text" name={"health_problem_" + problem.id} className="word_input side_drawer_input"/>
+                <input value={problem.text} onChange={(e)=>this.changeHealthProblem(e, problem.id)} type="text" name={"health_problem_" + problem.id} className="word_input side_drawer_input"/>
             </div>
         ));
 
@@ -205,7 +207,7 @@ class EditMemberForm extends Component
 
                 <div className="side_drawer_content_section">
                     <div className="side_drawer_row">
-                    <label htmlFor="cause_of_death" className="word_input_label">Cause of death:</label>
+                    <label htmlFor="cause_of_death" className={"word_input_label" + ((this.props.editedPerson.isDead) ? "" : " label_disabled")}>Cause of death:</label>
                     <input disabled={!this.props.editedPerson.isDead} value={this.props.editedPerson.causeOfDeath} onChange={(e) => this.changeStr(e, "causeOfDeath")} type="text" name="cause_of_death" className="word_input side_drawer_input"/>
                     </div>
 
@@ -215,7 +217,7 @@ class EditMemberForm extends Component
                     </div>
 
                     <div className="side_drawer_row">
-                    <label htmlFor="place_death" className="word_input_label">Place of death:</label>
+                    <label htmlFor="place_death" className={"word_input_label" + ((this.props.editedPerson.isDead) ? "" : " label_disabled")}>Place of death:</label>
                     <input disabled={!this.props.editedPerson.isDead} value={this.props.editedPerson.placeDeath} onChange={(e) => this.changeStr(e, "placeDeath")} type="text" name="place_death" className="word_input side_drawer_input"/>
                     </div>
                 </div>
@@ -237,8 +239,8 @@ class EditMemberForm extends Component
                         <p className="side_drawer_row">Diseases and health problems:</p>
                         {healthProblemInputs}
                         <div className="side_drawer_row">
-                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, 1)}>+</button>
-                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, -1)}>-</button>
+                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, 1)}>ADD</button>
+                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, -1)}>REMOVE</button>
                         </div>
                     </div>
 

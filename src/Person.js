@@ -183,8 +183,13 @@ class Person
             }
 
         } while(used);
-        console.log("smallestId: " + smallestId);
+        // console.log("smallestId: " + smallestId);
         return smallestId;
+    }
+
+    getHealthProblemsText()
+    {
+        return this.healthProblems.map(item => item.text);
     }
 
     static cloneFromOther(otherPerson)
