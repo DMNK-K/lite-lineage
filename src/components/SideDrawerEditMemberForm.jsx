@@ -95,7 +95,7 @@ class EditMemberForm extends Component
         if (parentIndex === 0 || parentIndex === 1)
         {
             const draftPerson = Person.cloneFromOther(this.props.editedPerson);
-            draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : parseInt(newParentId);
+            draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : parseInt(newParentId, 10);
             // console.log("draftPerson new parent: " + draftPerson["parentId" + parentIndex]);
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
@@ -105,14 +105,15 @@ class EditMemberForm extends Component
         }
     }
 
-    changeHealthProblem(e)
+    changeHealthProblem(e, problemId)
     {
-        const index = e.target.name.replace("health_problem_", "");
-        console.log(e);
+        problemId = parseInt(problemId, 10);
+        const index = this.props.editedPerson.healthProblems.findIndex(item => item.id === problemId);
+        // console.log(e);
         if (this.props.editedPerson.healthProblems.length > index && index >= 0)
         {
             const draftPerson = Person.cloneFromOther(this.props.editedPerson);
-            draftPerson.healthProblems[index] = e.target.value;
+            draftPerson.healthProblems[index] = {text: e.target.value, id: problemId};
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
     }
@@ -140,7 +141,7 @@ class EditMemberForm extends Component
     {
         const healthProblemInputs = this.props.editedPerson.healthProblems.map((problem) => (
             <div className="side_drawer_row" key={"hp_" + problem.id}>
-                <input value={problem.text} onChange={this.changeHealthProblem.bind(this)} type="text" name={"health_problem_" + problem.id} className="word_input side_drawer_input"/>
+                <input value={problem.text} onChange={(e)=>this.changeHealthProblem(e, problem.id)} type="text" name={"health_problem_" + problem.id} className="word_input side_drawer_input"/>
             </div>
         ));
 

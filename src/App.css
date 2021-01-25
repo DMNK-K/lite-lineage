@@ -358,6 +358,11 @@ h2
   margin-bottom: 36px;
 }
 
+.side_drawer_content_section:last-child
+{
+  margin-bottom: 8px;
+}
+
 h3
 {
   width:calc(100% - 4vh);
@@ -839,6 +844,12 @@ footer span
   {
     width: 35%;
   }
+
+  .start_view
+  {
+    width: 70%;
+    margin-left:15%;
+  }
 }
 
 @media screen and (max-width: 1440px)
@@ -846,6 +857,12 @@ footer span
   .side_drawer
   {
     width: 45%;
+  }
+
+  .start_view
+  {
+    width: 80%;
+    margin-left:10%;
   }
 
   .zoom_wrapper button
@@ -863,5 +880,9 @@ footer span
     width: 100%;
   }
 
-
+  .start_view
+  {
+    width: 96%;
+    margin-left:2%;
+  }
 }
