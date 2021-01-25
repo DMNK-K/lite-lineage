@@ -16,7 +16,7 @@ class FamilyMemberExtension extends Component
                 }
                 <p className="family_member_info">Eye color: {this.props.person.colorEyes}</p>
                 <p className="family_member_info">Hair color: {this.props.person.colorHair}</p>
-                <p className="family_member_info">Health problems: {this.props.person.healthProblems.join(", ")}</p>
+                <p className="family_member_info">Health problems: {this.props.person.getHealthProblemsText().join(", ")}</p>
                 <p className="family_member_info">Notes: {this.props.person.notes}</p>
             </div>
         );

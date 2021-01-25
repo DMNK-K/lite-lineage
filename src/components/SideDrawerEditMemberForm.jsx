@@ -91,10 +91,12 @@ class EditMemberForm extends Component
     changeParents(e, parentIndex)
     {
         const newParentId = e.target.value;
+        // console.log("newParentId: " + newParentId + " for parentIndex: " + parentIndex);
         if (parentIndex === 0 || parentIndex === 1)
         {
             const draftPerson = Person.cloneFromOther(this.props.editedPerson);
-            draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : newParentId;
+            draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : parseInt(newParentId);
+            // console.log("draftPerson new parent: " + draftPerson["parentId" + parentIndex]);
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
         else
@@ -237,8 +239,8 @@ class EditMemberForm extends Component
                         <p className="side_drawer_row">Diseases and health problems:</p>
                         {healthProblemInputs}
                         <div className="side_drawer_row">
-                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, 1)}>+</button>
-                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, -1)}>-</button>
+                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, 1)}>ADD</button>
+                            <button type="button" onClick={this.changeNumberOfHealthProblems.bind(this, -1)}>REMOVE</button>
                         </div>
                     </div>
 

@@ -276,9 +276,9 @@ class App extends Component
   handleEditFamMember(personId, replacerPersonObj)
   {
     //edited data should already be validated before it gets here
-    //console.log("handling edit of person with id: " + personId + " (should match this one: "+ replacerPersonObj.id +")");
     let newFamily = [...this.state.currentTree.family];
     const i = newFamily.findIndex(item => item.id === personId);
+    // console.log("Handling edit of person with id: " + personId + " (should match this one: "+ replacerPersonObj.id +"). Their index within family is: " + i);
     if (i >= 0)
     {
       newFamily[i] = replacerPersonObj;
