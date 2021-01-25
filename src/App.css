@@ -459,14 +459,53 @@ h3
 
 .parent_select
 {
+  position:relative;
+  display:inline-block;
   width:40%;
   height:100%;
   margin-left: 2%;
+  padding:0;
   background-color: var(--color_tertiary);
   color:var(--color_text_prim);
   font-family:var(--font_input);
+  text-align:center;
   border:none;
   cursor:pointer;
+}
+
+.parent_select p
+{
+  width:93%;
+  height:100%;
+  display:inline-block;
+}
+
+.parent_select_arrow
+{
+  width:5%;
+  margin-right:2%;
+  height:auto;
+  filter:invert();
+}
+
+.parent_select_tray
+{
+  position:absolute;
+  top:100%;
+  width:100%;
+  background-color: var(--color_secondary);
+}
+
+.parent_select_tray button
+{
+  width:100%;
+  background-color: var(--color_secondary);
+  margin:0;
+}
+
+.parent_select_tray button:hover
+{
+  background-color: var(--color_primary_hover);
 }
 
 .date_input

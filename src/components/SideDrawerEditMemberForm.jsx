@@ -88,15 +88,14 @@ class EditMemberForm extends Component
         }
     }
 
-    changeParents(e, parentIndex)
+    changeParents(newParentId, parentIndex)
     {
-        const newParentId = e.target.value;
-        // console.log("newParentId: " + newParentId + " for parentIndex: " + parentIndex);
+        console.log("newParentId: " + newParentId + " for parentIndex: " + parentIndex);
         if (parentIndex === 0 || parentIndex === 1)
         {
             const draftPerson = Person.cloneFromOther(this.props.editedPerson);
             draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : parseInt(newParentId, 10);
-            // console.log("draftPerson new parent: " + draftPerson["parentId" + parentIndex]);
+            console.log("draftPerson new parent: " + draftPerson["parentId" + parentIndex]);
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
         else
