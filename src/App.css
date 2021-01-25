@@ -20,6 +20,7 @@
   --color_secondary_alt: rgb(2, 77, 121);
   --color_tertiary: rgb(26, 142, 155);
   --color_angry: rgb(172, 9, 58);
+  --color_angry_hover: rgb(201, 21, 51);
 
   --color_text_prim: rgb(255, 255, 255);
   --color_text_sec: rgb(219, 219, 219);
@@ -786,7 +787,7 @@ footer span
 {
   width:5vh;
   height:5vh;
-  background-color: var(--color_angry);
+  position: relative;
 }
 
 .notice_content
@@ -803,6 +804,31 @@ footer span
   font-size: 16px;
   line-height: 24px;
 }
+
+
+
+.close_button
+{
+  background-color: var(--color_angry);
+  padding:0;
+}
+
+.close_button:hover
+{
+  background-color:var(--color_angry_hover);
+}
+
+.close_button img
+{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  filter:invert();
+  width:35%;
+  height:auto;
+}
+
 
 /* ================================================================= */
 /* ============== MEDIA QUERIES SECTION ============================ */
