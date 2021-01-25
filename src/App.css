@@ -19,6 +19,7 @@
   --color_secondary: rgb(2, 77, 121);
   --color_secondary_alt: rgb(2, 77, 121);
   --color_tertiary: rgb(26, 142, 155);
+  --color_tertiary_hover: rgb(29, 157, 172);
   --color_angry: rgb(172, 9, 58);
   --color_angry_hover: rgb(201, 21, 51);
 
@@ -471,6 +472,12 @@ h3
   text-align:center;
   border:none;
   cursor:pointer;
+  transition:background-color 0.15s;
+}
+
+.parent_select:hover
+{
+  background-color: var(--color_tertiary_hover);
 }
 
 .parent_select p

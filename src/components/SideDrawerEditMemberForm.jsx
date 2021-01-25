@@ -90,12 +90,12 @@ class EditMemberForm extends Component
 
     changeParents(newParentId, parentIndex)
     {
-        console.log("newParentId: " + newParentId + " for parentIndex: " + parentIndex);
+        // console.log("newParentId: " + newParentId + " for parentIndex: " + parentIndex);
         if (parentIndex === 0 || parentIndex === 1)
         {
             const draftPerson = Person.cloneFromOther(this.props.editedPerson);
             draftPerson["parentId" + parentIndex] = (newParentId === this.#noneSign) ? null : parseInt(newParentId, 10);
-            console.log("draftPerson new parent: " + draftPerson["parentId" + parentIndex]);
+            // console.log("draftPerson new parent: " + draftPerson["parentId" + parentIndex]);
             this.props.handleEdit(this.props.editedPerson.id, draftPerson);
         }
         else
@@ -207,7 +207,7 @@ class EditMemberForm extends Component
 
                 <div className="side_drawer_content_section">
                     <div className="side_drawer_row">
-                    <label htmlFor="cause_of_death" className="word_input_label">Cause of death:</label>
+                    <label htmlFor="cause_of_death" className={"word_input_label" + ((this.props.editedPerson.isDead) ? "" : " label_disabled")}>Cause of death:</label>
                     <input disabled={!this.props.editedPerson.isDead} value={this.props.editedPerson.causeOfDeath} onChange={(e) => this.changeStr(e, "causeOfDeath")} type="text" name="cause_of_death" className="word_input side_drawer_input"/>
                     </div>
 
@@ -217,7 +217,7 @@ class EditMemberForm extends Component
                     </div>
 
                     <div className="side_drawer_row">
-                    <label htmlFor="place_death" className="word_input_label">Place of death:</label>
+                    <label htmlFor="place_death" className={"word_input_label" + ((this.props.editedPerson.isDead) ? "" : " label_disabled")}>Place of death:</label>
                     <input disabled={!this.props.editedPerson.isDead} value={this.props.editedPerson.placeDeath} onChange={(e) => this.changeStr(e, "placeDeath")} type="text" name="place_death" className="word_input side_drawer_input"/>
                     </div>
                 </div>

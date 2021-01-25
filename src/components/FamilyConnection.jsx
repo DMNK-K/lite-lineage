@@ -16,19 +16,7 @@ class FamilyConnection extends Component
         return loc.mult(this.props.locationScale).add(new V2(this.props.lineCenteringOffset.x, this.props.lineCenteringOffset.y));
     }
 
-    coordsToStr(coords)
-    {
-        let str = "";
-        // console.log(coords);
-        for (let i = 0; i < coords.length; i++)
-        {
-            str += coords[i].x + "," + coords[i].y + " ";
-        }
-        str = str.slice(0, -1);
-        // console.log(str);
-        return str;
-    }
-
+    
     calcCoords()
     {
         let locA1 = (this.props.personA1) ? new V2(this.props.personA1.locationInTreeX, this.props.personA1.locationInTreeY) : null;
@@ -66,6 +54,19 @@ class FamilyConnection extends Component
                 return [parentPoint, bend1, bend2, endPoint];
             }
         }
+    }
+    
+    coordsToStr(coords)
+    {
+        let str = "";
+        // console.log(coords);
+        for (let i = 0; i < coords.length; i++)
+        {
+            str += coords[i].x + "," + coords[i].y + " ";
+        }
+        str = str.slice(0, -1);
+        // console.log(str);
+        return str;
     }
     
     render()
