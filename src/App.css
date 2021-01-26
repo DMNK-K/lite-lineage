@@ -192,7 +192,7 @@ h1
 .header_button_mobile
 {
   width:100%;
-
+  height:6vh;
   margin:0;
 }
 
@@ -866,6 +866,7 @@ footer span
   width:calc(100% - 5vh);
   height:100%;
   line-height: 5vh;
+  font-size: 18px;
   text-align: center;
 }
 
@@ -1013,5 +1014,35 @@ footer span
     justify-content: center;
     align-content: center;
     flex-direction: column;
+  }
+
+  .notice_bar p
+  {
+    font-size: 16px;
+  }
+
+  .notice_content p
+  {
+    font-size: 14px;
+    line-height:20px;
+  }
+}
+
+@media screen and (max-width: 380px)
+{
+  .side_drawer_row
+  {
+    font-size:12px;
+  }
+
+  .side_drawer_input
+  {
+    font-size:12px;
+  }
+
+  .notice_content p
+  {
+    font-size: 12px;
+    line-height:18px;
   }
 }
