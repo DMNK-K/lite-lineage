@@ -65,7 +65,9 @@ class SpecialDateInput extends Component
                 <div className="side_drawer_row">
                     <label htmlFor={this.props.dateOfStr + "_date_imprecise"} className={this.getLabelClass("checkbox_input_label", this.props.unknownDate)}>Uncertain of exact year:</label>
                     <input disabled={this.props.disabled || this.props.unknownDate} checked={this.props.unsurePreciseYear} onChange={(e) => this.props.handleChangeBool(e, "unsurePreciseYearOf" + this.props.propertySuffix)} type="checkbox" name={this.props.dateOfStr + "_date_imprecise"} className="checkbox_input side_drawer_input"/>
-                    
+                </div>
+
+                <div className="side_drawer_row">
                     <label htmlFor={this.props.dateOfStr + "_date_full"} className={this.getLabelClass("checkbox_input_label", this.props.unknownDate)}>Use month and day:</label>
                     <input disabled={this.props.disabled || this.props.unknownDate} checked={this.props.useFull} onChange={(e) => this.props.handleChangeBool(e, "useFullDate" + this.props.propertySuffix)} type="checkbox" name={this.props.dateOfStr + "_date_full"} className="checkbox_input side_drawer_input"/>
                 </div>

@@ -46,6 +46,10 @@ class StartView extends Component
             newTree.fillDataFromParsedJSON(obj);
             this.context.treeHandlers.handleImportTree(newTree);
         }
+        else
+        {
+            alert("No valid tree detected in the imported file. Either the file has not been exported from LiteLineage, or the file is corrupted in some way.")
+        }
     }
 
     render()
