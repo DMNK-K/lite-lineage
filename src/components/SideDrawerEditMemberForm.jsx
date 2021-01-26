@@ -173,7 +173,8 @@ class EditMemberForm extends Component
                 </div>
 
                 <div className="side_drawer_content_section">
-                    <div className="side_drawer_row">Parents:
+                    <p className="side_drawer_row">Parents:</p>
+                    <div className="side_drawer_row">
                         <SelectParent handleChange={this.changeParents} currentParent={currentParents[0]} potentialParents={potentialParents0} parentSlotIndex={0} noneSign={this.#noneSign}/>
                         <SelectParent handleChange={this.changeParents} currentParent={currentParents[1]} potentialParents={potentialParents1} parentSlotIndex={1} noneSign={this.#noneSign}/>
                     </div>
@@ -244,6 +245,9 @@ class EditMemberForm extends Component
                         </div>
                     </div>
 
+                </div>
+                
+                <div className="side_drawer_content_section">
                     <label htmlFor="notes" className="side_drawer_row">Notes:</label>
                     <textarea value={this.props.editedPerson.notes} onChange={this.changeNotes} name="notes" className="multiline_input side_drawer_input"/> 
                 </div>
