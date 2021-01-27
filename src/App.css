@@ -16,7 +16,9 @@
   --color_bcg_grayed: rgb(38, 43, 58);
   --color_primary: rgb(42, 50, 75);
   --color_primary_hover: rgb(26, 142, 155);
+  --color_primary_flash:  rgb(94, 221, 235);
   --color_secondary: rgb(2, 77, 121);
+  --color_secondary_hover: rgb(2, 96, 139);
   --color_secondary_alt: rgb(2, 77, 121);
   --color_tertiary: rgb(26, 142, 155);
   --color_tertiary_hover: rgb(29, 157, 172);
@@ -81,6 +83,7 @@ button
 button:focus, button:active
 {
   border:none;
+  outline: 1px solid var(--color_primary_hover);
 }
 
 button:hover
@@ -105,15 +108,6 @@ p
   top:0;
   background-color: var(--color_secondary);
   z-index: 3;
-}
-
-.notice_wrapper
-{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background-color:rgba(0, 0, 0, 0.4);
-  z-index:999999;
 }
 
 .main_content
@@ -141,7 +135,7 @@ p
 h1
 {
   font-family: var(--font_title);
-  font-size:3vh;
+  font-size:2.5vh;
   line-height: 6vh;
   color:white;
   margin-top: 0;
@@ -162,11 +156,46 @@ h1
   height:100%;
   min-width: 7vw;
   background-color: var(--color_tertiary);
+  font-size:14px;
 }
 
 .header_button:hover
 {
   background-color: var(--color_secondary);
+}
+
+.header_button_menu
+{
+  display:none;
+  position:relative;
+  height:100%;
+  min-width:20vw;
+  line-height: 100%;
+  background-color: var(--color_tertiary);
+  text-align:center;
+  font-size:12px;
+  color:var(--color_text_prim);
+  cursor:pointer;
+  transition: background-color 0.15s;
+}
+
+.header_button_menu:hover
+{
+  background-color: var(--color_secondary);
+}
+
+.header_button_menu nav
+{
+  position: absolute;
+  padding: 0;
+  top:100%;
+}
+
+.header_button_mobile
+{
+  width:100%;
+  height:6vh;
+  margin:0;
 }
 
 .header_tree_title_form
@@ -177,15 +206,14 @@ h1
 .header_tree_title
 {
   height:100%;
-  width:auto;
   background-color: rgba(255, 255, 255, 0.07);
   border:none;
-  padding-left:0.5%;
-  padding-right:0.5%;
+  padding-left:5%;
+  padding-right:5%;
   text-align: center;
   font-family:var(--font_main);
   color:var(--color_text_prim);
-  font-size:24px;
+  font-size:22px;
 }
 
 /* ====== Start view and contents ====== */
@@ -234,9 +262,35 @@ h2
 
 .start_button
 {
+  position: relative;
   width:100%;
   height:100%;
   font-size: 16px;
+  border-bottom:1px solid var(--color_primary_hover);
+  transform: translateZ(0); /*necessary for revealing ::after without hiding button text, dont remove even though looks redundant*/
+}
+
+.start_button::after
+{
+  position:absolute;
+  background-color: var(--color_primary_flash);
+  content:"";
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  transform:scale(1, 0);
+  transform-origin: 50% 100%;
+  z-index: -99;
+  transition:transform 0.175s, background-color 0.12s;
+  /* transition-timing-function: cubic-bezier(0.140, 0.990, 0.880, 0.665); */
+  transition-timing-function: ease-out;
+}
+
+.start_button:hover::after
+{
+  transform:scale(1, 1);
+  background-color:var(--color_primary_hover);
 }
 
 .start_button_special
@@ -437,6 +491,14 @@ h3
   border: none;
 }
 
+.invalid_input
+{
+  color: red; /*fallback*/
+  color: var(--color_angry);
+  text-shadow: 4px var(--color_angry);
+  box-shadow: inset 0 0 12px var(--color_angry);
+}
+
 .side_drawer_input:disabled
 {
   color:var(--color_text_disabled);
@@ -462,11 +524,11 @@ h3
 {
   position:relative;
   display:inline-block;
-  width:40%;
+  width:48%;
   height:100%;
-  margin-left: 2%;
+  margin-right:2%;
   padding:0;
-  background-color: var(--color_tertiary);
+  background-color: var(--color_secondary);
   color:var(--color_text_prim);
   font-family:var(--font_input);
   text-align:center;
@@ -477,7 +539,7 @@ h3
 
 .parent_select:hover
 {
-  background-color: var(--color_tertiary_hover);
+  background-color: var(--color_secondary_hover);
 }
 
 .parent_select p
@@ -512,7 +574,7 @@ h3
 
 .parent_select_tray button:hover
 {
-  background-color: var(--color_primary_hover);
+  background-color: var(--color_secondary_hover);
 }
 
 .date_input
@@ -801,10 +863,19 @@ footer span
 
 /* =======notice stuff ====== */
 
+.notice_wrapper
+{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background-color:rgba(0, 0, 0, 0.6);
+  z-index:999999;
+}
+
 .notice
 {
   width:35vw;
-  height:80vh;
+  height:82vh;
   position: absolute;
   top:50%;
   left:50%;
@@ -831,6 +902,7 @@ footer span
   width:calc(100% - 5vh);
   height:100%;
   line-height: 5vh;
+  font-size: 18px;
   text-align: center;
 }
 
@@ -907,8 +979,13 @@ footer span
 
   .start_view
   {
-    width: 80%;
-    margin-left:10%;
+    width: 84%;
+    margin-left:8%;
+  }
+
+  .notice
+  {
+    width:50vw;
   }
 
   .zoom_wrapper button
@@ -930,5 +1007,78 @@ footer span
   {
     width: 96%;
     margin-left:2%;
+  }
+
+  .start_button_wrapper
+  {
+    width:31%;
+    margin:1%;
+  }
+
+  .notice
+  {
+    width:95vw;
+  }
+
+  h1
+  {
+    font-size:1.75vh;
+  }
+
+  .header_tree_title
+  {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 680px)
+{
+  .start_button_wrapper
+  {
+    width:47%;
+    margin:1.5%;
+  }
+
+  .header_button
+  {
+    display:none;
+  }
+
+  .header_button_menu
+  {
+    display:flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+  }
+
+  .notice_bar p
+  {
+    font-size: 16px;
+  }
+
+  .notice_content p
+  {
+    font-size: 14px;
+    line-height:20px;
+  }
+}
+
+@media screen and (max-width: 380px)
+{
+  .side_drawer_row
+  {
+    font-size:12px;
+  }
+
+  .side_drawer_input
+  {
+    font-size:12px;
+  }
+
+  .notice_content p
+  {
+    font-size: 12px;
+    line-height:18px;
   }
 }
