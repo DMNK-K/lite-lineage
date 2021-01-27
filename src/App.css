@@ -491,6 +491,14 @@ h3
   border: none;
 }
 
+.invalid_input
+{
+  color: red; /*fallback*/
+  color: var(--color_angry);
+  text-shadow: 4px var(--color_angry);
+  box-shadow: inset 0 0 12px var(--color_angry);
+}
+
 .side_drawer_input:disabled
 {
   color:var(--color_text_disabled);
