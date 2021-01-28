@@ -151,13 +151,28 @@ class Person
     }
 
     /**
-     * Adds parent id to a slot that is not full, if none found replaces parentId0.
+     * Adds parent id to a slot that is not full, if none found, makes 2nd parent first one and adds to 2nd place
      */
     addParentId(newId)
     {
-        if (!this.parentId0) {this.parentId0 = newId;}
-        else if (!this.parentId1) {this.parentId1 = newId;}
-        else {this.parentId0 = newId;}
+        if (this.parentId0 && this.parentId1)
+        {
+            this.parentId0 = this.parentId1;
+            this.parentId1 = newId;
+        }
+        else if (!this.parentId0)
+        {
+            this.parentId0 = newId;
+        }
+        else
+        {
+            this.parentId1 = newId;
+        }
+    }
+    
+    hasBothParents()
+    {
+        return (this.parentId0 && this.parentId1);
     }
 
     getLocation()

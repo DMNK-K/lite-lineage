@@ -340,20 +340,27 @@ class App extends Component
 
   handleDeleteFamMember(personId)
   {
-    const newFamily = [...this.state.currentTree.family];
-    const i = newFamily.findIndex(item => item.id === personId);
-    if (i >= 0)
+    const newFamily = [];
+    //we need to loop to remove all places where this person is saved as parent
+    //and while we're at it, w ejust skip this person from adding to newFamily, this is how the actual deletion is done
+    for(let i = 0; i < this.state.currentTree.family.length; i++)
     {
-      newFamily.splice(i, 1);
-      const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
-      draftTree.family = newFamily;
-      this.setState(
-        {
-          currentTree: draftTree,
-        },
-        () => {this.state.currentTree.save();}
-      );
+      const member = Person.cloneFromOther(this.state.currentTree.family[i]);
+      if (member.id !== personId)
+      {
+        member.parentId0 = (member.parentId0 === personId) ? null : member.parentId0;
+        member.parentId1 = (member.parentId1 === personId) ? null : member.parentId1;
+        newFamily.push(member);
+      }
     }
+    const draftTree = FamilyTree.cloneFromOther(this.state.currentTree);
+    draftTree.family = newFamily;
+    this.setState(
+      {
+        currentTree: draftTree,
+      },
+      () => {this.state.currentTree.save();}
+    );
   }
 
   toggleNotice(name, desiredState)

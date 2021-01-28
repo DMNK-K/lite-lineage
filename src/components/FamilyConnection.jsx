@@ -22,20 +22,20 @@ class FamilyConnection extends Component
         let locA1 = (this.props.personA1) ? new V2(this.props.personA1.locationInTreeX, this.props.personA1.locationInTreeY) : null;
         let locA2 = (this.props.personA2) ? new V2(this.props.personA2.locationInTreeX, this.props.personA2.locationInTreeY) : null;
         let locB = (this.props.personB) ? new V2(this.props.personB.locationInTreeX, this.props.personB.locationInTreeY) : null;
-        
+        // console.log()
         //there are only 2 types of connections between family members, either between parents and children
         //or between 1 parent and the other one
-        if (this.props.personA1 && this.props.personA2 && !this.props.personB)
+        if (locA1 && locA2 && !locB)
         {
-            //it's a connection between one parent and the other, so the coords are simply a line between them
+            //it's a connection between one parent and the other one, so the coords are simply for a line between them
             return [this.convertLocation(locA1), this.convertLocation(locA2)];
         }
-        else
+        else if ((locA1 && locB) || (locA2 && locB))
         {
             //its a connection between parent/parents and the child
             const endPoint = this.convertLocation(locB);
             let bend1, bend2, bendY;
-            if (this.props.personA2)
+            if (locA1 && locA2)
             {
                 //both parents are provided
                 const halfwayParentsPoint = V2.getPointBetween(this.convertLocation(locA1), this.convertLocation(locA2), 0.5);
