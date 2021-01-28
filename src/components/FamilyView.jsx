@@ -36,7 +36,12 @@ class FamilyView extends Component
             startingDragOffset: {x: 0, y: 0},
             draggedId: null,
             lineCenteringOffset: {x: 80, y: 40},
+            treeScroll: {x: 0, y: 0}
         }
+
+        this.treeRef = React.createRef();
+
+        this.monitorTreeScroll = this.monitorTreeScroll.bind(this);
         this.startEdit = this.startEdit.bind(this);
         this.reportDeletionToEdit = this.reportDeletionToEdit.bind(this);
         this.endEdit = this.endEdit.bind(this);
@@ -67,11 +72,20 @@ class FamilyView extends Component
     componentDidMount()
     {
         window.addEventListener("mouseup", this.endDrag);
+        this.treeRef.current.addEventListener("scroll", this.monitorTreeScroll);
     }
     
     componentWillUnmount()
     {
         window.removeEventListener("mouseup", this.endDrag);
+        this.treeRef.current.removeEventListener("scroll", this.monitorTreeScroll);
+    }
+
+    monitorTreeScroll(e)
+    {
+        const loc = this.calcLocationFromOffset({x: e.target.scrollLeft, y: e.target.scrollTop});
+        this.context.treeHandlers.setDefaultNewFamMemberLocation(loc);
+        this.setState({treeScroll: {x: e.target.scrollLeft, y: e.target.scrollTop}});
     }
 
     startDrag(personId, e)
@@ -220,7 +234,7 @@ class FamilyView extends Component
                     <button onClick={this.zoom.bind(this, 1)} disabled={this.state.zoomLvl === this.#zoomMax}>+</button>
                     <button onClick={this.zoom.bind(this, -1)} disabled={this.state.zoomLvl === this.#zoomMin}>-</button>
                 </div>
-                <div id="family_tree" className="family_tree" onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, document.getElementById("family_tree")) : undefined}>
+                <div ref={this.treeRef} className="family_tree" onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, this.treeRef.current) : undefined}>
                     {familyMembers}
                     <ConnectionRenderer style={this.calcCssSizeOfConnectionRenderer()}>
                         {connections}

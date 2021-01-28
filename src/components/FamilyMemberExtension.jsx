@@ -6,7 +6,7 @@ class FamilyMemberExtension extends Component
     render()
     {
         return (
-            <div className="family_member_extended">
+            <div className="family_member_extended" onMouseDown={(e)=>(e.stopPropagation())}>
                 <p className="family_member_info">Place of birth: {this.props.person.placeBirth}</p>
                 {this.props.person.isDead && 
                 <Fragment>

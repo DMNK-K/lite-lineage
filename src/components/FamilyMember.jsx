@@ -64,7 +64,9 @@ class FamilyMember extends Component
                     </button>
                 </div>
                 <div className="family_member_name_wrapper">
-                    <p className="family_member_name">{this.props.person.getDisplayName()}</p>
+                    <p className={"family_member_name" + (this.props.person.getDisplayName().length > 35 ? " family_member_name_shrinked" : "")}>
+                        {this.props.person.getDisplayName()}
+                    </p>
                 </div>
                 <p className="family_member_info family_member_info_single_line">
                     <img alt="icon birth" src={IconBirth} className="family_member_icon"/>

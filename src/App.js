@@ -19,6 +19,7 @@ class App extends Component
         treeNames: this.loadTreeNames(), //array of treeNames
         isInTree: false,
         currentTree: null, //null when none loaded, otherwise an instance of FamilyTree class
+        defaultNewMemberLocation: {x: 1, y: 1},
         notices: {cookies: false}
       }
       this.handleWindowClose = this.handleWindowClose.bind(this);
@@ -29,7 +30,8 @@ class App extends Component
       this.handleExitTree = this.handleExitTree.bind(this);
       this.handleRenameTree = this.handleRenameTree.bind(this);
       this.handleOpenTree = this.handleOpenTree.bind(this);
-      
+      this.setDefaultNewFamMemberLocation = this.setDefaultNewFamMemberLocation.bind(this);
+
       this.handleAddFamMember = this.handleAddFamMember.bind(this);
       this.handleDeleteFamMember = this.handleDeleteFamMember.bind(this);
       this.handleEditFamMember = this.handleEditFamMember.bind(this);
@@ -44,6 +46,7 @@ class App extends Component
         handleRenameTree: this.handleRenameTree,
         handleOpenTree: this.handleOpenTree,
         handleImportTree: this.handleImportTree,
+        setDefaultNewFamMemberLocation: this.setDefaultNewFamMemberLocation,
       };
 
       //similar thing with this:
@@ -214,6 +217,13 @@ class App extends Component
     });
   }
 
+  setDefaultNewFamMemberLocation(newLoc)
+  {
+    newLoc.x += FamilyTree.minFamilyMemberLocation.x;
+    newLoc.y += FamilyTree.minFamilyMemberLocation.y;
+    this.setState({defaultNewMemberLocation: newLoc});
+  }
+
   handleAddFamMember(mode = "default", anchorPersonId)
   {
     if (!this.state.currentTree){return;}
@@ -229,7 +239,11 @@ class App extends Component
     let draftAnchorPerson = null;
     if (anchorPersonIndex >= 0) {draftAnchorPerson = Person.cloneFromOther(this.state.currentTree.family[anchorPersonIndex]);}
 
-    let loc = FamilyTree.minFamilyMemberLocation;
+    let loc = this.state.defaultNewMemberLocation;
+    if (loc.x < FamilyTree.minFamilyMemberLocation.x || loc.y < FamilyTree.minFamilyMemberLocation.y)
+    {
+      loc = FamilyTree.minFamilyMemberLocation;
+    }
     //doing mode specific things
     if (anchorPersonId !== undefined && anchorPersonId >= 0)
     {

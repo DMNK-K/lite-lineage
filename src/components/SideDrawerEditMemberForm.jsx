@@ -23,14 +23,19 @@ class EditMemberForm extends Component
     }
 
     //there's a bunch of similar methods, because might need different processing for different types later
+    //eg names might be restricted in length like here:
     changeName(e, propertyName)
     {
         const draftPerson = Person.cloneFromOther(this.props.editedPerson);
         const possibleVariants = ["firstName", "lastName", "secondName"];
+        const maxLength = 30;
         if (possibleVariants.includes(propertyName) && draftPerson.hasOwnProperty(propertyName))
         {
-            draftPerson[propertyName] = e.target.value;
-            this.props.handleEdit(this.props.editedPerson.id, draftPerson);
+            if (e.target.value.length <= maxLength)
+            {
+                draftPerson[propertyName] = e.target.value;
+                this.props.handleEdit(this.props.editedPerson.id, draftPerson);
+            }
         }
         else
         {
@@ -156,14 +161,17 @@ class EditMemberForm extends Component
                         <input value={this.props.editedPerson.firstName} onChange={(e) => this.changeName(e, "firstName")} type="text" name="name_first" className="word_input side_drawer_input"/>
                     </div>
 
-                    <div className="side_drawer_row">
-                        <label htmlFor="name_second" className="word_input_label">Second name:</label>
-                        <input value={this.props.editedPerson.secondName} onChange={(e) => this.changeName(e, "secondName")} type="text" name="name_second" className="word_input side_drawer_input"/>
-                    </div>
 
                     <div className="side_drawer_row">
                         <label htmlFor="name_last" className="word_input_label">Last name:</label>
                         <input value={this.props.editedPerson.lastName} onChange={(e) => this.changeName(e, "lastName")} type="text" name="name_last" className="word_input side_drawer_input"/>
+                    </div>
+
+                    <div className="side_drawer_row"></div>
+
+                    <div className="side_drawer_row">
+                        <label htmlFor="name_second" className="word_input_label">Second name:</label>
+                        <input value={this.props.editedPerson.secondName} onChange={(e) => this.changeName(e, "secondName")} type="text" name="name_second" className="word_input side_drawer_input"/>
                     </div>
 
                     <div className="side_drawer_row">
