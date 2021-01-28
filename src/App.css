@@ -647,6 +647,7 @@ h3
 .family_member
 {
   position: absolute;
+  cursor: move;
   top:0px;
   left:0px;
   background-color: var(--color_secondary);

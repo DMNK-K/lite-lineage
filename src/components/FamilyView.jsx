@@ -33,6 +33,7 @@ class FamilyView extends Component
             locationScale: 40,
             stretcherOverhead: {x: 7, y: 5},
             isDragging: false,
+            startingDragOffset: {x: 0, y: 0},
             draggedId: null,
             lineCenteringOffset: {x: 80, y: 40},
         }
@@ -62,27 +63,28 @@ class FamilyView extends Component
     {
         this.setState({editingPerson: false, editedPersonId: null});
     }
-
-    startDrag(personId)
-    {
-        // console.log("starting drag");
-        this.setState({isDragging: true, draggedId: personId});
-    }
-
+    
     componentDidMount()
     {
         window.addEventListener("mouseup", this.endDrag);
     }
-
+    
     componentWillUnmount()
     {
         window.removeEventListener("mouseup", this.endDrag);
+    }
+
+    startDrag(personId, e)
+    {
+        this.setState({isDragging: true, draggedId: personId, startingDragOffset: {x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY}});
     }
 
     tryDrag(e, referenceElement)
     {
         //this was the only solution that calculated coords correctly, but it needs a ref element passed somehow
         const offset = Helpers.getRelativeCoords(e.nativeEvent, referenceElement);
+        offset.x -= this.state.startingDragOffset.x;
+        offset.y -= this.state.startingDragOffset.y;
         // console.log("dragging "+ this.state.draggedId +" to [" + offset.x + ", " + offset.y + "]");
         if (this.state.isDragging === true && this.state.draggedId != null && this.state.draggedId >= 0)
         {
