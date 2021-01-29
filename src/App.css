@@ -12,40 +12,43 @@
   --font_long_text: "Armata";
   --font_input: "Armata";
 
-  /*
-  original colors:
-  --color_bcg: rgb(25, 29, 41);
+  /* --color_bcg: rgb(25, 29, 41);
   --color_bcg_grayed: rgb(38, 43, 58);
-  --color_primary: rgb(42, 50, 75);
-  --color_primary_hover: rgb(26, 142, 155);
-  --color_primary_flash:  rgb(94, 221, 235);
-  --color_secondary: rgb(2, 77, 121);
-  --color_secondary_hover: rgb(2, 96, 139);
-  --color_secondary_alt: rgb(2, 77, 121);
-  --color_tertiary: rgb(26, 142, 155);
-  --color_tertiary_hover: rgb(29, 157, 172); */
 
-  /* --color_text_prim: rgb(255, 255, 255);
+  --color_main_bars: rgb(2, 77, 121);
+  --color_main_bars_accent: rgb(26, 142, 155);
+  --color_main_bars_accent_hover: rgb(2, 77, 121);
+
+  --color_default_button: rgb(42, 50, 75);
+  --color_default_button_hover:rgb(26, 142, 155);
+
+  --color_start: rgb(42, 50, 75);
+  --color_start_hover: rgb(26, 142, 155);
+  --color_start_flash: rgb(94, 221, 235);
+
+  --color_primary: rgb(2, 77, 121);
+  --color_primary_accent: rgb(42, 50, 75);
+  --color_primary_hover: #61546d;
+  --color_primary_accent_hover: rgb(26, 142, 155);
+
+  --color_secondary: rgb(42, 50, 75);
+  --color_secondary_accent: rgb(2, 77, 121);
+  --color_secondary_hover: rgb(2, 77, 121);
+  --color_secondary_accent_hover: rgb(26, 142, 155);
+
+  --color_icon: #ffffff;
+
+  --color_text_prim: rgb(255, 255, 255);
   --color_text_sec: rgb(255, 255, 255);
   --color_text_tert: rgb(219, 219, 219);
   --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_side_drawer: rgb(255, 255, 255);
   --color_text_input: rgb(224, 224, 224);
-  --color_text_disabled: rgb(255, 255, 255, 0.2); */
-
-  /* --color_bcg: #1a2127;
-  --color_bcg_grayed: #1a1d20;
-  --color_primary: #222b33;
-  --color_primary_hover: #f1bf98;
-  --color_primary_flash:  #ffdcc2;
-  --color_secondary: #009171;
-  --color_secondary_hover: #00a892;
-  --color_secondary_alt: #007c61;
-  --color_tertiary: #00b982;
-  --color_tertiary_hover: #1d9dac; */
-
+  --color_text_grayed: rgb(255, 255, 255, 0.2);
+  --color_text_input_disabled: rgb(255, 255, 255, 0.2); */
 
   
-  --color_bcg: #ede3eb;
+  /* --color_bcg: #ede3eb;
   --color_bcg_grayed: #ccc3c4;
 
   --color_main_bars: #61546d;
@@ -55,32 +58,34 @@
   --color_default_button: #FA8B14;
   --color_default_button_hover: #FA8B14;
 
-  --color_start: #FF5376;
-  --color_start_hover: #FF5376;
-  --color_start_flash: #FF5376;
+  --color_start: #eb637e;
+  --color_start_hover: #eb637e;
+  --color_start_flash: #eb637e;
 
   --color_primary: #f2edf8;
-  /* --color_primary: #61546d; */
-  --color_primary_accent: #FF5376;
+  --color_primary_accent: #eb637e;
   --color_primary_hover: #61546d;
   --color_primary_accent_hover: #61546d;
 
   --color_secondary: #61546d;
-  --color_secondary_accent: #FF5376;
-  --color_secondary_hover: #FF5376;
-  --color_secondary_accent_hover: #FF5376;
+  --color_secondary_accent: #eb637e;
+  --color_secondary_hover: #eb637e;
+  --color_secondary_accent_hover: #eb637e;
   
+  --color_icon: #eb637e;
+
   --color_text_prim: #ffffff;
   --color_text_sec: #161418;
   --color_text_tert: #1b181d;
   --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_side_drawer: #f2edf8; 
   --color_text_input:  #161418;
   --color_text_grayed: #988da3;
-  --color_text_input_disabled: #61546d;
+  --color_text_input_disabled: #61546d; */
 
-  --color_icon: #61546d;
+  
 
-  /* --color_bcg: #FFFFFF;
+  --color_bcg: #FFFFFF;
   --color_bcg_grayed: #d4d4d4;
 
   --color_main_bars: #68646D;
@@ -97,23 +102,28 @@
   --color_primary: #F7ECE1;
   --color_primary_accent: #FF715B;
   --color_primary_hover: #FF715B;
-  --color_primary_accent_hover: #FF715B;
+  --color_primary_accent_hover: #ff9e5e;
 
   --color_secondary: #F7ECE1;
   --color_secondary_accent: #FF715B;
   --color_secondary_hover: #FF715B;
-  --color_secondary_accent_hover: #FF715B;
+  --color_secondary_accent_hover: #ff9e5e;
 
-  --color_angry: rgb(172, 9, 58);
-  --color_angry_hover: rgb(201, 21, 51);
+  --color_icon: #504c55;
+  --color_icon_hover: rgb(255, 255, 255);
 
   --color_text_prim: rgb(255, 255, 255);
   --color_text_sec: #000103;
   --color_text_tert: #222024;
   --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_side_drawer: #000103;
   --color_text_input: #222024;
-  --color_text_disabled: #a9a7ac; */
-  
+  --color_text_grayed: #a6a3a8;
+  --color_text_input_disabled: #a6a3a8;
+
+
+  --color_angry: rgb(172, 9, 58);
+  --color_angry_hover: rgb(201, 21, 51);
 
   --color_scroll_bcg: rgba(255, 255, 255, 0.1);
   --color_scroll_thumb: rgba(255, 255, 255, 0.2);
@@ -353,7 +363,7 @@ h2
   height:100%;
   font-size: 16px;
   background-color: var(--color_start);
-  border-bottom:2px solid var(--color_start_hover);
+  border-bottom:3px solid var(--color_start_hover);
   transform: translateZ(0); /*necessary for revealing ::after without hiding button text, dont remove even though looks redundant*/
 }
 
@@ -459,7 +469,7 @@ h2
   width:28%;
   height: 89%;
   background-color: var(--color_secondary);
-  color: var(--color_text_prim);
+  color: var(--color_text_side_drawer);
   z-index: 20;
 }
 
@@ -782,12 +792,19 @@ h3
 
 .family_member_zoom_3
 {
+  width:200px;
+  height:100px;
+  font-size: 15px;
+}
+
+.family_member_zoom_4
+{
   width: 240px;
   height: 120px;
   font-size: 18px;
 }
 
-.family_member_zoom_4
+.family_member_zoom_5
 {
   width: 320px;
   height: 160px;
@@ -818,16 +835,28 @@ h3
 
 .family_member_task_button_with_text
 {
+  color:var(--color_text_sec);
+  font-weight: bold;
   padding-left: 2.5%;
   padding-right: 2.5%;
+}
+
+.family_member_task_button_with_text:hover
+{
+  color:var(--color_text_prim);
 }
 
 .family_member_task_icon
 {
   height:80%;
   width:auto;
-  filter:invert();
-  opacity: 0.9;
+  fill:currentColor;
+  color: var(--color_icon);
+}
+
+.family_member_task_button:hover .family_member_task_icon
+{
+  color: var(--color_icon_hover);
 }
 
 .family_member_icon
@@ -837,8 +866,6 @@ h3
   margin-right:2%;
   fill:currentColor;
   color: var(--color_icon);
-  /* filter:invert(); */
-  opacity: 0.9;
 }
 
 .family_member_extend

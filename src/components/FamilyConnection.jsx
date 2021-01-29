@@ -74,7 +74,11 @@ class FamilyConnection extends Component
         const coords = this.calcCoords();
 
         return (
-            <polyline points={this.coordsToStr(coords)} fill="none" stroke={(this.props.personB) ? "white" : "orange"}></polyline>
+            <polyline
+                points={this.coordsToStr(coords)}
+                fill="none"
+                stroke={(this.props.personB) ? "#504c55" : "#FF715B"}
+                strokeWidth={this.props.personB ? "1.5" : "2.5"}></polyline>
         );
     }
 }

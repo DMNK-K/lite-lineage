@@ -13,12 +13,14 @@ class FamilyView extends Component
 {
     static contextType = TreeContext;
     #zoomMin = 0;
-    #zoomMax = 4;
-    #locationScalesByZoom = [20, 30, 40, 60, 80];
+    #zoomDefault = 3;
+    #zoomMax = 5;
+    #locationScalesByZoom = [20, 30, 40, 50, 60, 80];
     #lineCenteringOffsetByZoom = [
         {x: 40, y: 20},
         {x: 60, y: 30},
         {x: 80, y: 40},
+        {x: 100, y: 50},
         {x: 120, y: 60},
         {x: 160, y: 80}
     ];
@@ -29,13 +31,13 @@ class FamilyView extends Component
         this.state = {
             editingPerson: false,
             editedPersonId: null,
-            zoomLvl: 2,
-            locationScale: 40,
+            zoomLvl: this.#zoomDefault,
+            locationScale: this.#locationScalesByZoom[this.#zoomDefault],
             stretcherOverhead: {x: 7, y: 5},
             isDragging: false,
             startingDragOffset: {x: 0, y: 0},
             draggedId: null,
-            lineCenteringOffset: {x: 80, y: 40},
+            lineCenteringOffset: this.#lineCenteringOffsetByZoom[this.#zoomDefault],
             treeScroll: {x: 0, y: 0}
         }
 
