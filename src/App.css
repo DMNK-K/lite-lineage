@@ -12,6 +12,42 @@
   --font_long_text: "Armata";
   --font_input: "Armata";
 
+  --color_bcg: #FFFFFF;
+  --color_bcg_grayed: #d4d4d4;
+
+  --color_main_bars: #68646D;
+  --color_main_bars_accent: #06A77D;
+  --color_main_bars_accent_hover: #68646D;
+
+  --color_default_button: #FF715B;
+  --color_default_button_hover: #ff9e5e;
+
+  --color_start: #06A77D;
+  --color_start_hover: #FF715B;
+  --color_start_flash: #ffbeb4;
+
+  --color_primary: #F7ECE1;
+  --color_primary_accent: #FF715B;
+  --color_primary_hover: #FF715B;
+  --color_primary_accent_hover: #ff9e5e;
+
+  --color_secondary: #F7ECE1;
+  --color_secondary_accent: #FF715B;
+  --color_secondary_hover: #FF715B;
+  --color_secondary_accent_hover: #ff9e5e;
+
+  --color_icon: #504c55;
+  --color_icon_hover: rgb(255, 255, 255);
+
+  --color_text_prim: rgb(255, 255, 255);
+  --color_text_sec: #000103;
+  --color_text_tert: #222024;
+  --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_side_drawer: #000103;
+  --color_text_input: #222024;
+  --color_text_grayed: #a6a3a8;
+  --color_text_input_disabled: #a6a3a8;
+
   /* --color_bcg: rgb(25, 29, 41);
   --color_bcg_grayed: rgb(38, 43, 58);
 
@@ -82,44 +118,6 @@
   --color_text_input:  #161418;
   --color_text_grayed: #988da3;
   --color_text_input_disabled: #61546d; */
-
-  
-
-  --color_bcg: #FFFFFF;
-  --color_bcg_grayed: #d4d4d4;
-
-  --color_main_bars: #68646D;
-  --color_main_bars_accent: #06A77D;
-  --color_main_bars_accent_hover: #68646D;
-
-  --color_default_button: #FF715B;
-  --color_default_button_hover: #ff9e5e;
-
-  --color_start: #06A77D;
-  --color_start_hover: #FF715B;
-  --color_start_flash: #ffbeb4;
-
-  --color_primary: #F7ECE1;
-  --color_primary_accent: #FF715B;
-  --color_primary_hover: #FF715B;
-  --color_primary_accent_hover: #ff9e5e;
-
-  --color_secondary: #F7ECE1;
-  --color_secondary_accent: #FF715B;
-  --color_secondary_hover: #FF715B;
-  --color_secondary_accent_hover: #ff9e5e;
-
-  --color_icon: #504c55;
-  --color_icon_hover: rgb(255, 255, 255);
-
-  --color_text_prim: rgb(255, 255, 255);
-  --color_text_sec: #000103;
-  --color_text_tert: #222024;
-  --color_text_quat: rgba(197, 197, 197, 0.5);
-  --color_text_side_drawer: #000103;
-  --color_text_input: #222024;
-  --color_text_grayed: #a6a3a8;
-  --color_text_input_disabled: #a6a3a8;
 
 
   --color_angry: rgb(172, 9, 58);
@@ -350,10 +348,11 @@ h2
   display: inline-block;
   position: relative;
   vertical-align: top;
-  margin: 0.5%;
+  margin: 1%;
 
-  width: 24%;
+  width: 23%;
   height: 200px;
+
 }
 
 .start_button
@@ -364,6 +363,8 @@ h2
   font-size: 16px;
   background-color: var(--color_start);
   border-bottom:3px solid var(--color_start_hover);
+  box-shadow:-10px 10px 0 rgba(0, 0, 0, 0.12);
+
   transform: translateZ(0); /*necessary for revealing ::after without hiding button text, dont remove even though looks redundant*/
 }
 
@@ -430,6 +431,7 @@ h2
   left:0;
   font-size: 14px;
   color: var(--color_text_prim);
+  background-color: var(--color_start);
   padding: 5%;
 }
 
@@ -774,6 +776,7 @@ h3
   width: 80px;
   height: 40px;
   font-size: 6px;
+  box-shadow:0px 1px 4px rgba(0, 0, 0, 0.15);
 }
 
 .family_member_zoom_1
@@ -781,6 +784,7 @@ h3
   width: 120px;
   height: 60px;
   font-size: 9px;
+  box-shadow:0px 1.5px 6px rgba(0, 0, 0, 0.15);
 }
 
 .family_member_zoom_2
@@ -788,6 +792,7 @@ h3
   width: 160px;
   height: 80px;
   font-size: 12px;
+  box-shadow:0px 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .family_member_zoom_3
@@ -795,6 +800,7 @@ h3
   width:200px;
   height:100px;
   font-size: 15px;
+  box-shadow:0px 2.5px 10px rgba(0, 0, 0, 0.15);
 }
 
 .family_member_zoom_4
@@ -802,6 +808,7 @@ h3
   width: 240px;
   height: 120px;
   font-size: 18px;
+  box-shadow:0px 3px 12px rgba(0, 0, 0, 0.15);
 }
 
 .family_member_zoom_5
@@ -809,6 +816,7 @@ h3
   width: 320px;
   height: 160px;
   font-size: 24px;
+  box-shadow:0px 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .family_member_bar
