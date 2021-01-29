@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import FamilyMemberExtension from './FamilyMemberExtension';
 import '../App.css';
-import IconDelete from '../icons/icon_delete.svg';
-import IconBirth from '../icons/icon_birth.svg';
-import IconDeath from '../icons/icon_death.svg';
-import IconEdit from '../icons/icon_edit.svg';
+import IconBirth from './inline_icons/IconBirth';
+import IconDeath from './inline_icons/IconDeath';
+import IconEdit from './inline_icons/IconEdit';
+import IconDelete from './inline_icons/IconDelete';
 
 //we don't want these ones to use context
 class FamilyMember extends Component
@@ -51,7 +51,7 @@ class FamilyMember extends Component
             <div className={"family_member family_member_zoom_" + this.props.zoomLvl} onMouseDown={this.props.startDrag.bind(this, this.props.person.id)} style={this.calcCssPosObj()}>
                 <div className="family_member_bar">
                     <button className="family_member_task_button" onClick={this.props.startEdit.bind(this, this.props.person.id)} onMouseDown={this.onMouseDownStopPropagation}>
-                        <img alt="edit icon" src={IconEdit} className="family_member_task_icon"/>
+                        <IconEdit className="family_member_task_icon"/>
                     </button>
                     <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "child", this.props.person.id)} onMouseDown={this.onMouseDownStopPropagation}>
                         ADD CHILD
@@ -60,7 +60,7 @@ class FamilyMember extends Component
                         ADD PARENT
                     </button>
                     <button className="family_member_task_button" onClick={this.onDelete} onMouseDown={this.onMouseDownStopPropagation}>
-                        <img alt="delete icon" src={IconDelete} className="family_member_task_icon"/>
+                        <IconDelete className="family_member_task_icon"/>
                     </button>
                 </div>
                 <div className="family_member_name_wrapper">
@@ -69,13 +69,13 @@ class FamilyMember extends Component
                     </p>
                 </div>
                 <p className="family_member_info family_member_info_single_line">
-                    <img alt="icon birth" src={IconBirth} className="family_member_icon"/>
+                    <IconBirth className="family_member_icon"/>
                     {this.props.person.getDisplayDateBirth()}
                 </p>
                 {
                     this.props.person.isDead === true && 
                     <p className="family_member_info family_member_info_single_line">
-                        <img alt="icon death" src={IconDeath} className="family_member_icon"/>
+                        <IconDeath className="family_member_icon"/>
                         {this.props.person.getDisplayDateDeath()}
                     </p>
                 }

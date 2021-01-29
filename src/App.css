@@ -25,6 +25,13 @@
   --color_tertiary: rgb(26, 142, 155);
   --color_tertiary_hover: rgb(29, 157, 172); */
 
+  /* --color_text_prim: rgb(255, 255, 255);
+  --color_text_sec: rgb(255, 255, 255);
+  --color_text_tert: rgb(219, 219, 219);
+  --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_input: rgb(224, 224, 224);
+  --color_text_disabled: rgb(255, 255, 255, 0.2); */
+
   /* --color_bcg: #1a2127;
   --color_bcg_grayed: #1a1d20;
   --color_primary: #222b33;
@@ -36,31 +43,44 @@
   --color_tertiary: #00b982;
   --color_tertiary_hover: #1d9dac; */
 
-  /* --color_bcg: #EDE3E4;
+
+  
+  --color_bcg: #ede3eb;
   --color_bcg_grayed: #ccc3c4;
 
-  --color_main_bars: #6D545D;
-  --color_main_bars_accent: #FCA311;
-  --color_main_bars_accent_hover: #6D545D;
+  --color_main_bars: #61546d;
+  --color_main_bars_accent: #FA8B14;
+  --color_main_bars_accent_hover: #61546d;
 
-  --color_default_button: #FCA311;
-  --color_default_button_hover: #FCA311;
+  --color_default_button: #FA8B14;
+  --color_default_button_hover: #FA8B14;
 
   --color_start: #FF5376;
   --color_start_hover: #FF5376;
   --color_start_flash: #FF5376;
 
-  --color_primary: #6D545D;
+  --color_primary: #f2edf8;
+  /* --color_primary: #61546d; */
   --color_primary_accent: #FF5376;
-  --color_primary_hover: #6D545D;
-  --color_primary_accent_hover: #6D545D;
+  --color_primary_hover: #61546d;
+  --color_primary_accent_hover: #61546d;
 
-  --color_secondary: #6D545D;
+  --color_secondary: #61546d;
   --color_secondary_accent: #FF5376;
   --color_secondary_hover: #FF5376;
-  --color_secondary_accent_hover: #FF5376; */
+  --color_secondary_accent_hover: #FF5376;
   
-  --color_bcg: #FFFFFF;
+  --color_text_prim: #ffffff;
+  --color_text_sec: #161418;
+  --color_text_tert: #1b181d;
+  --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_input:  #161418;
+  --color_text_grayed: #988da3;
+  --color_text_input_disabled: #61546d;
+
+  --color_icon: #61546d;
+
+  /* --color_bcg: #FFFFFF;
   --color_bcg_grayed: #d4d4d4;
 
   --color_main_bars: #68646D;
@@ -92,13 +112,8 @@
   --color_text_tert: #222024;
   --color_text_quat: rgba(197, 197, 197, 0.5);
   --color_text_input: #222024;
-  --color_text_disabled: #a9a7ac;
+  --color_text_disabled: #a9a7ac; */
   
-  /* --color_text_prim: rgb(255, 255, 255);
-  --color_text_sec: rgb(219, 219, 219);
-  --color_text_tert: rgba(197, 197, 197, 0.5);
-  --color_text_input: rgb(224, 224, 224);
-  --color_text_disabled: rgb(255, 255, 255, 0.2); */
 
   --color_scroll_bcg: rgba(255, 255, 255, 0.1);
   --color_scroll_thumb: rgba(255, 255, 255, 0.2);
@@ -191,7 +206,7 @@ p
   height:5%;
   background-color: var(--color_main_bars);
   z-index: 3;
-  color:var(--color_text_tert);
+  color:var(--color_text_quat);
   font-size: 1.5vh;
   text-align:center;
 }
@@ -201,7 +216,7 @@ h1
   font-family: var(--font_title);
   font-size:2.5vh;
   line-height: 6vh;
-  color:white;
+  color:var(--color_text_prim);
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 1.5%;
@@ -305,13 +320,13 @@ h1
 h2
 {
   font-family: var(--font_main);
-  color: var(--color_text_prim);
+  color: var(--color_text_sec);
 }
 
 .start_desc
 {
   font-family: var(--font_long_text);
-  color: var(--color_text_prim);
+  color: var(--color_text_sec);
   margin-bottom: 4%;
 }
 
@@ -509,7 +524,6 @@ h3
   height: 4vh;
   width: 4vh;
   background-color: var(--color_angry);
-  color:white;
   border-radius: 0;
 }
 
@@ -551,7 +565,7 @@ h3
 
 .label_disabled
 {
-  color:var(--color_text_disabled);
+  color:var(--color_text_grayed);
 }
 
 .side_drawer_input
@@ -573,7 +587,7 @@ h3
 
 .side_drawer_input:disabled
 {
-  color:var(--color_text_disabled);
+  color:var(--color_text_input_disabled);
   cursor: default;
 }
 
@@ -728,6 +742,7 @@ h3
   top:0px;
   left:0px;
   background-color: var(--color_primary);
+  color:var(--color_text_sec);
 
   -webkit-user-select: none;      
   -moz-user-select: none;
@@ -820,7 +835,9 @@ h3
   height:80%;
   width:auto;
   margin-right:2%;
-  filter:invert();
+  fill:currentColor;
+  color: var(--color_icon);
+  /* filter:invert(); */
   opacity: 0.9;
 }
 
@@ -864,7 +881,7 @@ h3
 
 .family_member_name
 {
-  color:var(--color_text_prim);
+  color:var(--color_text_sec);
   font-size:100%;
   text-align:center;
   overflow:hidden;
@@ -881,7 +898,7 @@ h3
 
 .family_member_info
 {
-  color:var(--color_text_sec);
+  color:var(--color_text_tert);
   font-size:70%;
 }
 
@@ -908,7 +925,7 @@ h3
 /* ====== footer stuff ========= */
 footer button
 {
-  color:var(--color_text_tert);
+  color:var(--color_text_quat);
   background:none;
   height:100%;
   font-size: 1.5vh;
