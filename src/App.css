@@ -12,33 +12,122 @@
   --font_long_text: "Armata";
   --font_input: "Armata";
 
-  --color_bcg: rgb(25, 29, 41);
+  /* --color_bcg: rgb(25, 29, 41);
   --color_bcg_grayed: rgb(38, 43, 58);
-  --color_primary: rgb(42, 50, 75);
-  --color_primary_hover: rgb(26, 142, 155);
-  --color_primary_flash:  rgb(94, 221, 235);
-  --color_secondary: rgb(2, 77, 121);
-  --color_secondary_hover: rgb(2, 96, 139);
-  --color_secondary_alt: rgb(2, 77, 121);
-  --color_tertiary: rgb(26, 142, 155);
-  --color_tertiary_hover: rgb(29, 157, 172);
+
+  --color_main_bars: rgb(2, 77, 121);
+  --color_main_bars_accent: rgb(26, 142, 155);
+  --color_main_bars_accent_hover: rgb(2, 77, 121);
+
+  --color_default_button: rgb(42, 50, 75);
+  --color_default_button_hover:rgb(26, 142, 155);
+
+  --color_start: rgb(42, 50, 75);
+  --color_start_hover: rgb(26, 142, 155);
+  --color_start_flash: rgb(94, 221, 235);
+
+  --color_primary: rgb(2, 77, 121);
+  --color_primary_accent: rgb(42, 50, 75);
+  --color_primary_hover: #61546d;
+  --color_primary_accent_hover: rgb(26, 142, 155);
+
+  --color_secondary: rgb(42, 50, 75);
+  --color_secondary_accent: rgb(2, 77, 121);
+  --color_secondary_hover: rgb(2, 77, 121);
+  --color_secondary_accent_hover: rgb(26, 142, 155);
+
+  --color_icon: #ffffff;
+
+  --color_text_prim: rgb(255, 255, 255);
+  --color_text_sec: rgb(255, 255, 255);
+  --color_text_tert: rgb(219, 219, 219);
+  --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_side_drawer: rgb(255, 255, 255);
+  --color_text_input: rgb(224, 224, 224);
+  --color_text_grayed: rgb(255, 255, 255, 0.2);
+  --color_text_input_disabled: rgb(255, 255, 255, 0.2); */
+
+  
+  /* --color_bcg: #ede3eb;
+  --color_bcg_grayed: #ccc3c4;
+
+  --color_main_bars: #61546d;
+  --color_main_bars_accent: #FA8B14;
+  --color_main_bars_accent_hover: #61546d;
+
+  --color_default_button: #FA8B14;
+  --color_default_button_hover: #FA8B14;
+
+  --color_start: #eb637e;
+  --color_start_hover: #eb637e;
+  --color_start_flash: #eb637e;
+
+  --color_primary: #f2edf8;
+  --color_primary_accent: #eb637e;
+  --color_primary_hover: #61546d;
+  --color_primary_accent_hover: #61546d;
+
+  --color_secondary: #61546d;
+  --color_secondary_accent: #eb637e;
+  --color_secondary_hover: #eb637e;
+  --color_secondary_accent_hover: #eb637e;
+  
+  --color_icon: #eb637e;
+
+  --color_text_prim: #ffffff;
+  --color_text_sec: #161418;
+  --color_text_tert: #1b181d;
+  --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_side_drawer: #f2edf8; 
+  --color_text_input:  #161418;
+  --color_text_grayed: #988da3;
+  --color_text_input_disabled: #61546d; */
+
+  
+
+  --color_bcg: #FFFFFF;
+  --color_bcg_grayed: #d4d4d4;
+
+  --color_main_bars: #68646D;
+  --color_main_bars_accent: #06A77D;
+  --color_main_bars_accent_hover: #68646D;
+
+  --color_default_button: #FF715B;
+  --color_default_button_hover: #ff9e5e;
+
+  --color_start: #06A77D;
+  --color_start_hover: #FF715B;
+  --color_start_flash: #ffbeb4;
+
+  --color_primary: #F7ECE1;
+  --color_primary_accent: #FF715B;
+  --color_primary_hover: #FF715B;
+  --color_primary_accent_hover: #ff9e5e;
+
+  --color_secondary: #F7ECE1;
+  --color_secondary_accent: #FF715B;
+  --color_secondary_hover: #FF715B;
+  --color_secondary_accent_hover: #ff9e5e;
+
+  --color_icon: #504c55;
+  --color_icon_hover: rgb(255, 255, 255);
+
+  --color_text_prim: rgb(255, 255, 255);
+  --color_text_sec: #000103;
+  --color_text_tert: #222024;
+  --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_side_drawer: #000103;
+  --color_text_input: #222024;
+  --color_text_grayed: #a6a3a8;
+  --color_text_input_disabled: #a6a3a8;
+
+
   --color_angry: rgb(172, 9, 58);
   --color_angry_hover: rgb(201, 21, 51);
 
-  --color_text_prim: rgb(255, 255, 255);
-  --color_text_sec: rgb(219, 219, 219);
-  --color_text_tert: rgba(197, 197, 197, 0.5);
-  --color_text_input: rgb(224, 224, 224);
-  --color_text_disabled: rgb(255, 255, 255, 0.2);
+  --color_scroll_bcg: rgba(0, 0, 0, 0.08);
+  --color_scroll_thumb: rgba(0, 0, 0, 0.12);
 
-  --color_scroll_bcg: rgba(255, 255, 255, 0.1);
-  --color_scroll_thumb: rgba(255, 255, 255, 0.2);
-
-  --space-cadet: rgb(42, 50, 75);
-
-  --dark-byzantium: #542344ff;
-  --desert-sand: #d8bfaaff;
-  --gray-web: #808080ff;
 }
 
 html
@@ -75,7 +164,7 @@ button
 {
   font-family:var(--font_main);
   color:var(--color_text_prim);
-  background-color: var(--color_primary);
+  background-color: var(--color_default_button);
   border:none;
   transition: background-color 0.15s;
 }
@@ -83,12 +172,12 @@ button
 button:focus, button:active
 {
   border:none;
-  outline: 1px solid var(--color_primary_hover);
+  outline: 1px solid var(--color_default_button_hover);
 }
 
 button:hover
 {
-  background-color: var(--color_primary_hover);
+  background-color: var(--color_default_button_hover);
   cursor:pointer;
 }
 
@@ -106,8 +195,8 @@ p
   width:100%;
   height:6%;
   top:0;
-  background-color: var(--color_secondary);
-  z-index: 3;
+  background-color: var(--color_main_bars);
+  z-index: 4;
 }
 
 .main_content
@@ -116,7 +205,7 @@ p
   width:100%;
   height:89%;
   top:6%;
-  z-index: 1;
+  z-index: 2;
 }
 
 .main_footer
@@ -125,9 +214,9 @@ p
   bottom: 0;
   width:100%;
   height:5%;
-  background-color: var(--color_secondary_alt);
-  z-index: 2;
-  color:var(--color_text_tert);
+  background-color: var(--color_main_bars);
+  z-index: 3;
+  color:var(--color_text_quat);
   font-size: 1.5vh;
   text-align:center;
 }
@@ -137,7 +226,7 @@ h1
   font-family: var(--font_title);
   font-size:2.5vh;
   line-height: 6vh;
-  color:white;
+  color:var(--color_text_prim);
   margin-top: 0;
   margin-bottom: 0;
   margin-left: 1.5%;
@@ -155,13 +244,13 @@ h1
   display: inline-block;
   height:100%;
   min-width: 7vw;
-  background-color: var(--color_tertiary);
+  background-color: var(--color_main_bars_accent);
   font-size:14px;
 }
 
 .header_button:hover
 {
-  background-color: var(--color_secondary);
+  background-color: var(--color_main_bars_accent_hover);
 }
 
 .header_button_menu
@@ -171,7 +260,7 @@ h1
   height:100%;
   min-width:20vw;
   line-height: 100%;
-  background-color: var(--color_tertiary);
+  background-color: var(--color_main_bars_accent);
   text-align:center;
   font-size:12px;
   color:var(--color_text_prim);
@@ -181,7 +270,7 @@ h1
 
 .header_button_menu:hover
 {
-  background-color: var(--color_secondary);
+  background-color: var(--color_main_bars_accent_hover);
 }
 
 .header_button_menu nav
@@ -193,9 +282,15 @@ h1
 
 .header_button_mobile
 {
+  background-color: var(--color_main_bars_accent);
   width:100%;
   height:6vh;
   margin:0;
+}
+
+.header_button_mobile:hover
+{
+  background-color: var(--color_main_bars_accent_hover);
 }
 
 .header_tree_title_form
@@ -205,6 +300,7 @@ h1
 
 .header_tree_title
 {
+  width:100%;
   height:100%;
   background-color: rgba(255, 255, 255, 0.07);
   border:none;
@@ -234,13 +330,13 @@ h1
 h2
 {
   font-family: var(--font_main);
-  color: var(--color_text_prim);
+  color: var(--color_text_sec);
 }
 
 .start_desc
 {
   font-family: var(--font_long_text);
-  color: var(--color_text_prim);
+  color: var(--color_text_sec);
   margin-bottom: 4%;
 }
 
@@ -257,7 +353,7 @@ h2
   margin: 0.5%;
 
   width: 24%;
-  height: 220px;
+  height: 200px;
 }
 
 .start_button
@@ -266,14 +362,15 @@ h2
   width:100%;
   height:100%;
   font-size: 16px;
-  border-bottom:1px solid var(--color_primary_hover);
+  background-color: var(--color_start);
+  border-bottom:3px solid var(--color_start_hover);
   transform: translateZ(0); /*necessary for revealing ::after without hiding button text, dont remove even though looks redundant*/
 }
 
 .start_button::after
 {
   position:absolute;
-  background-color: var(--color_primary_flash);
+  background-color: var(--color_start_flash);
   content:"";
   top:0;
   bottom:0;
@@ -290,7 +387,7 @@ h2
 .start_button:hover::after
 {
   transform:scale(1, 1);
-  background-color:var(--color_primary_hover);
+  background-color:var(--color_start_hover);
 }
 
 .start_button_special
@@ -310,6 +407,7 @@ h2
   height:35px;
   top:0;
   right:0;
+  background-color: var(--color_start);
 }
 
 .start_button_delete img
@@ -332,7 +430,6 @@ h2
   left:0;
   font-size: 14px;
   color: var(--color_text_prim);
-  background-color: var(--color_primary);
   padding: 5%;
 }
 
@@ -371,9 +468,9 @@ h2
   position: fixed;
   width:28%;
   height: 89%;
-  background-color: var(--color_primary);
-  color: var(--color_text_prim);
-  z-index: 99999;
+  background-color: var(--color_secondary);
+  color: var(--color_text_side_drawer);
+  z-index: 20;
 }
 
 .side_drawer_bar
@@ -437,7 +534,6 @@ h3
   height: 4vh;
   width: 4vh;
   background-color: var(--color_angry);
-  color:white;
   border-radius: 0;
 }
 
@@ -479,7 +575,7 @@ h3
 
 .label_disabled
 {
-  color:var(--color_text_disabled);
+  color:var(--color_text_grayed);
 }
 
 .side_drawer_input
@@ -501,7 +597,7 @@ h3
 
 .side_drawer_input:disabled
 {
-  color:var(--color_text_disabled);
+  color:var(--color_text_input_disabled);
   cursor: default;
 }
 
@@ -528,7 +624,7 @@ h3
   height:100%;
   margin-right:2%;
   padding:0;
-  background-color: var(--color_secondary);
+  background-color: var(--color_secondary_accent);
   color:var(--color_text_prim);
   font-family:var(--font_input);
   text-align:center;
@@ -539,18 +635,23 @@ h3
 
 .parent_select:hover
 {
-  background-color: var(--color_secondary_hover);
+  background-color: var(--color_secondary_accent_hover);
 }
 
 .parent_select p
 {
   width:93%;
   height:100%;
+  font-size:14px;
   display:inline-block;
+  overflow: hidden;
+  vertical-align: middle;
 }
 
 .parent_select_arrow
 {
+  display: inline-block;
+  vertical-align: middle;
   width:5%;
   margin-right:2%;
   height:auto;
@@ -562,19 +663,19 @@ h3
   position:absolute;
   top:100%;
   width:100%;
-  background-color: var(--color_secondary);
+  background-color: var(--color_secondary_accent);
 }
 
 .parent_select_tray button
 {
   width:100%;
-  background-color: var(--color_secondary);
+  background-color: var(--color_secondary_accent);
   margin:0;
 }
 
 .parent_select_tray button:hover
 {
-  background-color: var(--color_secondary_hover);
+  background-color: var(--color_secondary_accent_hover);
 }
 
 .date_input
@@ -604,7 +705,7 @@ h3
   bottom: 50%;
   transform:translate(0, 50%);
   right:0;
-  z-index: 999;
+  z-index: 10;
 }
 
 .zoom_wrapper button
@@ -647,9 +748,11 @@ h3
 .family_member
 {
   position: absolute;
+  cursor: move;
   top:0px;
   left:0px;
-  background-color: var(--color_secondary);
+  background-color: var(--color_primary);
+  color:var(--color_text_sec);
 
   -webkit-user-select: none;      
   -moz-user-select: none;
@@ -663,7 +766,7 @@ h3
     It works, because all the children of .family_member use values for size
     relative to the size of the family member, so just by swapping this class
     inside the app, you scale all the relevant stuff, without doing it through
-    inline styles, although it would work too.
+    inline styles, it would work too.
 */
 
 .family_member_zoom_0
@@ -689,12 +792,19 @@ h3
 
 .family_member_zoom_3
 {
+  width:200px;
+  height:100px;
+  font-size: 15px;
+}
+
+.family_member_zoom_4
+{
   width: 240px;
   height: 120px;
   font-size: 18px;
 }
 
-.family_member_zoom_4
+.family_member_zoom_5
 {
   width: 320px;
   height: 160px;
@@ -711,29 +821,6 @@ h3
   /* vertical-align: top; */
 }
 
-.family_member_dragger
-{
-  position: absolute;
-  top:0;
-  left:0;
-  height:20%;
-  /* this makes it square since the whole fam member is in proportions of 2:1 */
-  width:10%; 
-  cursor:move;
-  /* border:1px solid green; */
-}
-
-.family_member_dragger img
-{
-  width:82%;
-  height:82%;
-  margin-left:3px;
-  margin-top:3px;
-  filter:invert();
-  opacity:0.3;
-  pointer-events: none;
-}
-
 .family_member_task_button
 {
   display: inline-block;
@@ -748,16 +835,28 @@ h3
 
 .family_member_task_button_with_text
 {
+  color:var(--color_text_sec);
+  font-weight: bold;
   padding-left: 2.5%;
   padding-right: 2.5%;
+}
+
+.family_member_task_button_with_text:hover
+{
+  color:var(--color_text_prim);
 }
 
 .family_member_task_icon
 {
   height:80%;
   width:auto;
-  filter:invert();
-  opacity: 0.9;
+  fill:currentColor;
+  color: var(--color_icon);
+}
+
+.family_member_task_button:hover .family_member_task_icon
+{
+  color: var(--color_icon_hover);
 }
 
 .family_member_icon
@@ -765,8 +864,8 @@ h3
   height:80%;
   width:auto;
   margin-right:2%;
-  filter:invert();
-  opacity: 0.9;
+  fill:currentColor;
+  color: var(--color_icon);
 }
 
 .family_member_extend
@@ -776,6 +875,12 @@ h3
   width:100%;
   height:14%;
   font-size:55%;
+  background-color:var(--color_primary_accent);
+}
+
+.family_member_extend:hover
+{
+  background-color: var(--color_primary_accent_hover);
 }
 
 .family_member_extended
@@ -784,9 +889,10 @@ h3
   top:100%;
   width:100%;
   padding:3%;
-  background-color: var(--color_secondary);
+  background-color: var(--color_primary);
   font-size: inherit;
-  z-index: 999999;
+  z-index: 1;
+  cursor: default;
 }
 
 .family_member_name_wrapper
@@ -796,22 +902,30 @@ h3
   align-items: center; 
   height:42%;
   position: relative;
+  overflow:hidden;
   /* border:1px solid yellow; */
 }
 
 .family_member_name
 {
-  color:var(--color_text_prim);
+  color:var(--color_text_sec);
   font-size:100%;
   text-align:center;
+  overflow:hidden;
+  text-overflow: ellipsis;
   width:100%;
   padding-left: 3%;
   padding-right: 3%;
 }
 
+.family_member_name_shrinked
+{
+  font-size: 70%;
+}
+
 .family_member_info
 {
-  color:var(--color_text_sec);
+  color:var(--color_text_tert);
   font-size:70%;
 }
 
@@ -838,7 +952,7 @@ h3
 /* ====== footer stuff ========= */
 footer button
 {
-  color:var(--color_text_tert);
+  color:var(--color_text_quat);
   background:none;
   height:100%;
   font-size: 1.5vh;
@@ -881,7 +995,7 @@ footer span
   left:50%;
   transform: translate(-50%, -50%);
   background-color: var(--color_bcg);
-  border: 2px solid var(--color_secondary_alt);
+  border: 2px solid var(--color_secondary_accent);
   border-radius: 1%;
   /* box-shadow: 20px 20px var(--color_bcg); */
 }
@@ -892,7 +1006,7 @@ footer span
   flex-direction: row;
   justify-content: space-between;
   height:5vh;
-  background-color: var(--color_secondary_alt);
+  background-color: var(--color_secondary_accent);
   color:var(--color_text_prim);
   box-shadow: 0 0 6px black;
 }
@@ -1062,10 +1176,27 @@ footer span
     font-size: 14px;
     line-height:20px;
   }
+
+  .parent_select p
+  {
+    font-size:12px;
+  }
 }
 
 @media screen and (max-width: 380px)
 {
+
+  h1
+  {
+    margin-left:2%;
+    width:26%;
+  }
+
+  .header_tree_title_form
+  {
+    width:52%;
+  }
+
   .side_drawer_row
   {
     font-size:12px;

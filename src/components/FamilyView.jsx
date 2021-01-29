@@ -13,12 +13,14 @@ class FamilyView extends Component
 {
     static contextType = TreeContext;
     #zoomMin = 0;
-    #zoomMax = 4;
-    #locationScalesByZoom = [20, 30, 40, 60, 80];
+    #zoomDefault = 3;
+    #zoomMax = 5;
+    #locationScalesByZoom = [20, 30, 40, 50, 60, 80];
     #lineCenteringOffsetByZoom = [
         {x: 40, y: 20},
         {x: 60, y: 30},
         {x: 80, y: 40},
+        {x: 100, y: 50},
         {x: 120, y: 60},
         {x: 160, y: 80}
     ];
@@ -29,13 +31,19 @@ class FamilyView extends Component
         this.state = {
             editingPerson: false,
             editedPersonId: null,
-            zoomLvl: 2,
-            locationScale: 40,
+            zoomLvl: this.#zoomDefault,
+            locationScale: this.#locationScalesByZoom[this.#zoomDefault],
             stretcherOverhead: {x: 7, y: 5},
             isDragging: false,
+            startingDragOffset: {x: 0, y: 0},
             draggedId: null,
-            lineCenteringOffset: {x: 80, y: 40},
+            lineCenteringOffset: this.#lineCenteringOffsetByZoom[this.#zoomDefault],
+            treeScroll: {x: 0, y: 0}
         }
+
+        this.treeRef = React.createRef();
+
+        this.monitorTreeScroll = this.monitorTreeScroll.bind(this);
         this.startEdit = this.startEdit.bind(this);
         this.reportDeletionToEdit = this.reportDeletionToEdit.bind(this);
         this.endEdit = this.endEdit.bind(this);
@@ -62,27 +70,37 @@ class FamilyView extends Component
     {
         this.setState({editingPerson: false, editedPersonId: null});
     }
-
-    startDrag(personId)
-    {
-        // console.log("starting drag");
-        this.setState({isDragging: true, draggedId: personId});
-    }
-
+    
     componentDidMount()
     {
         window.addEventListener("mouseup", this.endDrag);
+        this.treeRef.current.addEventListener("scroll", this.monitorTreeScroll);
     }
-
+    
     componentWillUnmount()
     {
         window.removeEventListener("mouseup", this.endDrag);
+        this.treeRef.current.removeEventListener("scroll", this.monitorTreeScroll);
+    }
+
+    monitorTreeScroll(e)
+    {
+        const loc = this.calcLocationFromOffset({x: e.target.scrollLeft, y: e.target.scrollTop});
+        this.context.treeHandlers.setDefaultNewFamMemberLocation(loc);
+        this.setState({treeScroll: {x: e.target.scrollLeft, y: e.target.scrollTop}});
+    }
+
+    startDrag(personId, e)
+    {
+        this.setState({isDragging: true, draggedId: personId, startingDragOffset: {x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY}});
     }
 
     tryDrag(e, referenceElement)
     {
         //this was the only solution that calculated coords correctly, but it needs a ref element passed somehow
         const offset = Helpers.getRelativeCoords(e.nativeEvent, referenceElement);
+        offset.x -= this.state.startingDragOffset.x;
+        offset.y -= this.state.startingDragOffset.y;
         // console.log("dragging "+ this.state.draggedId +" to [" + offset.x + ", " + offset.y + "]");
         if (this.state.isDragging === true && this.state.draggedId != null && this.state.draggedId >= 0)
         {
@@ -218,7 +236,7 @@ class FamilyView extends Component
                     <button onClick={this.zoom.bind(this, 1)} disabled={this.state.zoomLvl === this.#zoomMax}>+</button>
                     <button onClick={this.zoom.bind(this, -1)} disabled={this.state.zoomLvl === this.#zoomMin}>-</button>
                 </div>
-                <div id="family_tree" className="family_tree" onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, document.getElementById("family_tree")) : undefined}>
+                <div ref={this.treeRef} className="family_tree" onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, this.treeRef.current) : undefined}>
                     {familyMembers}
                     <ConnectionRenderer style={this.calcCssSizeOfConnectionRenderer()}>
                         {connections}
