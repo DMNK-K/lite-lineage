@@ -12,6 +12,8 @@
   --font_long_text: "Armata";
   --font_input: "Armata";
 
+  /*
+  original colors:
   --color_bcg: rgb(25, 29, 41);
   --color_bcg_grayed: rgb(38, 43, 58);
   --color_primary: rgb(42, 50, 75);
@@ -21,24 +23,86 @@
   --color_secondary_hover: rgb(2, 96, 139);
   --color_secondary_alt: rgb(2, 77, 121);
   --color_tertiary: rgb(26, 142, 155);
-  --color_tertiary_hover: rgb(29, 157, 172);
+  --color_tertiary_hover: rgb(29, 157, 172); */
+
+  /* --color_bcg: #1a2127;
+  --color_bcg_grayed: #1a1d20;
+  --color_primary: #222b33;
+  --color_primary_hover: #f1bf98;
+  --color_primary_flash:  #ffdcc2;
+  --color_secondary: #009171;
+  --color_secondary_hover: #00a892;
+  --color_secondary_alt: #007c61;
+  --color_tertiary: #00b982;
+  --color_tertiary_hover: #1d9dac; */
+
+  /* --color_bcg: #EDE3E4;
+  --color_bcg_grayed: #ccc3c4;
+
+  --color_main_bars: #6D545D;
+  --color_main_bars_accent: #FCA311;
+  --color_main_bars_accent_hover: #6D545D;
+
+  --color_default_button: #FCA311;
+  --color_default_button_hover: #FCA311;
+
+  --color_start: #FF5376;
+  --color_start_hover: #FF5376;
+  --color_start_flash: #FF5376;
+
+  --color_primary: #6D545D;
+  --color_primary_accent: #FF5376;
+  --color_primary_hover: #6D545D;
+  --color_primary_accent_hover: #6D545D;
+
+  --color_secondary: #6D545D;
+  --color_secondary_accent: #FF5376;
+  --color_secondary_hover: #FF5376;
+  --color_secondary_accent_hover: #FF5376; */
+  
+  --color_bcg: #FFFFFF;
+  --color_bcg_grayed: #d4d4d4;
+
+  --color_main_bars: #68646D;
+  --color_main_bars_accent: #06A77D;
+  --color_main_bars_accent_hover: #68646D;
+
+  --color_default_button: #FF715B;
+  --color_default_button_hover: #ff9e5e;
+
+  --color_start: #06A77D;
+  --color_start_hover: #FF715B;
+  --color_start_flash: #ffbeb4;
+
+  --color_primary: #F7ECE1;
+  --color_primary_accent: #FF715B;
+  --color_primary_hover: #FF715B;
+  --color_primary_accent_hover: #FF715B;
+
+  --color_secondary: #F7ECE1;
+  --color_secondary_accent: #FF715B;
+  --color_secondary_hover: #FF715B;
+  --color_secondary_accent_hover: #FF715B;
+
   --color_angry: rgb(172, 9, 58);
   --color_angry_hover: rgb(201, 21, 51);
 
   --color_text_prim: rgb(255, 255, 255);
+  --color_text_sec: #000103;
+  --color_text_tert: #222024;
+  --color_text_quat: rgba(197, 197, 197, 0.5);
+  --color_text_input: #222024;
+  --color_text_disabled: #a9a7ac;
+  
+  /* --color_text_prim: rgb(255, 255, 255);
   --color_text_sec: rgb(219, 219, 219);
   --color_text_tert: rgba(197, 197, 197, 0.5);
   --color_text_input: rgb(224, 224, 224);
-  --color_text_disabled: rgb(255, 255, 255, 0.2);
+  --color_text_disabled: rgb(255, 255, 255, 0.2); */
 
   --color_scroll_bcg: rgba(255, 255, 255, 0.1);
   --color_scroll_thumb: rgba(255, 255, 255, 0.2);
 
-  --space-cadet: rgb(42, 50, 75);
-
-  --dark-byzantium: #542344ff;
-  --desert-sand: #d8bfaaff;
-  --gray-web: #808080ff;
 }
 
 html
@@ -75,7 +139,7 @@ button
 {
   font-family:var(--font_main);
   color:var(--color_text_prim);
-  background-color: var(--color_primary);
+  background-color: var(--color_default_button);
   border:none;
   transition: background-color 0.15s;
 }
@@ -83,12 +147,12 @@ button
 button:focus, button:active
 {
   border:none;
-  outline: 1px solid var(--color_primary_hover);
+  outline: 1px solid var(--color_default_button_hover);
 }
 
 button:hover
 {
-  background-color: var(--color_primary_hover);
+  background-color: var(--color_default_button_hover);
   cursor:pointer;
 }
 
@@ -106,7 +170,7 @@ p
   width:100%;
   height:6%;
   top:0;
-  background-color: var(--color_secondary);
+  background-color: var(--color_main_bars);
   z-index: 4;
 }
 
@@ -125,7 +189,7 @@ p
   bottom: 0;
   width:100%;
   height:5%;
-  background-color: var(--color_secondary_alt);
+  background-color: var(--color_main_bars);
   z-index: 3;
   color:var(--color_text_tert);
   font-size: 1.5vh;
@@ -155,13 +219,13 @@ h1
   display: inline-block;
   height:100%;
   min-width: 7vw;
-  background-color: var(--color_tertiary);
+  background-color: var(--color_main_bars_accent);
   font-size:14px;
 }
 
 .header_button:hover
 {
-  background-color: var(--color_secondary);
+  background-color: var(--color_main_bars_accent_hover);
 }
 
 .header_button_menu
@@ -171,7 +235,7 @@ h1
   height:100%;
   min-width:20vw;
   line-height: 100%;
-  background-color: var(--color_tertiary);
+  background-color: var(--color_main_bars_accent);
   text-align:center;
   font-size:12px;
   color:var(--color_text_prim);
@@ -181,7 +245,7 @@ h1
 
 .header_button_menu:hover
 {
-  background-color: var(--color_secondary);
+  background-color: var(--color_main_bars_accent_hover);
 }
 
 .header_button_menu nav
@@ -193,9 +257,15 @@ h1
 
 .header_button_mobile
 {
+  background-color: var(--color_main_bars_accent);
   width:100%;
   height:6vh;
   margin:0;
+}
+
+.header_button_mobile:hover
+{
+  background-color: var(--color_main_bars_accent_hover);
 }
 
 .header_tree_title_form
@@ -267,14 +337,15 @@ h2
   width:100%;
   height:100%;
   font-size: 16px;
-  border-bottom:1px solid var(--color_primary_hover);
+  background-color: var(--color_start);
+  border-bottom:2px solid var(--color_start_hover);
   transform: translateZ(0); /*necessary for revealing ::after without hiding button text, dont remove even though looks redundant*/
 }
 
 .start_button::after
 {
   position:absolute;
-  background-color: var(--color_primary_flash);
+  background-color: var(--color_start_flash);
   content:"";
   top:0;
   bottom:0;
@@ -291,7 +362,7 @@ h2
 .start_button:hover::after
 {
   transform:scale(1, 1);
-  background-color:var(--color_primary_hover);
+  background-color:var(--color_start_hover);
 }
 
 .start_button_special
@@ -311,6 +382,7 @@ h2
   height:35px;
   top:0;
   right:0;
+  background-color: var(--color_start);
 }
 
 .start_button_delete img
@@ -333,7 +405,6 @@ h2
   left:0;
   font-size: 14px;
   color: var(--color_text_prim);
-  background-color: var(--color_primary);
   padding: 5%;
 }
 
@@ -372,7 +443,7 @@ h2
   position: fixed;
   width:28%;
   height: 89%;
-  background-color: var(--color_primary);
+  background-color: var(--color_secondary);
   color: var(--color_text_prim);
   z-index: 20;
 }
@@ -529,7 +600,7 @@ h3
   height:100%;
   margin-right:2%;
   padding:0;
-  background-color: var(--color_secondary);
+  background-color: var(--color_secondary_accent);
   color:var(--color_text_prim);
   font-family:var(--font_input);
   text-align:center;
@@ -540,7 +611,7 @@ h3
 
 .parent_select:hover
 {
-  background-color: var(--color_secondary_hover);
+  background-color: var(--color_secondary_accent_hover);
 }
 
 .parent_select p
@@ -568,19 +639,19 @@ h3
   position:absolute;
   top:100%;
   width:100%;
-  background-color: var(--color_secondary);
+  background-color: var(--color_secondary_accent);
 }
 
 .parent_select_tray button
 {
   width:100%;
-  background-color: var(--color_secondary);
+  background-color: var(--color_secondary_accent);
   margin:0;
 }
 
 .parent_select_tray button:hover
 {
-  background-color: var(--color_secondary_hover);
+  background-color: var(--color_secondary_accent_hover);
 }
 
 .date_input
@@ -656,7 +727,7 @@ h3
   cursor: move;
   top:0px;
   left:0px;
-  background-color: var(--color_secondary);
+  background-color: var(--color_primary);
 
   -webkit-user-select: none;      
   -moz-user-select: none;
@@ -760,6 +831,12 @@ h3
   width:100%;
   height:14%;
   font-size:55%;
+  background-color:var(--color_primary_accent);
+}
+
+.family_member_extend:hover
+{
+  background-color: var(--color_primary_accent_hover);
 }
 
 .family_member_extended
@@ -768,7 +845,7 @@ h3
   top:100%;
   width:100%;
   padding:3%;
-  background-color: var(--color_secondary);
+  background-color: var(--color_primary);
   font-size: inherit;
   z-index: 1;
   cursor: default;
@@ -874,7 +951,7 @@ footer span
   left:50%;
   transform: translate(-50%, -50%);
   background-color: var(--color_bcg);
-  border: 2px solid var(--color_secondary_alt);
+  border: 2px solid var(--color_secondary_accent);
   border-radius: 1%;
   /* box-shadow: 20px 20px var(--color_bcg); */
 }
@@ -885,7 +962,7 @@ footer span
   flex-direction: row;
   justify-content: space-between;
   height:5vh;
-  background-color: var(--color_secondary_alt);
+  background-color: var(--color_secondary_accent);
   color:var(--color_text_prim);
   box-shadow: 0 0 6px black;
 }
