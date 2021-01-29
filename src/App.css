@@ -125,8 +125,8 @@
   --color_angry: rgb(172, 9, 58);
   --color_angry_hover: rgb(201, 21, 51);
 
-  --color_scroll_bcg: rgba(255, 255, 255, 0.1);
-  --color_scroll_thumb: rgba(255, 255, 255, 0.2);
+  --color_scroll_bcg: rgba(0, 0, 0, 0.08);
+  --color_scroll_thumb: rgba(0, 0, 0, 0.12);
 
 }
 
