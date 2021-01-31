@@ -37,7 +37,7 @@ class FamilyMember extends Component
         return {top: top + "px", left: left + "px"}
     }
 
-    onMouseDownStopPropagation(e)
+    stopPropagation(e)
     {
         e.stopPropagation();
     }
@@ -48,18 +48,18 @@ class FamilyMember extends Component
         //to prevent starting dragging, since the drag is on a parent
         //it could also work with checking target vs current target on onStartDrag
         return (
-            <div className={"family_member family_member_zoom_" + this.props.zoomLvl} onMouseDown={this.props.startDrag.bind(this, this.props.person.id)} style={this.calcCssPosObj()}>
+            <div className={"family_member family_member_zoom_" + this.props.zoomLvl} onMouseDown={this.props.startDrag.bind(this, this.props.person.id)} style={this.calcCssPosObj()} onTouchStart={this.props.startDrag.bind(this, this.props.person.id)}>
                 <div className="family_member_bar">
-                    <button className="family_member_task_button" onClick={this.props.startEdit.bind(this, this.props.person.id)} onMouseDown={this.onMouseDownStopPropagation}>
+                    <button className="family_member_task_button" onClick={this.props.startEdit.bind(this, this.props.person.id)} onMouseDown={this.stopPropagation} onTouchStart={this.stopPropagation}>
                         <IconEdit className="family_member_task_icon"/>
                     </button>
-                    <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "child", this.props.person.id)} onMouseDown={this.onMouseDownStopPropagation}>
+                    <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "child", this.props.person.id)} onMouseDown={this.stopPropagation} onTouchStart={this.stopPropagation}>
                         ADD CHILD
                     </button>
-                    <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "parent", this.props.person.id)} onMouseDown={this.onMouseDownStopPropagation}>
+                    <button className="family_member_task_button family_member_task_button_with_text" onClick={this.props.familyHandlers.handleAddFamMember.bind(this, "parent", this.props.person.id)} onMouseDown={this.stopPropagation} onTouchStart={this.stopPropagation}>
                         ADD PARENT
                     </button>
-                    <button className="family_member_task_button" onClick={this.onDelete} onMouseDown={this.onMouseDownStopPropagation}>
+                    <button className="family_member_task_button" onClick={this.onDelete} onMouseDown={this.stopPropagation} onTouchStart={this.stopPropagation}>
                         <IconDelete className="family_member_task_icon"/>
                     </button>
                 </div>
@@ -80,7 +80,9 @@ class FamilyMember extends Component
                     </p>
                 }
 
-                <button className="family_member_extend" onClick={this.toggleExtend} onMouseDown={this.onMouseDownStopPropagation}>{(this.state.extended === true) ? "HIDE DETAILS" : "SHOW DETAILS"}</button>
+                <button className="family_member_extend" onClick={this.toggleExtend} onMouseDown={this.stopPropagation} onTouchStart={this.stopPropagation}>
+                    {(this.state.extended === true) ? "HIDE DETAILS" : "SHOW DETAILS"}
+                </button>
                 {this.state.extended === true && <FamilyMemberExtension person={this.props.person}/>}
             </div>
         );
