@@ -8,6 +8,8 @@ import Person from '../Person';
 import Helpers from '../Helpers';
 import ConnectionRenderer from './ConnectionRenderer';
 import FamilyConnection from './FamilyConnection';
+import IconZoomIn from '../icons/icon_zoom_in.svg';
+import IconZoomOut from '../icons/icon_zoom_out.svg';
 
 class FamilyView extends Component
 {
@@ -74,12 +76,14 @@ class FamilyView extends Component
     componentDidMount()
     {
         window.addEventListener("mouseup", this.endDrag);
+        window.addEventListener("touchend", this.endDrag);
         this.treeRef.current.addEventListener("scroll", this.monitorTreeScroll);
     }
     
     componentWillUnmount()
     {
         window.removeEventListener("mouseup", this.endDrag);
+        window.removeEventListener("touchend", this.endDrag);
         this.treeRef.current.removeEventListener("scroll", this.monitorTreeScroll);
     }
 
@@ -92,15 +96,28 @@ class FamilyView extends Component
 
     startDrag(personId, e)
     {
-        this.setState({isDragging: true, draggedId: personId, startingDragOffset: {x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY}});
+        //since touch events don't have offsetX and offsetY as of now
+        //an offset equal to the line centering offset is assumed to provide minimum of functionality
+        let newStartingDragOffset;
+        if (e.type === "touchstart")
+        {
+            newStartingDragOffset = {x : this.state.lineCenteringOffset.x, y: this.state.lineCenteringOffset.y};
+        }
+        else
+        {
+            newStartingDragOffset =  {x: e.nativeEvent.offsetX, y: e.nativeEvent.offsetY};
+        }
+        this.setState({isDragging: true, draggedId: personId, startingDragOffset: newStartingDragOffset});
     }
 
     tryDrag(e, referenceElement)
     {
-        //this was the only solution that calculated coords correctly, but it needs a ref element passed somehow
-        const offset = Helpers.getRelativeCoords(e.nativeEvent, referenceElement);
+        // console.log(e.nativeEvent.changedTouches[0]);
+        const eventToConsider = (e.type === "touchmove") ? e.nativeEvent.changedTouches[0] : e.nativeEvent;
+        const offset = Helpers.getRelativeCoords(eventToConsider, referenceElement);
         offset.x -= this.state.startingDragOffset.x;
         offset.y -= this.state.startingDragOffset.y;
+        // console.log(offset);
         // console.log("dragging "+ this.state.draggedId +" to [" + offset.x + ", " + offset.y + "]");
         if (this.state.isDragging === true && this.state.draggedId != null && this.state.draggedId >= 0)
         {
@@ -233,10 +250,19 @@ class FamilyView extends Component
             <div className="family_view">
                 {this.state.editingPerson === true && sideDrawer}
                 <div className="zoom_wrapper">
-                    <button onClick={this.zoom.bind(this, 1)} disabled={this.state.zoomLvl === this.#zoomMax}>+</button>
-                    <button onClick={this.zoom.bind(this, -1)} disabled={this.state.zoomLvl === this.#zoomMin}>-</button>
+                    <button onClick={this.zoom.bind(this, 1)} disabled={this.state.zoomLvl === this.#zoomMax}>
+                        <img alt="zoom in" src={IconZoomIn}/>
+                    </button>
+                    <button onClick={this.zoom.bind(this, -1)} disabled={this.state.zoomLvl === this.#zoomMin}>
+                        <img alt="zoom out" src={IconZoomOut}/>
+                    </button>
                 </div>
-                <div ref={this.treeRef} className="family_tree" onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, this.treeRef.current) : undefined}>
+                <div
+                    ref={this.treeRef}
+                    className="family_tree"
+                    onMouseMove={this.state.isDragging ? (e) => this.tryDrag(e, this.treeRef.current) : undefined}
+                    onTouchMove={this.state.isDragging ? (e) => this.tryDrag(e, this.treeRef.current) : undefined}
+                >
                     {familyMembers}
                     <ConnectionRenderer style={this.calcCssSizeOfConnectionRenderer()}>
                         {connections}

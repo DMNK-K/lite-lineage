@@ -48,7 +48,7 @@ class FamilyMember extends Component
         //to prevent starting dragging, since the drag is on a parent
         //it could also work with checking target vs current target on onStartDrag
         return (
-            <div className={"family_member family_member_zoom_" + this.props.zoomLvl} onMouseDown={this.props.startDrag.bind(this, this.props.person.id)} style={this.calcCssPosObj()}>
+            <div className={"family_member family_member_zoom_" + this.props.zoomLvl} onMouseDown={this.props.startDrag.bind(this, this.props.person.id)} style={this.calcCssPosObj()} onTouchStart={this.props.startDrag.bind(this, this.props.person.id)}>
                 <div className="family_member_bar">
                     <button className="family_member_task_button" onClick={this.props.startEdit.bind(this, this.props.person.id)} onMouseDown={this.onMouseDownStopPropagation}>
                         <IconEdit className="family_member_task_icon"/>
