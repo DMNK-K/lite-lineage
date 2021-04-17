@@ -6,3 +6,5 @@ Website for creating family trees.
 * javascript
     * react
 
+## Setup
+Site is live [HERE](https://litelineage.netlify.app/).
